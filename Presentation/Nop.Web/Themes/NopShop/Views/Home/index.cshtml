@@ -1,0 +1,22 @@
+@{
+    Layout = "~/Themes/NopShop/Views/Shared/_ColumnsTwoHomepage.cshtml";
+}
+
+@Html.Widget("home_page_top")
+@Html.Action("TopicBlock", "Topic", new { systemName = "HomePageText" })
+@Html.Action("HomepageCategories", "Catalog")
+@Html.Action("HomepageProducts", "Product")
+@Html.Action("HomepageBestSellers", "Product")
+@Html.Action("HomePageNews", "News")
+@Html.Action("HomePagePolls", "Poll")
+@Html.Widget("home_page_bottom")
+
+
+
+
+
+
+
+
+
+

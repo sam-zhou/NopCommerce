@@ -1,0 +1,11 @@
+﻿@model ProductDetailsModel
+@using Nop.Web.Models.Catalog;
+@{
+    var addtocomparelink = Url.RouteUrl("AddProductToCompare", new { productId = Model.Id });
+}
+@if (Model.CompareProductsEnabled)
+{
+    <div class="compare-products col-md-5">
+        <input type="button" value="@T("Products.Compare.AddToCompareList")" class="btn btn-primary add-to-compare-list-button" onclick="AjaxCart.addproducttocomparelist('@addtocomparelink');return false;" />
+    </div>
+}
