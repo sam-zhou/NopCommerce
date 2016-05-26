@@ -253,3 +253,5 @@ paket-files/
 
 *.dll
 *.pdb
+Presentation/Nop.Web/Plugins/*
+.vs/
