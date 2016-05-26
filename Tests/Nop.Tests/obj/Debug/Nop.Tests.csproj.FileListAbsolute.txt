@@ -1,9 +1,0 @@
-D:\NopCommerce\Tests\Nop.Tests\bin\Debug\Nop.Tests.dll
-D:\NopCommerce\Tests\Nop.Tests\bin\Debug\Nop.Tests.pdb
-D:\NopCommerce\Tests\Nop.Tests\bin\Debug\nunit.framework.dll
-D:\NopCommerce\Tests\Nop.Tests\bin\Debug\Rhino.Mocks.dll
-D:\NopCommerce\Tests\Nop.Tests\bin\Debug\nunit.framework.xml
-D:\NopCommerce\Tests\Nop.Tests\bin\Debug\Rhino.Mocks.xml
-D:\NopCommerce\Tests\Nop.Tests\obj\Debug\Nop.Tests.csprojResolveAssemblyReference.cache
-D:\NopCommerce\Tests\Nop.Tests\obj\Debug\Nop.Tests.dll
-D:\NopCommerce\Tests\Nop.Tests\obj\Debug\Nop.Tests.pdb
