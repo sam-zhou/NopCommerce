@@ -78,7 +78,10 @@
                                         @if (Model.IsEditable)
                                         {
                                             <td class="remove-from-cart">
-                                                <input type="checkbox" name="removefromcart" value="@(item.Id)" />
+                                                <input type="checkbox" name="removefromcart" class="hidden" value="@(item.Id)"/>
+                                                <span class="btn btn-danger get" name="removefromcartBtn" onclick="shoppingcart_removeFromCart(this)" >
+                                                        <i class="fa fa-times"></i>
+                                                </span>
                                             </td>
                                         }
                                         @if (Model.ShowSku)
@@ -305,3 +308,11 @@
     @Html.Widget("order_summary_content_after")
 </div>
 
+<script type="text/javascript">
+
+
+    function shoppingcart_removeFromCart(source) {
+        $(source).parent().find('input[name=removefromcart]').prop('checked', true);
+        $('input[name=updatecart]').click();
+    }
+</script>

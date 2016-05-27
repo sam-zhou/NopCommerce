@@ -2380,7 +2380,6 @@
     <Content Include="Themes\NopShop\Views\Web.config" />
     <Content Include="Themes\NopShop\Views\Common\StoreSelector.cshtml" />
     <Content Include="Views\Common\StoreSelector.cshtml" />
-    <Content Include="Themes\NopShop\Views\Product\_ProductGroupDetailsPictures.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Roxy_Fileman\tmp\" />

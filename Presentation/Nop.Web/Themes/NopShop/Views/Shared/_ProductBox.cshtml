@@ -44,8 +44,11 @@
 
 <div class="product-image-wrapper" data-productid="@Model.Id">
     <div class="single-products box-product">
-        <div class="productinfo text-center">
-            <img alt="@Model.DefaultPictureModel.AlternateText" src="@Model.DefaultPictureModel.ImageUrl" title="@Model.DefaultPictureModel.Title" />
+        <div class="productinfo text-center"><a class="product-name-a" href="@Url.RouteUrl("Product", new
+                                                          {
+                                                              SeName = Model.SeName
+                                                          })"><img alt="@Model.DefaultPictureModel.AlternateText" src="@Model.DefaultPictureModel.ImageUrl" title="@Model.DefaultPictureModel.Title" /></a>
+            
             <h2>
                 @if (!String.IsNullOrEmpty(Model.ProductPrice.OldPrice)|| Model.ProductPrice.DisplayTaxShippingInfo)
                 {
