@@ -322,6 +322,8 @@
     <Compile Include="Models\Common\ContactVendorModel.cs" />
     <Compile Include="Models\Common\FooterModel.cs" />
     <Compile Include="Models\Common\FaviconModel.cs" />
+    <Compile Include="Models\Common\StoreModel.cs" />
+    <Compile Include="Models\Common\StoreSelectorModel.cs" />
     <Compile Include="Models\Common\PagerModel.cs" />
     <Compile Include="Models\Common\StoreThemeModel.cs" />
     <Compile Include="Models\Common\LanguageSelectorModel.cs" />
@@ -2376,6 +2378,9 @@
     <Content Include="Themes\NopShop\Views\Topic\TopicDetails.cshtml" />
     <Content Include="Themes\NopShop\Views\Vendor\ApplyVendor.cshtml" />
     <Content Include="Themes\NopShop\Views\Web.config" />
+    <Content Include="Themes\NopShop\Views\Common\StoreSelector.cshtml" />
+    <Content Include="Views\Common\StoreSelector.cshtml" />
+    <Content Include="Themes\NopShop\Views\Product\_ProductGroupDetailsPictures.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Roxy_Fileman\tmp\" />

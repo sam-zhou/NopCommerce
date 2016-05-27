@@ -142,6 +142,16 @@ namespace Nop.Web.Infrastructure.Cache
         /// Key for categories on the search page
         /// </summary>
         /// <remarks>
+        /// {0} : current store ID
+        /// {1} : current language Id
+        /// </remarks>
+        public const string STORES_MODEL_KEY = "Nop.pres.stores-{0}-{1}";
+
+
+        /// <summary>
+        /// Key for categories on the search page
+        /// </summary>
+        /// <remarks>
         /// {0} : language id
         /// {1} : roles of the current user
         /// {2} : current store ID

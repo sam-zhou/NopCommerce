@@ -1,0 +1,21 @@
+﻿@model StoreSelectorModel
+@using Nop.Web.Models.Common;
+@using Nop.Core;
+@using Nop.Core.Infrastructure;
+@if (Model.AvailableStores.Count > 1)
+{
+    <div class="language-selector">
+    @{
+        var webHelper = EngineContext.Current.Resolve<IWebHelper>();
+
+        var languages = Model.AvailableStores.Select(lang => new SelectListItem
+        {
+            Text = lang.Name,
+            Value = webHelper.ModifyQueryString(Url.RouteUrl("ChangeLanguage", new { langid = lang.Id }), "returnurl=" + HttpUtility.UrlEncode(HttpContext.Current.Request.RawUrl), null),
+            Selected = lang.Id.Equals(Model.CurrentStoreId)
+        });
+
+        @Html.DropDownList("customerlanguage", languages, new { onchange = "setLocation(this.value);" })
+    }
+    </div>
+}

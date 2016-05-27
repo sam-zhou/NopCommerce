@@ -18,6 +18,7 @@ using Nop.Core.Domain.News;
 using Nop.Core.Domain.Orders;
 using Nop.Core.Domain.Tax;
 using Nop.Core.Domain.Vendors;
+using Nop.Core.Infrastructure;
 using Nop.Services.Catalog;
 using Nop.Services.Common;
 using Nop.Services.Customers;
@@ -29,6 +30,7 @@ using Nop.Services.Messages;
 using Nop.Services.Orders;
 using Nop.Services.Security;
 using Nop.Services.Seo;
+using Nop.Services.Stores;
 using Nop.Services.Topics;
 using Nop.Services.Vendors;
 using Nop.Web.Extensions;
@@ -69,7 +71,7 @@ namespace Nop.Web.Controllers
         private readonly ICacheManager _cacheManager;
         private readonly ICustomerActivityService _customerActivityService;
         private readonly IVendorService _vendorService;
-
+        private readonly IStoreService _storeService;
         private readonly CustomerSettings _customerSettings;
         private readonly TaxSettings _taxSettings;
         private readonly CatalogSettings _catalogSettings;
@@ -119,7 +121,7 @@ namespace Nop.Web.Controllers
             ForumSettings forumSettings,
             LocalizationSettings localizationSettings, 
             CaptchaSettings captchaSettings,
-            VendorSettings vendorSettings)
+            VendorSettings vendorSettings, IStoreService storeService)
         {
             this._categoryService = categoryService;
             this._productService = productService;
@@ -155,6 +157,7 @@ namespace Nop.Web.Controllers
             this._localizationSettings = localizationSettings;
             this._captchaSettings = captchaSettings;
             this._vendorSettings = vendorSettings;
+            _storeService = storeService;
         }
 
         #endregion
@@ -191,6 +194,39 @@ namespace Nop.Web.Controllers
             this.Response.TrySkipIisCustomErrors = true;
 
             return View();
+        }
+
+        //store
+        [ChildActionOnly]
+        public ActionResult StoreSelector()
+        {
+
+
+            var availableStores = _cacheManager.Get(string.Format(ModelCacheEventConsumer.STORES_MODEL_KEY, _storeContext.CurrentStore.Id, _workContext.WorkingLanguage.Id), () =>
+            {
+                var result = _storeService
+                    .GetAllStores()
+                    .Select(x => new StoreModel
+                    {
+                        Id = x.Id,
+                        Name = x.GetLocalized(q => q.Name),
+                        Url = x.Url,
+                        Country = x.CompanyName
+                    })
+                    .ToList();
+                return result;
+            });
+
+            var model = new StoreSelectorModel
+            {
+                CurrentStoreId = _storeContext.CurrentStore.Id,
+                AvailableStores = availableStores,
+            };
+
+            if (model.AvailableStores.Count == 1)
+                Content("");
+
+            return PartialView(model);
         }
 
         //language
