@@ -235,6 +235,13 @@ namespace Nop.Services.Directory
                 result = ConvertToPrimaryExchangeRateCurrency(result, sourceCurrencyCode);
                 result = ConvertFromPrimaryExchangeRateCurrency(result, targetCurrencyCode);
             }
+
+            if (targetCurrencyCode.RoundTo > 0)
+            {
+                result = (Math.Floor(result/targetCurrencyCode.RoundTo) + 1)*targetCurrencyCode.RoundTo;
+            }
+            
+
             return result;
         }
 

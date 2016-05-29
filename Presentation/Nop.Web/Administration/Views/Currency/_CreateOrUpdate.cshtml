@@ -152,6 +152,15 @@
                 @Html.ValidationMessageFor(model => model.DisplayOrder)
             </td>
         </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.RoundTo):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.RoundTo)
+                @Html.ValidationMessageFor(model => model.RoundTo)
+            </td>
+        </tr>
         @if (Model.Id > 0)
         {
             <tr>

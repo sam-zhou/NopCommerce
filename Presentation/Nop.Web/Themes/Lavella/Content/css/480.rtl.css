@@ -1,0 +1,111 @@
+﻿* {
+	direction: rtl;
+}
+@media all and (min-width: 481px) {
+	.search-box input.search-box-text {
+		width: 300px !important;
+		font: italic 14px open sans;
+		color: #bbb;
+	}
+	.ui-autocomplete.ui-menu.ui-widget.ui-widget-content {
+		width: 300px !important;
+	}
+	.eu-cookie-bar-notification {
+		width: 450px;
+		max-width: 95%;
+		margin-right: -225px;
+		margin-left: 0;
+	}
+	.newsletter-email input[type="text"] {
+		width: 300px;
+		font-family: open sans;
+		color: #888;
+		font-style: italic;
+	}
+	.footer-middle h3 {
+		width: 768px;
+	}
+	.poll {
+		padding: 15px 7px 5px;
+		width: 50%;
+	}
+	.item-box {
+		width: 49%;
+		margin-right: 2%;
+		margin-left: 0;
+	}
+	.item-box:nth-child(2n+1) {
+		clear: both;
+		margin-right: 0;
+		margin-left: 0;
+	}
+	.product-grid.home-page-category-grid .item-box:nth-child(2n) {
+		margin-right: 2%;
+		margin-left: 0;
+	}
+	.category-page .item-box .description {
+		max-height: 58px;
+	}
+	.product-variant-list.grid,
+    .product-variant-list.list {
+		overflow: hidden;
+	}
+	.product-variant-list.grid .product-variant-line,
+    .product-variant-list.list .product-variant-line {
+		float: right;
+		width: 48%;
+	}
+	.product-variant-list.grid .variant-overview .add-to-wishlist-button,
+    .product-variant-list.list .variant-overview .add-to-wishlist-button {
+		display: block;
+		margin-right: 0;
+		margin-left: 0;
+	}
+	.product-variant-list.grid .add-to-cart-button,
+    .product-variant-list.list .add-to-cart-button {
+		margin-bottom: 20px;
+	}
+	.gallery .picture-wrapper {
+		width: 80%;
+	}
+	.enter-password-form input[type="password"] {
+		width: 300px !important;
+	}
+	.registration-page .fieldset:nth-child(2) select,
+.account-page .fieldset:nth-child(3) select {
+		width: 110px;
+	}
+	.order-review-data {
+		display: table;
+		width: 100%;
+		margin: 0 0 30px;
+	}
+	.order-review-data ul {
+		display: table-cell;
+	}
+	.order-details-area td {
+		float: none;
+		width: auto;
+	}
+	.shipment-details-page .shipment-overview > ul {
+		float: right;
+		width: 48%;
+		margin: 0 1% !important;
+	}
+	.order-progress li {
+		margin: 0 0 40px 50px;
+	}
+	.checkout-page .address-item {
+		float: right;
+		width: 47%;
+		margin: 1.5%;
+	}
+	.checkout-page .address-item:nth-child(2n+1) {
+		clear: both;
+	}
+	.checkout-page .order-review-data>ul {
+		display: inline-block;
+		width: 46%;
+		margin: 1.5%;
+	}
+}

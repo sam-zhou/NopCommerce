@@ -1,0 +1,55 @@
+﻿@{
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+
+    string additionalClass = String.Empty;
+    var manufacturersCarouselHtml = Html.Widget("footer_manufacturers_carousel");
+    if (MvcHtmlString.IsNullOrEmpty(manufacturersCarouselHtml))
+    {
+        additionalClass = "full-width";
+    }
+}
+<div class="page home-page">
+    <div class="page-body">
+        @Html.Widget("home_page_top")
+
+        <div class="home-page-top-banner-wrapper">
+            <div class="slider-left">
+                @Html.Widget("home_page_main_slider")
+            </div>
+            <div class="banners-right">
+                <div>@Html.Widget("home_page_right_banner_1")</div>
+                <div>@Html.Widget("home_page_right_banner_2")</div>
+            </div>
+        </div>
+
+        @Html.Action("TopicBlock", "Topic", new { systemName = "HomePageText" })
+        @Html.Widget("home_page_before_categories")
+        @Html.Action("HomepageCategories", "Catalog")
+        @Html.Widget("home_page_before_products")
+        @Html.Action("HomepageProducts", "Product")
+        @Html.Widget("home_page_before_best_sellers")
+        @Html.Action("HomepageBestSellers", "Product")
+
+        <div class="home-page-bottom-banner-wrapper">
+            <div class="left-banner">
+                @Html.Widget("home_page_left_banner_bottom")
+            </div>
+            <div class="right-banner">
+                @Html.Widget("home_page_right_banner_bottom")
+            </div>
+        </div>
+        @Html.Widget("home_page_before_news")
+        @Html.Action("HomePageNews", "News")
+        @Html.Widget("home_page_before_poll")
+        @Html.Action("HomePagePolls", "Poll")
+        @Html.Widget("home_page_bottom")
+    </div>
+</div>
+<div class="footer-upper @additionalClass">
+    <div class="fu-wrapper-left">
+        @manufacturersCarouselHtml
+    </div>
+    <div class="fu-wrapper">
+        @Html.Action("NewsletterBox", "Newsletter")
+    </div>
+</div>

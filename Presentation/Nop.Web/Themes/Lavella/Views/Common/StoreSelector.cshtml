@@ -1,0 +1,29 @@
+﻿@model StoreSelectorModel
+@using Nop.Web.Models.Common;
+@using Nop.Core;
+@using Nop.Core.Infrastructure;
+@if (Model.AvailableStores.Count > 1)
+{
+    var webHelper = EngineContext.Current.Resolve<IWebHelper>();
+
+    <div class="header-languageselector">
+        @{
+            var rawUrl = HttpContext.Current.Request.RawUrl.TrimStart('/'); ;
+
+            var stores = Model.AvailableStores.Select(s => new SelectListItem
+            {
+                Text = s.Name,
+                Value = s.Url + rawUrl,
+                Selected = s.Id.Equals(Model.CurrentStoreId)
+            }).ToList();
+
+            var selectedText = stores.FirstOrDefault(x => x.Selected).Text;
+
+
+        }
+        <div class="select">
+            <div class="select-text">@selectedText</div>
+            @Html.DropDownList("customerstore", stores, new { onchange = "window.location.href = this.value;" })
+        </div>
+    </div>
+}

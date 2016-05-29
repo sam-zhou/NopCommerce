@@ -24,3 +24,15 @@ Tax.FixedRate
 Tax.CountryStateZip
 Widgets.GoogleAnalytics
 Widgets.NivoSlider
+SevenSpikes.Core
+SevenSpikes.Nop.Plugins.AjaxCart
+SevenSpikes.Nop.Plugins.AjaxFilters
+SevenSpikes.Nop.Plugins.AnywhereSliders
+SevenSpikes.Nop.Plugins.CloudZoom
+SevenSpikes.Nop.Plugins.InstantSearch
+SevenSpikes.Nop.Plugins.JCarousel
+SevenSpikes.Nop.Plugins.MegaMenu
+SevenSpikes.Nop.Plugins.ProductRibbons
+SevenSpikes.Nop.Plugins.NopQuickTabs
+SevenSpikes.Nop.Plugins.QuickView
+SevenSpikes.Theme.Lavella

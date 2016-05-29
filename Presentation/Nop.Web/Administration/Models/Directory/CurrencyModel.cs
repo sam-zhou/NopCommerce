@@ -59,6 +59,10 @@ namespace Nop.Admin.Models.Directory
         [NopResourceDisplayName("Admin.Configuration.Currencies.Fields.AvailableStores")]
         public List<StoreModel> AvailableStores { get; set; }
         public int[] SelectedStoreIds { get; set; }
+
+        [NopResourceDisplayName("Admin.Configuration.Currencies.Fields.RoundTo")]
+        [AllowHtml]
+        public int RoundTo { get; set; }
     }
 
     public partial class CurrencyLocalizedModel : ILocalizedModelLocal

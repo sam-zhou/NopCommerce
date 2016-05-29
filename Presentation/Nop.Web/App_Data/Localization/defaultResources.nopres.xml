@@ -3825,6 +3825,12 @@
   <LocaleResource Name="Admin.Configuration.Currencies.Fields.Rate.Range">
     <Value>Exchange rate must be greater than 0.</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.Configuration.Currencies.Fields.RoundTo">
+    <Value>Round To</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Configuration.Currencies.Fields.RoundTo.Range">
+    <Value>Round to must be greater or equal than 0</Value>
+  </LocaleResource>
   <LocaleResource Name="Admin.Configuration.Currencies.GetLiveRates">
     <Value>Get live rates</Value>
   </LocaleResource>

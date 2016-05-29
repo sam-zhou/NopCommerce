@@ -1,0 +1,80 @@
+﻿@using Nop.Web.Models.Catalog;
+@{
+    Layout = "~/Views/Shared/_Root.Head.cshtml";
+
+    var additionalClass = String.Empty;
+    
+    var controllerName = System.Web.HttpContext.Current.Request.RequestContext.RouteData.GetRequiredString("controller");
+    var isHomePage = controllerName.Equals("home", StringComparison.InvariantCultureIgnoreCase);
+    if (isHomePage)
+    {
+        additionalClass = "master-home-page";
+    }
+}
+@Html.Widget("body_start_html_tag_after")
+@Html.Partial("_Notifications")
+@Html.Action("JavaScriptDisabledWarning", "Common")
+@Html.Partial("OldInternetExplorerWarning")
+<div class="master-wrapper-page @additionalClass">
+    @Html.Action("AdminHeaderLinks", "Common")
+    @Html.Partial("Header")
+    <div class="overlayOffCanvas"></div>
+    <div class="responsive-nav-wrapper-parent">
+        <div class="responsive-nav-wrapper">
+            <div class="menu-title">
+                <span>@T("SevenSpikes.Themes.Common.MenuTitle")</span>
+            </div>
+            <div class="search-wrap">
+                <span>@T("Search")</span>
+            </div>
+            <div class="shopping-cart-link">
+                <a href="@Url.RouteUrl("ShoppingCart")">@T("ShoppingCart")</a>
+            </div>
+            <div class="filters-button">
+                <span>@T("SevenSpikes.Themes.Common.Filters")</span>
+            </div>
+            <div class="personal-button" id="header-links-opener">
+                <span>@T("SevenSpikes.Themes.Common.Personal")</span>
+            </div>
+        </div>
+    </div>
+    <div class="justAFixingDivBefore"></div>
+    <div class="header-menu">
+        <div class="close-menu">
+            <span>@T("SevenSpikes.Themes.Common.CloseMenu")</span>
+        </div>
+        @{
+            var menuHtml = Html.Widget("theme_header_menu");
+        }
+        @if (!MvcHtmlString.IsNullOrEmpty(menuHtml))
+        {
+            @menuHtml
+        }
+        else
+        {
+            @Html.Action("TopMenu", "Catalog")
+        }
+    </div>
+    <div class="master-wrapper-content">
+        <script type="text/javascript">
+            AjaxCart.init(false, '.header-links .cart-qty', '.header-links .wishlist-qty', '#flyout-cart');
+        </script>
+        @Html.Widget("content_before")
+        @*ajax loading window*@
+        <div class="ajax-loading-block-window" style="display: none">
+            <div class="loading-image">
+            </div>
+        </div>
+        @if (IsSectionDefined("Breadcrumb"))
+        {
+            @RenderSection("Breadcrumb")
+        }
+        <div class="master-column-wrapper">
+            @RenderBody()
+        </div>
+        @Html.Widget("content_after")
+    </div>
+</div>
+@Html.Action("Footer", "Common")
+@Html.Action("EuCookieLaw", "Common")
+@Html.Widget("body_end_html_tag_before")
