@@ -914,6 +914,7 @@
     }
 	.gender label {
         width:auto;
+	    text-align: left;
     }
 	
     .login-page .returning-wrapper .inputs.reversed span {
