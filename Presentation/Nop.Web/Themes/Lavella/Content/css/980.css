@@ -538,7 +538,7 @@
         background: none;
         width: 33.33%;
         margin: 0;
-        margin-bottom:30px;
+        margin-bottom:0;
     }
     .home-page .product-grid.home-page-category-grid .item-grid .item-box:nth-child(3n+1) {
         clear: both;
@@ -553,6 +553,7 @@
     .home-page-category-grid .picture {
         display: block;
         margin: 0 auto;
+        height: 140px;
     }
     .home-page-category-grid .item-box .title {
         height: auto;
@@ -771,11 +772,11 @@
     }
 
     .product-grid .item-grid {
-        margin-bottom: 25px;
+        margin-bottom: 0;
     }
 
     .product-grid.home-page-category-grid .item-grid {
-        margin-bottom: 30px;
+        margin-bottom: 0;
     }
 
 
