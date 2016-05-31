@@ -53,10 +53,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ChemistWarehouseReader.cs" />
+    <Compile Include="ChemistWarehouse\CWProductListReader.cs" />
+    <Compile Include="HtmlItemConverter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WebReader.cs" />
+    <Compile Include="ProductListReader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

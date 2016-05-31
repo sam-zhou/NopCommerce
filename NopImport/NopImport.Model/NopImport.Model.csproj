@@ -55,15 +55,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Category.cs" />
+    <Compile Include="SearchModel\BaseSeachModel.cs" />
+    <Compile Include="SearchModel\CategorySearchModel.cs" />
     <Compile Include="Data\BaseEntity.cs" />
     <Compile Include="Data\IBaseEntity.cs" />
     <Compile Include="Data\Product.cs" />
     <Compile Include="DynamicTypeInfo.cs" />
-    <Compile Include="Model\Identifier.cs" />
+    <Compile Include="Common\Identifier.cs" />
     <Compile Include="Map\BaseMap.cs" />
     <Compile Include="Map\EnumTableMap.cs" />
     <Compile Include="Map\ProductMap.cs" />
+    <Compile Include="SearchModel\ProductSearchModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
