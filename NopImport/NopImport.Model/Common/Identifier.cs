@@ -9,6 +9,14 @@
         public string Name { get; set; }
 
         public string AttributeElement { get; set; }
+
+        public bool SearchParent { get; set; }
+
+        public int CharactersToRemove { get; set; }
+
+        public string OrginalText { get; set; }
+
+        public string ReplaceWith { get; set; }
     }
 
     public enum IdentifierType

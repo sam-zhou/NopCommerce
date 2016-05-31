@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NopImport.Model.Common;
+using NopImport.Model.Data;
 
 namespace NopImport.Model.SearchModel
 {
-    public abstract class BaseSeachModel
+    public abstract class BaseSeachModel<T> where T: BaseEntity
     {
         private List<Identifier> _identifiers;
 
@@ -23,13 +24,18 @@ namespace NopImport.Model.SearchModel
             }
         }
 
-        public void AddIdentifier(string name, IdentifierType type, string value)
+        public void AddIdentifier(string name, IdentifierType type, string value, string attributeElement = null, bool searchParent = false, int charactersToRemove = 0, string originalText = null, string replaceWith = null)
         {
             Identifiers.Add(new Identifier
             {
                 Type = type,
                 Value = value,
                 Name = name,
+                AttributeElement = attributeElement,
+                SearchParent = searchParent,
+                CharactersToRemove = charactersToRemove,
+                OrginalText = originalText,
+                ReplaceWith = replaceWith
             });
         }
 

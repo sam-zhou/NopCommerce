@@ -12,6 +12,34 @@ namespace NopImport.Model.Data
 
         public virtual string Url { get; set; }
 
+        public virtual string ExternalId { get; set; }
+
+        public virtual string Picture { get; set; }
+
+        public virtual string Price { get; set; }
+
+        public virtual string OriginalPrice { get; set; }
+
+        public virtual string Description { get; set; }
+
+        public virtual string GeneralInfo { get; set; }
+
+        public virtual string Miscellaneous { get; set; }
+
+        public virtual string DrugInteractions { get; set; }
+
+        public virtual string Warnings { get; set; }
+
+        public virtual string CommonUses { get; set; }
+
+        public virtual string Ingredients { get; set; }
+
+        public virtual string Directions { get; set; }
+
+        public virtual string Indications { get; set; }
+
+        public virtual bool IsUpdated { get; set; }
+
         public virtual bool IsSynced { get; set; }
     }
 }

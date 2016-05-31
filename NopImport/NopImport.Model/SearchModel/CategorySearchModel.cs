@@ -1,8 +1,9 @@
 ﻿using NopImport.Model.Common;
+using NopImport.Model.Data;
 
 namespace NopImport.Model.SearchModel
 {
-    public class CategorySearchModel : BaseSeachModel
+    public class CategorySearchModel : BaseSeachModel<Product>
     {
         public string Name { get; set; }
 

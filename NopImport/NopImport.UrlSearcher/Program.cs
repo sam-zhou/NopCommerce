@@ -13,48 +13,46 @@ using NopImport.Model;
 using NopImport.Model.Common;
 using NopImport.Model.SearchModel;
 using NopImport.UrlSearcher.ChemistWarehouse;
+using NopImport.UrlSearcher.Common;
 
 
 namespace NopImport.UrlSearcher
 {
-    class Program
+    internal class Program
     {
 
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-                    
-            var reader = new CWProductListReader();
-            reader.ProgressChanged += ReaderOnProgressChanged;
-            var list = reader.Process();
-
-            
-            Console.WriteLine("Writing To Db : ");
-            using (var db = new DatabaseService("DefaultConnectionString", "NopImport"))
-            {
-                db.ResetDatabase();
-
-                
-
-                for (int i = 0; i < list.Count; i++)
-                {
-                    if (!db.Get(new IsProductByExist(list[i].Url)))
-                    {
-                        var product = list[i];
-                        db.Save(product);
-                    }
-
-                    
-                    Console.Write("Completed: \r{0}%  {1}/{2}", (i + 1) * 100 / list.Count, i + 1, list.Count);
-                }
-
-            }
-            Console.WriteLine("Done! ");
 
 
 
-            
+            GetList(true);
+            GetDetails();
+            Console.WriteLine("Done!");
             Console.ReadLine();
+        }
+
+        private static void GetDetails()
+        {
+            Console.WriteLine("GetDetails ");
+            var reader = new CWProductReader();
+            reader.ProgressChanged += ReaderOnProgressChanged;
+            
+            reader.Process();
+        }
+
+
+        private static void GetList(bool resetDb = false)
+        {
+            Console.WriteLine("GetList");
+            var reader = new CWProductListReader(resetDb);
+            reader.ProgressChanged += ReaderOnProgressChanged;
+            
+            reader.Process();
+
+            
+            
         }
 
         private static void ReaderOnProgressChanged(object sender, ProgressChangedEventArgs e)
