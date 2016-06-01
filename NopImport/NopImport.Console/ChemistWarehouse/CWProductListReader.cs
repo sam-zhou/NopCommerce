@@ -28,8 +28,9 @@ namespace NopImport.Console.ChemistWarehouse
             {
                 Name = "Chemist Warehouse",
                 BaseUrl = "http://www.chemistwarehouse.com.au",
-                UrlTemplate = "http://www.chemistwarehouse.com.au/Shop-Online/587/Swisse?page={0}",
-                PageSize = 5,
+                //UrlTemplate = "http://www.chemistwarehouse.com.au/Shop-Online/587/Swisse?page={0}",
+                UrlTemplate = "http://www.chemistwarehouse.com.au/Shop-Online/513/Blackmores?page={0}",
+                PageSize = 8,
                 ProductItemIdentifier = new Identifier
                 {
                     Type = IdentifierType.Text,

@@ -124,7 +124,7 @@ namespace NopImport.Console.Export
 
                     Worksheet.Cells[i + 2, 90] = "42518.6622331366";
                     Worksheet.Cells[i + 2, 91] = "35;";
-                    Worksheet.Cells[i + 2, 92] = "4;";
+                    Worksheet.Cells[i + 2, 92] = "5;";   //Manufactory Code
                     Worksheet.Cells[i + 2, 93] = @"D:\home\site\wwwroot\content\images\thumbs\" + product.LocalPicture;
                     Worksheet.Cells[i + 2, 94] = "";
                     Worksheet.Cells[i + 2, 95] = "";

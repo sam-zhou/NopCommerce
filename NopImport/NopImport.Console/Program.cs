@@ -13,8 +13,8 @@ namespace NopImport.Console
 
 
 
-            // GetList(true);
-            // GetDetails();
+            GetList();
+            GetDetails();
             RunExport();
             System.Console.WriteLine("All Done!");
             System.Console.ReadLine();
@@ -65,7 +65,7 @@ namespace NopImport.Console
 
         private static void ExporterOnProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            System.Console.Write("\r {0}% Completed", e.ProgressPercentage);
+            System.Console.Write("\r{0}% Completed", e.ProgressPercentage);
         }
     }
 }
