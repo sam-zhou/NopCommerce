@@ -19,7 +19,7 @@ namespace NopImport.Console.ChemistWarehouse
             //    PageSize = 61,
             //    ProductItemIdentifier = new Identifier
             //    {
-            //        Type = IdentifierType.Text,
+            //        Type = IdentifierType.ElementContent,
             //        Value = "//*[@class='product-container']"
             //    },
             //};
@@ -33,16 +33,16 @@ namespace NopImport.Console.ChemistWarehouse
                 PageSize = 8,
                 ProductItemIdentifier = new Identifier
                 {
-                    Type = IdentifierType.Text,
+                    Type = IdentifierType.ElementContent,
                     Value = "//*[@class='product-container']"
                 },
             };
 
-        
-            CategorySearch.AddIdentifier("Name", IdentifierType.Text, ".//*[@class='product-name']");
+            CategorySearch.AddIdentifier("ExternalStoreCode", IdentifierType.Text, "CW");
+            CategorySearch.AddIdentifier("Name", IdentifierType.ElementContent, ".//*[@class='product-name']");
             CategorySearch.AddIdentifier("Url", IdentifierType.Attribute, "href");
             CategorySearch.AddIdentifier("ExternalId", IdentifierType.Attribute, "value", ".//input", true);
-            CategorySearch.AddIdentifier("Price", IdentifierType.Text, ".//*[@class='Price']", null, false, 1);
+            CategorySearch.AddIdentifier("Price", IdentifierType.ElementContent, ".//*[@class='Price']", null, false, 1);
         }
 
         

@@ -16,6 +16,8 @@ namespace NopImport.Model.Data
 
         public virtual string Url { get; set; }
 
+        public virtual string ExternalStoreCode { get; set; }
+
         public virtual string ExternalId { get; set; }
 
         public virtual string Picture { get; set; }

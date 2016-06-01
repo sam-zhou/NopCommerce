@@ -1,6 +1,10 @@
 ﻿using System.ComponentModel;
+using Nop.Core.Infrastructure;
+using Nop.Services.Catalog;
 using NopImport.Console.ChemistWarehouse;
 using NopImport.Console.Export;
+using NopImport.Console.Import;
+using SevenSpikes.Nop.Plugins.NopQuickTabs.Services;
 
 namespace NopImport.Console
 {
@@ -13,9 +17,10 @@ namespace NopImport.Console
 
 
 
-            GetList();
-            GetDetails();
-            RunExport();
+            //GetList();
+            //GetDetails();
+            //RunExport();
+            ImportToNop();
             System.Console.WriteLine("All Done!");
             System.Console.ReadLine();
         }
@@ -66,6 +71,14 @@ namespace NopImport.Console
         private static void ExporterOnProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             System.Console.Write("\r{0}% Completed", e.ProgressPercentage);
+        }
+
+
+        static void ImportToNop()
+        {
+            var linker = new NopLinker();
+
+            linker.ImportItems();
         }
     }
 }

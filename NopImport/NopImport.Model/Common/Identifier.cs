@@ -22,6 +22,7 @@
     public enum IdentifierType
     {
         Text,
+        ElementContent,
         Attribute,
     }
 }

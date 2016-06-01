@@ -15,6 +15,7 @@ namespace NopImport.Model.Map
             Map(q => q.Url).Length(500).Not.Nullable();
             Map(q => q.MetaDescription).Length(1000).Nullable();
             Map(q => q.MetaKeywords).Length(500).Nullable();
+            Map(q => q.ExternalStoreCode).Length(2).Nullable();
             Map(q => q.ExternalId).Length(10).Nullable();
             Map(q => q.Picture).Length(200).Nullable();
             Map(q => q.LocalPicture).Length(200).Nullable();
