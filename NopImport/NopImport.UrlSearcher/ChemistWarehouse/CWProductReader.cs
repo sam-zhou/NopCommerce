@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,7 +36,22 @@ namespace NopImport.UrlSearcher.ChemistWarehouse
 
         public override Product ProcessItem(Product product)
         {
-            product.Picture = product.Picture.Replace("200.jpg", "original.jpg");
+            if (!string.IsNullOrWhiteSpace(product.Picture))
+            {
+                product.Picture = product.Picture.Replace("200.jpg", "original.jpg");
+
+                var extension = Path.GetExtension(product.Picture);
+
+                var newFilename = Guid.NewGuid().ToString("N") + extension;
+
+
+                if (FileDownloader.DownloadFile(product.Picture, newFilename))
+                {
+                    product.LocalPicture = newFilename;
+                }
+            }
+
+
             return base.ProcessItem(product);
         }
     }

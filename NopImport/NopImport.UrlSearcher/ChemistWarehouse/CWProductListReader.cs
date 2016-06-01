@@ -6,7 +6,9 @@ namespace NopImport.UrlSearcher.ChemistWarehouse
 {
     public class CWProductListReader : ProductListReader
     {
+
         
+
         public CWProductListReader(bool resetDb = false) : base(resetDb) 
         {
             //CategorySearch = new CategorySearchModel

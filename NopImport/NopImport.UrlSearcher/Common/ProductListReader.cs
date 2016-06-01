@@ -23,6 +23,12 @@ namespace NopImport.UrlSearcher.Common
             _resetDb = resetDb;
         }
 
+        protected ProductListReader(CategorySearchModel categorySearchModel, bool resetDb = false) : this(resetDb)
+        {
+            CategorySearch = categorySearchModel;
+            
+        }
+
 
         public override void Process()
         {
@@ -40,7 +46,7 @@ namespace NopImport.UrlSearcher.Common
                     {
                         var catePageUrl = GetUrl(i);
                         var htmlString = ReadHtml(catePageUrl);
-                        var listResult = GetUrlsFromHtml(htmlString).ToList();
+                        var listResult = GetProductFromHtml(htmlString).ToList();
                         
 
                         for (int j = 0; j < listResult.Count; j++)
@@ -50,6 +56,8 @@ namespace NopImport.UrlSearcher.Common
                                 var product = listResult[j];
                                 db.Save(product);
                             }
+                            
+                            
 
                         }
                         ChangeProgress(i * 100 / CategorySearch.PageSize);
@@ -72,7 +80,7 @@ namespace NopImport.UrlSearcher.Common
             return string.Format(CategorySearch.UrlTemplate, page);
         }
 
-        protected IEnumerable<Product> GetUrlsFromHtml(string html)
+        protected IEnumerable<Product> GetProductFromHtml(string html)
         {
             var output = new List<Product>();
             var htmlDocument = new HtmlDocument();

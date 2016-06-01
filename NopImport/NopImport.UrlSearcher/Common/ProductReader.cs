@@ -37,7 +37,24 @@ namespace NopImport.UrlSearcher.Common
                     var node = htmlDocument.DocumentNode;
 
                     product = node.GetEntity(ProductSearchModel, product);
+
+
+
+
                     product = ProcessItem(product);
+                    
+
+
+
+
+
+
+
+
+
+
+
+
                     db.Session.Update(product);
 
                     db.CommitTransaction();
@@ -49,6 +66,7 @@ namespace NopImport.UrlSearcher.Common
 
         public virtual Product ProcessItem(Product product)
         {
+            product.IsUpdated = true;
             return product;
         }
     }

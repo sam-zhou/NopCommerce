@@ -13,6 +13,21 @@ namespace NopImport.UrlSearcher.Common
 {
     public abstract class AbstractReader
     {
+        private FileDownloader _fileDownloader;
+
+        protected virtual FileDownloader FileDownloader
+        {
+            get
+            {
+                if (_fileDownloader == null)
+                {
+                    var path = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..\\..\\Presentation\\Nop.Web\\Content\\Images\\Thumbs"));
+                    _fileDownloader = new FileDownloader(path);
+                }
+                return _fileDownloader;
+            }
+        }
+
         public event EventHandler<ProgressChangedEventArgs> ProgressChanged;
 
 
