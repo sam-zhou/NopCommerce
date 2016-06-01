@@ -62,13 +62,30 @@ namespace NopImport.UrlSearcher
                 {
                     targetNode = targetNode.SelectSingleNode(identifier.AttributeElement);
                 }
-                result = targetNode.Attributes[identifier.Value].Value;
 
 
+                if (targetNode == null)
+                {
+                    result = string.Empty;
+                }
+                else
+                {
+                    result = targetNode.Attributes[identifier.Value].Value;
+                }
             }
             else
             {
-                result = targetNode.SelectSingleNode(identifier.Value).InnerHtml;
+                var selectedNode = targetNode.SelectSingleNode(identifier.Value);
+
+                if (selectedNode != null)
+                {
+                    result = selectedNode.InnerHtml;
+                }
+                else
+                {
+                    result = string.Empty;
+                }
+
             }
 
             result = result.Trim();

@@ -10,6 +10,10 @@ namespace NopImport.Model.Data
     {
         public virtual string Name { get; set; }
 
+        public virtual string MetaDescription { get; set; }
+
+        public virtual string MetaKeywords { get; set; }
+
         public virtual string Url { get; set; }
 
         public virtual string ExternalId { get; set; }

@@ -27,7 +27,7 @@ namespace NopImport.UrlSearcher
 
 
 
-            //GetList(true);
+           // GetList(true);
             GetDetails();
             Console.WriteLine("Done!");
             Console.ReadLine();

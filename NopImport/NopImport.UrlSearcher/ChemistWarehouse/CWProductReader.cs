@@ -20,6 +20,9 @@ namespace NopImport.UrlSearcher.ChemistWarehouse
             productSearchModel.AddIdentifier("OriginalPrice", IdentifierType.Text, ".//div[@class='retailPrice']", null, false, 0, "Don't Pay RRP: $", string.Empty);
             productSearchModel.AddIdentifier("Picture", IdentifierType.Attribute, "src", ".//img[@class='product-thumbnail']");
 
+            productSearchModel.AddIdentifier("MetaDescription", IdentifierType.Attribute, "content", ".//meta[@name='description']");
+            productSearchModel.AddIdentifier("MetaKeywords", IdentifierType.Attribute, "content", ".//meta[@name='keywords']");
+
             productSearchModel.AddIdentifier("Description", IdentifierType.Text, ".//section[contains(@class, 'product-info-section') and contains(@class, 'description')]//div[@class='details']");
             productSearchModel.AddIdentifier("GeneralInfo", IdentifierType.Text, ".//section[contains(@class, 'product-info-section') and contains(@class, 'general-info')]//div[@class='details']");
 
