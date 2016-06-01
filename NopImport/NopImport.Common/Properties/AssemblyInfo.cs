@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("NopImport.UrlSearcher")]
+[assembly: AssemblyTitle("NopImport.Common")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("DDI Health")]
-[assembly: AssemblyProduct("NopImport.UrlSearcher")]
+[assembly: AssemblyProduct("NopImport.Common")]
 [assembly: AssemblyCopyright("Copyright © DDI Health 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("2a723b3f-948c-4cc4-b9b6-c17c830210a9")]
+[assembly: Guid("7404934b-63fe-4171-8d45-3549c2045fd5")]
 
 // Version information for an assembly consists of the following four values:
 //

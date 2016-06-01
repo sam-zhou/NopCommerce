@@ -1,8 +1,8 @@
-﻿using NopImport.Model.Common;
+﻿using NopImport.Console.Common;
+using NopImport.Model.Common;
 using NopImport.Model.SearchModel;
-using NopImport.UrlSearcher.Common;
 
-namespace NopImport.UrlSearcher.ChemistWarehouse
+namespace NopImport.Console.ChemistWarehouse
 {
     public class CWProductListReader : ProductListReader
     {

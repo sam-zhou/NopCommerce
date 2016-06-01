@@ -7,8 +7,8 @@
     <ProjectGuid>{2A723B3F-948C-4CC4-B9B6-C17C830210A9}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NopImport.UrlSearcher</RootNamespace>
-    <AssemblyName>NopImport.UrlSearcher</AssemblyName>
+    <RootNamespace>NopImport.Console</RootNamespace>
+    <AssemblyName>NopImport.Console</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -35,7 +35,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>NopImport.UrlSearcher.Program</StartupObject>
+    <StartupObject>NopImport.Console.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
@@ -60,7 +60,11 @@
     <Compile Include="ChemistWarehouse\CWProductListReader.cs" />
     <Compile Include="ChemistWarehouse\CWProductReader.cs" />
     <Compile Include="Common\AbstractReader.cs" />
+    <Compile Include="Common\Excel\WorkSheetBase.cs" />
+    <Compile Include="Common\Excel\WorkSheetFactory.cs" />
     <Compile Include="Common\FileDownloader.cs" />
+    <Compile Include="Export\ExcelExporter.cs" />
+    <Compile Include="Export\ProductWorkSheet.cs" />
     <Compile Include="HtmlItemConverter.cs" />
     <Compile Include="NodeHelper.cs" />
     <Compile Include="Common\ProductReader.cs" />
@@ -69,10 +73,16 @@
     <Compile Include="Common\ProductListReader.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\NopImport.Common\NopImport.Common.csproj">
+      <Project>{6ed3f996-5302-4e04-a400-dbe8855154f9}</Project>
+      <Name>NopImport.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NopImport.Common.Services\NopImport.Common.Services.csproj">
       <Project>{6eaa3562-8691-495a-add3-0995775d35bb}</Project>
       <Name>NopImport.Common.Services</Name>

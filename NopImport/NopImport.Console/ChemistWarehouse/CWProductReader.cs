@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using NopImport.Console.Common;
 using NopImport.Model.Common;
 using NopImport.Model.Data;
 using NopImport.Model.SearchModel;
-using NopImport.UrlSearcher.Common;
 
-namespace NopImport.UrlSearcher.ChemistWarehouse
+namespace NopImport.Console.ChemistWarehouse
 {
     public class CWProductReader: ProductReader
     {

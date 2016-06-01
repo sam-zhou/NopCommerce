@@ -1,13 +1,9 @@
-﻿using System;
-using System.ComponentModel;
-using System.IO;
-using System.Net;
-using HtmlAgilityPack;
+﻿using HtmlAgilityPack;
 using NopImport.Common.Services;
 using NopImport.Model.Data;
 using NopImport.Model.SearchModel;
 
-namespace NopImport.UrlSearcher.Common
+namespace NopImport.Console.Common
 {
     public abstract class ProductReader: AbstractReader
     {        

@@ -91,9 +91,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Helper", "Helper", "{788745
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NopImport.Model", "NopImport\NopImport.Model\NopImport.Model.csproj", "{ABDEC396-C0C1-4D18-A8C4-D0F629CAD48F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NopImport.UrlSearcher", "NopImport\NopImport.UrlSearcher\NopImport.UrlSearcher.csproj", "{2A723B3F-948C-4CC4-B9B6-C17C830210A9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NopImport.Console", "NopImport\NopImport.Console\NopImport.Console.csproj", "{2A723B3F-948C-4CC4-B9B6-C17C830210A9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NopImport.Common.Services", "NopImport\NopImport.Common.Services\NopImport.Common.Services.csproj", "{6EAA3562-8691-495A-ADD3-0995775D35BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NopImport.Common", "NopImport\NopImport.Common\NopImport.Common.csproj", "{6ED3F996-5302-4E04-A400-DBE8855154F9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -523,6 +525,16 @@ Global
 		{6EAA3562-8691-495A-ADD3-0995775D35BB}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{6EAA3562-8691-495A-ADD3-0995775D35BB}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{6EAA3562-8691-495A-ADD3-0995775D35BB}.Release|x86.ActiveCfg = Release|Any CPU
+		{6ED3F996-5302-4E04-A400-DBE8855154F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6ED3F996-5302-4E04-A400-DBE8855154F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6ED3F996-5302-4E04-A400-DBE8855154F9}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{6ED3F996-5302-4E04-A400-DBE8855154F9}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{6ED3F996-5302-4E04-A400-DBE8855154F9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6ED3F996-5302-4E04-A400-DBE8855154F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6ED3F996-5302-4E04-A400-DBE8855154F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6ED3F996-5302-4E04-A400-DBE8855154F9}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{6ED3F996-5302-4E04-A400-DBE8855154F9}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{6ED3F996-5302-4E04-A400-DBE8855154F9}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -569,6 +581,7 @@ Global
 		{ABDEC396-C0C1-4D18-A8C4-D0F629CAD48F} = {78874555-DF10-4E54-A02A-C3CC0EB053A7}
 		{2A723B3F-948C-4CC4-B9B6-C17C830210A9} = {78874555-DF10-4E54-A02A-C3CC0EB053A7}
 		{6EAA3562-8691-495A-ADD3-0995775D35BB} = {78874555-DF10-4E54-A02A-C3CC0EB053A7}
+		{6ED3F996-5302-4E04-A400-DBE8855154F9} = {78874555-DF10-4E54-A02A-C3CC0EB053A7}
 	EndGlobalSection
 	GlobalSection(NDepend) = preSolution
 		Project = ".\NopCommerce.ndproj"

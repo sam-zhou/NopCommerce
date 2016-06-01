@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 using HtmlAgilityPack;
 using NopImport.Model.Common;
 using NopImport.Model.Data;
 using NopImport.Model.SearchModel;
 
-namespace NopImport.UrlSearcher
+namespace NopImport.Console
 {
     public static class NodeHelper
     {
