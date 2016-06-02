@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Settings>
+  <Setting Name="MegaMenuSettings.Enabled">
+    <Value>true</Value>
+  </Setting>
+  <Setting Name="MegaMenuSettings.EnableClickForDropdown">
+    <Value>false</Value>
+  </Setting>
+  <Setting Name="MegaMenuSettings.EnableCategories">
+    <Value>true</Value>
+  </Setting>
+  <Setting Name="MegaMenuSettings.EnableManufacturers">
+    <Value>true</Value>
+  </Setting>
+  <Setting Name="MegaMenuSettings.EnableVendors">
+    <Value>true</Value>
+  </Setting>
+  <Setting Name="MegaMenuSettings.ManufacturerImageSize">
+    <Value>165</Value>
+  </Setting>
+  <Setting Name="MegaMenuSettings.MegaMenuCategoryTemplate">
+    <Value>CategoryMenuTemplate.WithoutPictures</Value>
+  </Setting>
+  <Setting Name="MegaMenuSettings.MegaMenuManufacturerTemplate">
+    <Value>ManufacturerMenuTemplate.WithoutPictures</Value>
+  </Setting>
+  <Setting Name="MegaMenuSettings.ShowCategoriesInASingleMenuItem">
+    <Value>true</Value>
+  </Setting>
+  <Setting Name="MegaMenuSettings.MenuItemName">
+    <Value>Products</Value>
+  </Setting>
+  <Setting Name="MegaMenuSettings.ShowManufacturersInCategories">
+    <Value>true</Value>
+  </Setting>
+  <Setting Name="MegaMenuSettings.ProductsImageSize">
+    <Value>90</Value>
+  </Setting>
+  <Setting Name="MegaMenuSettings.CategoriesImageSize">
+    <Value>290</Value>
+  </Setting>
+  <Setting Name="MegaMenuSettings.NumberOfCategories">
+    <Value>8</Value>
+  </Setting>
+  <Setting Name="MegaMenuSettings.NumberOfCategoriesPerRow">
+    <Value>4</Value>
+  </Setting>
+  <Setting Name="MegaMenuSettings.NumberOfManufacturersPerRow">
+    <Value>6</Value>
+  </Setting>
+  <Setting Name="MegaMenuSettings.NumberOfManufacturersInCategories">
+    <Value>10</Value>
+  </Setting>
+  <Setting Name="MegaMenuSettings.NumberOfManufacturers">
+    <Value>10</Value>
+  </Setting>
+  <Setting Name="MegaMenuSettings.NumberOfVendors">
+    <Value>10</Value>
+  </Setting>
+  <Setting Name="MegaMenuSettings.CategoriesColumnTitle">
+    <Value>Shop by category</Value>
+  </Setting>
+  <Setting Name="MegaMenuSettings.ManufacturersColumnTitle">
+    <Value>Shop by manufacturer</Value>
+  </Setting>
+  <Setting Name="MegaMenuSettings.ManufacturersItemName">
+    <Value>Manufacturers</Value>
+  </Setting>
+  <Setting Name="MegaMenuSettings.ManufacturerTitleInManufacturerItem">
+    <Value>Shop by manufacturer</Value>
+  </Setting>
+  <Setting Name="MegaMenuSettings.VendorsColumnName">
+    <Value>Vendors</Value>
+  </Setting>
+  <Setting Name="MegaMenuSettings.IncludeHomePageLink">
+    <Value>true</Value>
+  </Setting>
+  <Setting Name="MegaMenuSettings.IncludeRecentlyAddedLink">
+    <Value>false</Value>
+  </Setting>
+  <Setting Name="MegaMenuSettings.IncludeMyAccountLink">
+    <Value>true</Value>
+  </Setting>
+  <Setting Name="MegaMenuSettings.IncludeContactUsLink">
+    <Value>false</Value>
+  </Setting>
+  <Setting Name="MegaMenuSettings.IncludeNewsLink">
+    <Value>false</Value>
+  </Setting>
+  <Setting Name="MegaMenuSettings.IncludeBlogLink">
+    <Value>false</Value>
+  </Setting>
+  <Setting Name="MegaMenuSettings.IncludeForumLink">
+    <Value>false</Value>
+  </Setting>
+  <Setting Name="MegaMenuSettings.StickyCategoryId">
+    <Value>0</Value>
+  </Setting>
+  <Setting Name="MegaMenuSettings.ShowTopicsBodyInDropdown">
+    <Value>false</Value>
+  </Setting>
+</Settings>

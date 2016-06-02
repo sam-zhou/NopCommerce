@@ -1,0 +1,157 @@
+﻿/*
+* Copyright 2014 Seven Spikes Ltd. All rights reserved. (http://www.nop-templates.com)
+* http://www.nop-templates.com/t/licensinginfo
+*/
+
+input.search-box-text:focus {
+    outline: -webkit-focus-ring-color auto 0;
+}
+span.search-box-text {
+    display: block;
+    float: left;
+    padding: 0;
+    border: none;
+    background: none;
+}
+input.search-box-text {
+    padding: 1px 1px 1px 5px;
+    width: 291px !important;
+    height: 19px;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    background: #fff;
+    color: #333;
+    line-height: 21px;
+}
+input.search-box-text.instant-search-busy {
+    background: #f8f8f8 url('../../../images/ajax-loader-small.gif') no-repeat 265px center;
+}
+input.search-box-text.narrow.instant-search-busy {
+    background: #f8f8f8 url('../../../images/ajax-loader-small.gif') no-repeat 145px center;
+}
+#instant-search-categories {
+	float: left;
+	width: 120px;
+	border: 1px solid #eee;
+	padding: 1px;
+    font-family: open sans;
+    font-size: 16px;
+    font-style: italic;
+    height: 36px;
+    padding: 6px;
+    color:#888;
+}
+
+#instant-search-categories {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.store-search-box .search-box-button {
+    position: absolute;
+    top: 0;
+    right: -35px;
+}
+.store-search-box .custom-select .custom-select-text {
+    font-size: 0;
+}
+
+.search-box-button {
+    margin: 0;
+}
+.header .search-box .search-box-button{
+    position:relative;
+    border-bottom:1px solid #eee;
+    left:-38px;
+}
+/* AUTOCOMPLETE */
+
+.instantSearch {
+    overflow: hidden;
+    padding: 10px !important;
+    height: auto !important;
+    background: rgba(255,255,255,.9);
+    box-shadow: 0px 0px 2px 0 rgba(0, 0, 0, 0.1);
+    width:320px !important;
+}
+.instantSearch .k-list {
+    margin: 0;
+    padding: 0;
+}
+.instantSearch .k-list-container {
+    width: 100% !important;
+    height: auto !important;
+	border-radius: 4px;
+    position: static !important;
+}
+.instantSearch .k-item {
+    display: block;
+    overflow: hidden;
+    border-bottom:1px dotted #eee;
+}
+.instantSearch .k-item:hover .img-block{
+    border:1px solid #9ca34e;
+}
+.instantSearch .k-item+.k-item{
+    border-bottom:none;
+}
+
+.instant-search-item {
+    overflow: hidden;
+    padding:5px;
+    cursor: pointer;
+}
+.instant-search-item .img-block {
+    float: left;
+    overflow: hidden;
+    width: 85px;
+    height: 104px;
+    position:relative;
+    border:1px solid transparent;
+    transition:all 0.3s ease;
+    -webkit-transition:all 0.3s ease;
+    -ms-transition:all 0.3s ease;
+}
+.instant-search-item .img-block img{
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    max-height: 100%;
+    max-width: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.instant-search-item .detail {
+    float: right;
+    width: 200px;
+    line-height: 17px;
+    text-align:left;
+}
+.instant-search-item .detail .title {
+    padding-bottom: .25em;
+    color: #888;
+    font-size: 16px;
+    margin-top:10px;
+}
+.instant-search-item .detail .price {
+    color: #b80709;
+    font-size: 16px;
+    margin-top: 5px;
+}
+.instant-search-item .detail .sku {
+    margin-top: 5px;
+    color: #888;
+    font-size: 14px;
+}
+
+@media all and (max-width: 480px) {
+    #instant-search-categories{
+        width:100px;
+    }
+}
+@media all and (min-width: 980px) {
+    .store-search-box .custom-select .custom-select-text {
+        font-size: 14px;
+    } 
+}

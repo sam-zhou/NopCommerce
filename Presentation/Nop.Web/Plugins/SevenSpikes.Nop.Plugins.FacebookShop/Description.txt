@@ -1,0 +1,8 @@
+﻿Group: 7Spikes
+FriendlyName: Nop Facebook Shop
+SystemName: SevenSpikes.Nop.Plugins.FacebookShop
+Version: 1.00
+SupportedVersions: 3.70
+Author: Seven Spikes
+DisplayOrder: 1
+FileName: SevenSpikes.Nop.Plugins.FacebookShop.dll

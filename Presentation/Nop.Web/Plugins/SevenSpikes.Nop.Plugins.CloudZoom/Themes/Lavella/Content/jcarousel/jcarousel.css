@@ -1,0 +1,101 @@
+/*
+* Copyright 2012 Seven Spikes Ltd. All rights reserved. (http://www.nop-templates.com)
+* http://www.nop-templates.com/t/licensinginfo
+*/
+
+.jcarousel-skin-thumbs {
+	/*width: 302px;*/
+    width:100%;
+    margin-top:20px;
+    margin-bottom:20px;
+}
+
+.jcarousel-skin-thumbs .jcarousel-clip {
+    overflow: hidden;
+}
+.jcarousel-skin-thumbs .jcarousel-clip-horizontal {
+	margin: 0 21px;
+}
+/*vertical carousel buttons*/
+.jcarousel-container.jcarousel-container-vertical{
+    position:relative;
+}
+.jcarousel-prev.jcarousel-prev-vertical{
+    position:absolute;
+    top:-20px;
+    width:100%;
+    height:20px;
+    background:url(images/v-carousel-up.png);
+    background-repeat:no-repeat;
+    background-position:center;
+    cursor:pointer;
+}
+.jcarousel-next.jcarousel-next-vertical{
+    position:absolute;
+    bottom:-20px;
+    width:100%;
+    height:20px;
+    background:url(images/v-carousel-down.png);
+    background-repeat:no-repeat;
+    background-position:center;
+    cursor:pointer;
+}
+
+/*carousel buttons*/
+
+.jcarousel-skin-thumbs .jcarousel-prev-horizontal {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 17px;
+    height: 22px;
+    background: url('images/prev-horizontal.png') top no-repeat;
+	margin: -5px 0 0;
+	cursor: pointer;
+}
+.jcarousel-skin-thumbs .jcarousel-next-horizontal {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 17px;
+    height: 22px;
+    cursor: pointer;
+    background: url('images/next-horizontal.png') top no-repeat;
+	margin: -5px 0 0;
+}
+.jcarousel-prev-horizontal:hover, .jcarousel-prev-horizontal:focus, .jcarousel-next-horizontal:hover, .jcarousel-next-horizontal:focus {
+	background-position: bottom;
+}
+.jcarousel-skin-thumbs .jcarousel-prev-horizontal:active, .jcarousel-skin-thumbs .jcarousel-next-horizontal:active {
+	opacity: 0.8;
+}
+.jcarousel-skin-thumbs .jcarousel-prev-disabled-horizontal, .jcarousel-skin-thumbs .jcarousel-prev-disabled-horizontal:hover, .jcarousel-skin-thumbs .jcarousel-prev-disabled-horizontal:focus, .jcarousel-skin-thumbs .jcarousel-prev-disabled-horizontal:active, 
+.jcarousel-skin-thumbs .jcarousel-next-disabled-horizontal, .jcarousel-skin-thumbs .jcarousel-next-disabled-horizontal:hover, .jcarousel-skin-thumbs .jcarousel-next-disabled-horizontal:focus, .jcarousel-skin-thumbs .jcarousel-next-disabled-horizontal:active {
+	background-position: top;
+	cursor: default;
+	opacity: 1;
+}
+
+/*carousel items*/
+
+.jcarousel-skin-thumbs .jcarousel-item.jcarousel-item-vertical {
+    margin-bottom:5px;
+    margin-top:5px;
+    width:100%;
+    height: 110px;
+}
+.jcarousel-skin-thumbs .jcarousel-item-vertical a.cloud-zoom-gallery{
+    display:inline-block;
+}
+.jcarousel-skin-thumbs .jcarousel-item-horizontal {
+    margin: 10px 10px 0 0;
+}
+.jcarousel-skin-thumbs .jcarousel-direction-rtl .jcarousel-item-horizontal {
+    margin-left: 0px;
+    margin-right: 0;
+}
+
+img.cloud-zoom-gallery-img {
+	margin: 0;
+	vertical-align: middle;
+}

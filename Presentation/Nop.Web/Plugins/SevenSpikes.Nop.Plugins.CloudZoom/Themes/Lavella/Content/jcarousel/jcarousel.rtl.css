@@ -1,0 +1,15 @@
+.jcarousel-skin-thumbs .jcarousel-prev-horizontal{
+	right: 0;
+	left: auto;
+}
+.jcarousel-skin-thumbs .jcarousel-next-horizontal{
+	left: 0;
+	right: auto;
+}
+.jcarousel-skin-thumbs .jcarousel-item-horizontal{
+	margin: 10px 0 0 10px;
+}
+.jcarousel-skin-thumbs .jcarousel-direction-rtl .jcarousel-item-horizontal{
+	margin-right: 0px;
+	margin-left: 0;
+}

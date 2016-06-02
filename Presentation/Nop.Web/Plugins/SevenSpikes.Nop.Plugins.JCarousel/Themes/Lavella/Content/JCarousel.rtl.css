@@ -1,0 +1,77 @@
+* {
+	direction: rtl;
+}
+.nop-jcarousel > h2 {
+	border-right: none;
+	border-left: none;
+}
+.products-carousel .nop-jcarousel .jcarousel-item .item-picture a {
+	left: 0;
+	right: 0;
+}
+.products-carousel .nop-jcarousel .jcarousel-item-horizontal .item-picture a img {
+	left: 0;
+	right: 0;
+}
+.jcarousel-item:hover .item-picture img {
+	-webkit-transform: scale(1.09, 1.09)/* CHECK_HERE */;
+	transform: scale(1.09, 1.09)/* CHECK_HERE */;
+}
+.manufacturers-carousel .nop-jcarousel .jcarousel-item .thumb-img:hover img {
+	transform: scale(1.025,1.025)/* CHECK_HERE */;
+	-webkit-transform: scale(1.025,1.025)/* CHECK_HERE */;
+	-ms-transform: scale(1.025,1.025)/* CHECK_HERE */;
+}
+.manufacturers-carousel .nop-jcarousel .jcarousel-item .thumb-img img {
+	right: 0;
+	left: 0;
+}
+.products-carousel .jcarousel-item .item-info {
+	text-align: right;
+}
+.nop-jcarousel .jcarousel-next-horizontal {
+	left: 0px;
+	right: auto;
+	background: url("images/arrows_2_left.png") no-repeat center center;
+}
+.nop-jcarousel .jcarousel-next-horizontal:hover,
+.nop-jcarousel .jcarousel-next-horizontal:focus {
+	background-position: left center;
+}
+.nop-jcarousel .jcarousel-prev-horizontal {
+	right: 0px;
+	left: auto;
+	background: url("images/arrows_2_right.png") no-repeat center center;
+}
+.nop-jcarousel .jcarousel-prev-horizontal:hover,
+.nop-jcarousel .jcarousel-prev-horizontal:focus {
+	background-position: right center;
+}
+.nop-jcarousel .jcarousel-item-vertical .item-holder .item-picture a {
+	right: 0;
+	left: 0;
+}
+.nop-jcarousel .jcarousel-item-vertical .item-holder .item-picture a img {
+	right: 0;
+	left: 0;
+}
+.nop-jcarousel .jcarousel-item-vertical .item-holder .item-info .button {
+	margin-right: 9px;
+	margin-left: 0;
+}
+.nop-jcarousel .jcarousel-next-vertical,
+.nop-jcarousel .jcarousel-prev-vertical {
+	right: 50%;
+	left: auto;
+	margin: 0 -11px 0 0;
+}
+.master-home-page .home-page .categories-carousel .item-picture a:hover img {
+	transform: scale(1.025,1.025)/* CHECK_HERE */;
+	-webkit-transform: scale(1.025,1.025)/* CHECK_HERE */;
+	-ms-transform: scale(1.025,1.025)/* CHECK_HERE */;
+}
+.master-home-page .home-page .categories-carousel .item-picture a img,
+.master-home-page .home-page .manufacturers-carousel .item-picture a img {
+	right: 0;
+	left: 0;
+}

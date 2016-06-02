@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Language Name="English">
+  <LocaleResource Name="SevenSpikes.MegaMenu">
+    <Value>Nop Mega Menu</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin">
+    <Value>Admin</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.ClickToConfigure">
+    <Value>To configure the plugin either click HERE or go to Plugins -&gt; Nop Mega Menu -&gt; Settings</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings">
+    <Value>Settings</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.CategoriesColumnTitle">
+    <Value>Categories column title</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.CategoriesColumnTitle.Hint">
+    <Value>Set the tilte of the column that contains the categories.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.CategoriesColumnTitleValue">
+    <Value>Shop by category</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.CategoriesImageSize">
+    <Value>Categories image size (pixels)</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.CategoriesImageSize.Hint">
+    <Value>Set the image size of the categories pictures (in pixels). If set to 0 the ThumbnailImageSize property, from nopCommerce, will be used.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.Common">
+    <Value>Nop Mega Menu Settings</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.Common.AdvancedSettings">
+    <Value>Advanced settings</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.Common.CategorySettings">
+    <Value>Category Menu Settings</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.Common.GeneralSettings">
+    <Value>General Settings</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.Common.ManufacturerSettings">
+    <Value>Manufacturer Menu Settings</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.Common.MegaMenuItemsSettings">
+    <Value>Mega Menu Items Settings</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.Common.VendorSettings">
+    <Value>Vendor Menu Settings</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.EnableCategories">
+    <Value>Include categories</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.EnableCategories.Hint">
+    <Value>If enabled a categories menu item will be included to the Mega Menu.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.EnableClickForDropdown">
+    <Value>Enable click for dropdowns</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.EnableClickForDropdown.Hint">
+    <Value>If checked the Mega Menu dropdowns will show on click (not on hover as default).</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.Enabled">
+    <Value>Enabled</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.Enabled.Hint">
+    <Value>If checked the Mega Menu plugin will be enabled.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.EnableManufacturers">
+    <Value>Include manufacturers</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.EnableManufacturers.Hint">
+    <Value>If enabled a manufacturers menu item will be included to the Mega Menu.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.EnableVendors">
+    <Value>Include vendors</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.EnableVendors.Hint">
+    <Value>If enabled a vendors menu item will be included to the Mega Menu.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.IncludeRecentlyAddedLink">
+    <Value>Include "New products" link</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.IncludeRecentlyAddedLink.Hint">
+    <Value>If enabled - "New products" link will be included to the Mega Menu.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.IncludeBlogLink">
+    <Value>Include "Blog" link</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.IncludeBlogLink.Hint">
+    <Value>If enabled a "Blog" link will be included to the Mega Menu.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.IncludeNewsLink">
+    <Value>Include "News" link</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.IncludeNewsLink.Hint">
+    <Value>If enabled a "News" link will be included to the Mega Menu.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.IncludeForumLink">
+    <Value>Include "Forum" link</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.IncludeForumLink.Hint">
+    <Value>If enabled a "Forum" link will be included to the Mega Menu. Please make sure that your forum is enabled from Configuration -&gt; Settings -&gt; Forum Settings.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.IncludeHomePageLink">
+    <Value>Include "Home Page" link</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.IncludeHomePageLink.Hint">
+    <Value>If enabled a "Home Page" link will be included to the Mega Menu.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.IncludeMyAccountLink">
+    <Value>Include "My Account" link</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.IncludeMyAccountLink.Hint">
+    <Value>If enabled a "My Account" link will be included to the Mega Menu.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.IncludeContactUsLink">
+    <Value>Include "Contact Us" link</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.IncludeContactUsLink.Hint">
+    <Value>If enabled a "Contact Us" link will be included to the Mega Menu.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.StickyCategoryId">
+    <Value>Set a Sticky category</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.StickyCategoryId.Hint">
+    <Value>Sets the category that will be always shown as an item in the top level of the menu.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.ManufacturerImageSize">
+    <Value>Manufacturer image size(pixels)</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.ManufacturerImageSize.Hint">
+    <Value>Set the image size for the manufacturers in pixels. If set to 0 the ThumbnailImageSize property, from nopCommerce, will be used.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.ManufacturersColumnTitle">
+    <Value>Manufacturers column title</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.ManufacturersColumnTitle.Hint">
+    <Value>Set the tilte of the column that contains the manufacturers.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.ManufacturersColumnTitleValue">
+    <Value>Shop by manufacturer</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.ManufacturersItemName">
+    <Value>Menu title</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.ManufacturersItemName.Hint">
+    <Value>Set the tilte of the manufacturers menu.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.ManufacturersItemNameValue">
+    <Value>Manufacturers</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.ManufacturerTitleInManufacturerItem">
+    <Value>Manufacturers title in the manufacturers menu</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.ManufacturerTitleInManufacturerItem.Hint">
+    <Value>Set the tilte of the column that contains the manufacturers in the manufacturers menu item.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.ManufacturerTitleInManufacturerItemValue">
+    <Value>Shop by manufacturer</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.MegaMenuCategoryTemplate">
+    <Value>Category menu template</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.MegaMenuCategoryTemplate.Hint">
+    <Value>Choose a template for the categories in the MegaMenu. This template defines how the categories and their subcategories will be displayed.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.MegaMenuCategoryTemplates.CategoryMenuTemplate.InfiniteCategories">
+    <Value>Infinite categories sublist</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.MegaMenuCategoryTemplates.CategoryMenuTemplate.WithoutPictures">
+    <Value>Categories in list</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.MegaMenuCategoryTemplates.CategoryMenuTemplate.WithPictures">
+    <Value>Categories in grid (with pictures)</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.MegaMenuManufacturerTemplate">
+    <Value>Manufacturer menu template</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.MegaMenuManufacturerTemplate.Hint">
+    <Value>Choose a template for the manufacturers in the MegaMenu. This template defines how the manufacturers will be displayed.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.MegaMenuManufacturerTemplates.ManufacturerMenuTemplate.WithoutPictures">
+    <Value>Manufacturers in list</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.MegaMenuManufacturerTemplates.ManufacturerMenuTemplate.WithPictures">
+    <Value>Manufacturers in grid (with pictures)</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.MenuItemName">
+    <Value>Menu title</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.MenuItemName.Hint">
+    <Value>Set the title of the categories menu.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.MenuItemNameValue">
+    <Value>Products</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.NumberOfCategories">
+    <Value>Maximum number of categories in category item</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.NumberOfCategories.Hint">
+    <Value>Set the maximum number of categories/subcategories that are going to be shown in a singte category item. If the maximum number is exeeded a "View all categories" link will be shown.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.NumberOfManufacturers">
+    <Value>Maximum number of manufacturers</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.NumberOfManufacturers.Hint">
+    <Value>Set the maximum number of manufacturers that are going to be shown in a manufacturer menu item. If the maximum number is exeeded a "View all manufacturers" link will be shown.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.NumberOfManufacturersInCategories">
+    <Value>Maximum number of manufacturers in category item</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.NumberOfManufacturersInCategories.Hint">
+    <Value>Set the maximum number of manufacturers that are going to be shown in a singte category item. If the maximum number is exeeded a "View all manufacturers" link will be shown.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.NumberOfVendors">
+    <Value>Maximum number of vendors</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.NumberOfVendors.Hint">
+    <Value>Set the maximum number of vendors that are going to be shown in the vendors menu item. If the maximum number is exeeded a "View all vendors" link will be shown.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.ProductsImageSize">
+    <Value>Products image size (pixels)</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.ProductsImageSize.Hint">
+    <Value>Set the image size of the Featured products and Best Seller Products by category, that are populated in the Model. You can use them in the CategoryMenuTemplate views. If set to 0 the ThumbnailImageSize property, from nopCommerce, will be used.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.ShowCategoriesInASingleMenuItem">
+    <Value>Show categories in a single menu</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.ShowCategoriesInASingleMenuItem.Hint">
+    <Value>If checked the categories will be shown in a single menu. Otherwise each top level category will be shown in a separate menu.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.ShowManufacturersInCategories">
+    <Value>Include category manufacturers (when in columns)</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.ShowManufacturersInCategories.Hint">
+    <Value>If checked the category manufacturers, will be shown.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.VendorsColumnName">
+    <Value>Vendors column title</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.VendorsColumnName.Hint">
+    <Value>Set the tilte of the column that contains the vendors.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.ShowTopicsBodyInDropdown">
+    <Value>Show Topics Body In Dropdown</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Settings.ShowTopicsBodyInDropdown.Hint">
+    <Value>If checked each topic showed as a menu item will have a drop-down with its body as a content.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Submenus">
+    <Value>Submenu names</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.Admin.Submenus.Settings">
+    <Value>Settings</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.ResponsiveBackButton">
+    <Value>back</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.ResponsiveMenuTitle">
+    <Value>Menu</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.ViewAllCategories">
+    <Value>View all</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.ViewAllManufacturers">
+    <Value>View all</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.ViewAllVendors">
+    <Value>View all</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.MegaMenu.TopicsTitle">
+    <Value>Topics</Value>
+  </LocaleResource>
+</Language>

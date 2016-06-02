@@ -1,0 +1,184 @@
+﻿/*
+* Copyright 2012 Seven Spikes Ltd. All rights reserved. (http://www.nop-templates.com)
+* http://www.nop-templates.com/t/licensinginfo
+*/
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+
+   ADMIN 
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+table.adminContent td.adminTitle {
+    padding: 10px !important;
+}
+
+    table.adminContent td.adminTitle label {
+        font-weight: bold;
+    }
+
+table.adminContent td.adminContent {
+    padding: 10px !important;
+}
+
+.localizedResource {
+    margin-top: 10px;
+    width: 710px;
+}
+
+.adminHint {
+    padding: 0;
+}
+
+    .adminHint p {
+        margin: 0;
+        margin-left: 40px;
+        margin-bottom: 15px;
+        font-style: italic;
+    }
+
+.controlTitle {
+    padding-left: 10px;
+    margin-bottom: 4px;
+    background-color: #E7EFEF;
+    width: 800px;
+    height: 25px;
+    line-height: 25px;
+}
+
+    .controlTitle:hover {
+        background-color: #e1e9e9;
+    }
+
+    .controlTitle a.toggleControl {
+        background: url("images/adminGroupToggle.png") left top no-repeat;
+        display: block;
+        padding: 0 0 0 25px;
+        cursor: pointer;
+        font: normal bold 12px/25px arial;
+        color: #333;
+        text-shadow: 1px 1px 0 #f9f9f9;
+    }
+
+        .controlTitle a.toggleControl:hover {
+            text-decoration: none;
+        }
+
+        .controlTitle a.toggleControl.closed {
+            background-position: left bottom;
+        }
+
+.adminGroupPanel {
+    margin: 20px 0;
+}
+
+.adminGroup {
+    overflow: hidden;
+}
+
+#logo-image {
+    position: relative;
+}
+
+.upload-image-overlay {
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    opacity: 0.5;
+}
+
+.go-to-list {
+    margin-bottom: 10px;
+    margin-left: 25px;
+}
+
+    .go-to-list a {
+        color: #c00;
+        font: normal bold 13px/25px arial;
+    }
+
+.hidden {
+    display: none !important;
+}
+
+tr.small-inputs .k-numerictextbox {
+  width: 50px;
+}
+
+/***** Admin Menu 7 Spikes *****/
+
+
+.spikes-admin-wrapper:after {
+    content: ".";
+    display: block;
+    clear: both;
+    font-size: 0;
+    line-height: 0;
+    visibility: hidden;
+}
+.seven-spikes-menus {
+    float: left;
+    width: 200px;
+}
+.seven-spikes-menus ul {
+    background: #f9f9f9;
+}
+.seven-spikes-menus li {
+    border-top: 1px solid #fff !important;
+    border-bottom: 1px solid #ccc !important;
+}
+.seven-spikes-menus li:last-child {
+    border-bottom: none !important;
+}
+.seven-spikes-menus li a,
+.seven-spikes-menus li span {
+    background-color: none !important;
+    padding: 0.5em 1em !important;
+}
+.seven-spikes-menus li:hover {
+    background-color: #e1e9e9 !important;
+}
+.spikes-menu-selected {
+    background-color: #e7efef;
+}
+
+#current-plugin-menu {
+    margin-bottom: 20px;
+}
+
+.seven-spikes-settings {
+margin-left: 225px;
+overflow: hidden;
+}
+
+.seven-spikes-menus .section-header {
+    height: auto;
+    min-height: 25px;
+    overflow: hidden;
+}
+
+.middleAligned { 
+    vertical-align: middle;
+}
+
+.downloadText {
+    width: 120px !important;
+}
+
+.downloadLink {
+    width: 380px !important;
+}
+
+.custom-fields-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #fff;
+    opacity: 0.5;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=40)";
+    z-index: 2;
+}

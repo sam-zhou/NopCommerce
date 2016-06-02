@@ -1,0 +1,79 @@
+
+.gallery .picture {
+    overflow: visible;
+    text-align: center;
+}
+.gallery.sevenspikes-cloudzoom-gallery {
+    display: none;
+}
+.gallery .picture-wrapper .picture:before {
+    display: none;
+}
+.gallery .picture #wrap img {
+    position: static !important;
+}
+
+#wrap {
+	max-width: 100%; /* mousetrap size fix */
+}
+
+.mousetrap {
+	width: 100% !important;
+	height: 100% !important;
+}
+
+@media all and (min-width: 1001px) {
+
+    /* Initial positions until the cloud zoom initializes, so that the image does not jump until the wrap elemet is added, because currently the image is position through this wrap element */
+    #sevenspikes-cloud-zoom .cloud-zoom {
+        position: relative;
+    }
+    #sevenspikes-cloud-zoom .cloud-zoom img {
+        position: static;
+    }
+
+/* This is the main image centered. */
+
+    #wrap {
+        display: inline-block;
+    }
+
+/* This is the overlay element. */
+
+    .cloud-zoom-lens {
+	    background-color: #fff;	
+	    cursor: crosshair;
+    }
+
+/* This is for the title text. */
+
+    .cloud-zoom-title {
+        background: #000;
+        padding: 5px 10px;
+	    color: #fff;
+        font-size: 12px;
+        text-align: center;
+    }
+
+/* This is the zoom window. */
+
+    #cloudZoomWindowElement {
+        z-index: 1001;
+    }
+
+/* This is the loading message. */
+
+    .cloud-zoom-loading {
+	    background: #333;
+	    padding: 3px;
+	    color: #fff;
+        font-size: 12px;
+    }
+
+/* This hides product ribbon when zooming. */
+
+    .gallery .ribbon-wrapper:hover .product-ribbon {
+        display: none;
+    }
+
+}

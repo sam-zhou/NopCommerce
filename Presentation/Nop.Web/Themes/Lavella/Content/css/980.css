@@ -114,7 +114,7 @@
     }
         .header-links li span {
             overflow: hidden;
-            font-family: open sans;
+            font-family: tahoma,arial,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53",open sans;
             color: #888;
             padding-left: 0;
 	    margin-left: 5px;
@@ -135,7 +135,7 @@
         }
         .header-links li a {
             color: #777;
-            font-family: 'Open Sans',sans-serif;
+            font-family: tahoma,arial,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53",open sans;
             overflow: hidden;
             -webkit-transition: all 0.25s ease-in-out 0s;
             transition: all 0.25s ease-in-out 0s;
@@ -408,7 +408,7 @@
 		padding: 5px 15px;
 		font-size: 18px; /*reset zeroing*/
 		cursor: pointer;
-		font-family: open sans;
+		font-family: tahoma,arial,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53",open sans;
 		text-transform: uppercase;
 		color: #555;
 		font-weight: lighter;

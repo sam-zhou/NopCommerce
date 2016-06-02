@@ -1,6 +1,8 @@
 @media all and (min-width: 240px) and (max-width: 980px) {
 
-    .desktop-header-right .desktop-cart {
+
+     
+    .accepted-payment-methods, .footer-middle, .footer-upper, .desktop-header-right .desktop-cart {
         display: none;
     }
 
@@ -171,7 +173,7 @@
         display: block;
         padding: 16px 18px !important;
         line-height: 17px;
-        font-family:open sans;
+        font-family: tahoma,arial,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53",open sans;
         color: #888;
         font-size: 18px;
         text-transform: uppercase;
@@ -306,7 +308,7 @@
         -moz-transition: all .1s ease-in-out;
         transition: all .1s ease-in-out;
         color: #888888;
-        font-family: open sans;
+        font-family: tahoma,arial,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53",open sans;
     }
         .header-links-wrapper.open {
             display: block;

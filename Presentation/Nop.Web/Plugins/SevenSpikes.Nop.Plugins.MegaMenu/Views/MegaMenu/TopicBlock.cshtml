@@ -1,0 +1,26 @@
+﻿@** Copyright 2016 Seven Spikes Ltd. All rights reserved. (http://www.nop-templates.com)
+    * http://www.nop-templates.com/t/licensinginfo
+*@
+
+@model TopicModel
+@using Nop.Web.Models.Topics;
+@using Nop.Web.Extensions;
+
+<li>
+    @if (!string.IsNullOrEmpty(Model.Title))
+    {
+        <a href="@Url.RouteUrl("Topic", new { SeName = Html.GetTopicSeName(Model.SystemName) })" title="@Model.Title">@Model.Title</a>
+    }
+    else
+    {
+        <a href="@Url.RouteUrl("Topic", new { SeName = Html.GetTopicSeName(Model.SystemName) })" title="@T("SevenSpikes.MegaMenu.DefaultTopicTitle")">@T("SevenSpikes.MegaMenu.DefaultTopicTitle")</a>
+    }
+    @if (!string.IsNullOrEmpty(Model.Body))
+    {
+        <div class="dropdown">
+            <div class="topic-wrapper">
+                @Html.Raw(Model.Body)
+            </div>
+        </div>
+    }
+</li>

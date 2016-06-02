@@ -1,0 +1,12 @@
+/* This is the overlay element. */
+
+        #wrap > .mousetrap{
+	left: 0;
+	right: auto;
+}
+/* This is the zoom window. */
+
+        #cloudZoomWindowElement{
+	right: 0;
+	left: auto;
+}

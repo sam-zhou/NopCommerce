@@ -1,0 +1,17 @@
+﻿@{
+    Layout = "~/Administration/Views/Shared/_AdminLayout.cshtml";
+}
+@using Nop.Web.Framework;
+@{
+    Html.AddCssFileParts("~/Plugins/SevenSpikes.Core/Styles/adminstyles.css");
+}
+
+<div class="spikes-admin-wrapper">
+    <div class="seven-spikes-menus">
+        @Html.Partial("~/Plugins/SevenSpikes.Core/Views/Shared/Menu7Spikes.cshtml")
+    </div>
+    <div class="seven-spikes-settings">
+        @RenderBody()
+    </div>
+</div>
+

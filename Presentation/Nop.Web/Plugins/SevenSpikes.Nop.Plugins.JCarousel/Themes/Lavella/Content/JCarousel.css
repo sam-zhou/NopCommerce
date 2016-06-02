@@ -1,0 +1,432 @@
+/*
+* Copyright 2012 Seven Spikes Ltd. All rights reserved. (http://www.nop-templates.com)
+* http://www.nop-templates.com/t/licensinginfo
+*/
+
+
+.nop-jcarousel > h2 {
+    border:1px dotted #D8CFC8;
+    border-left:none;
+    border-right:none;
+    color: #666666;
+    font: lighter 20px/39px 'Open Sans',sans-serif;
+    text-transform: uppercase;
+    text-align:center;
+}
+.carousel-title {
+    margin-bottom: 20px;
+}
+.carousel-title span {
+    font-weight: normal;
+}
+.nop-jcarousel .jcarousel-container {
+    border-radius: 0;
+}
+
+.nop-jcarousel .jcarousel-clip {
+    overflow: hidden;
+}
+.fu-wrapper-left .jcarousel-list-horizontal{
+    padding:0 !important;
+}
+.fu-wrapper-left .nop-jcarousel .jcarousel-item-horizontal{
+    margin: 0 4px;
+    height:167px;
+    overflow:hidden;
+}
+.fu-wrapper-left .nop-jcarousel .jcarousel-item-horizontal .item-holder{
+    height:100%;
+}  
+.fu-wrapper-left .nop-jcarousel .jcarousel-item-horizontal .item-picture{
+    max-height:100%;
+}
+.products-carousel .nop-jcarousel .jcarousel-item-horizontal{
+    margin: 0 0 40px;
+    padding: 10px;
+    overflow:hidden;
+}
+.products-carousel .nop-jcarousel .jcarousel-item-horizontal .item-picture,
+.products-carousel .nop-jcarousel .jcarousel-item-horizontal .ribbon-wrapper {
+   margin-bottom:2%;
+}
+.products-carousel .nop-jcarousel .jcarousel-item .item-picture a {
+	position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+}
+.products-carousel .nop-jcarousel .jcarousel-item-horizontal .item-picture a:before {
+	content: "";
+	display: block;
+	padding-top: 100%;
+}
+.products-carousel .nop-jcarousel .jcarousel-item-horizontal .item-picture a img {
+    max-width:100%;
+	max-height: 100%;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	margin: auto;
+    -webkit-transition: all 0.6s linear 0s;
+    transition: all 0.6s linear 0s;
+}
+.products-carousel .jcarousel-item:hover {
+    background-color: #f8f1ee;
+}
+.products-carousel .jcarousel-item .item-picture {
+    min-height: 300px;
+    position: relative;
+}
+.jcarousel-item:hover .item-picture img {
+    -webkit-transform: scale(1.09, 1.09);
+    transform: scale(1.09, 1.09);
+}
+.manufacturers-carousel .nop-jcarousel .jcarousel-item .thumb-img{
+    display: block;
+    position:relative;
+    height:167px;
+}
+.manufacturers-carousel .nop-jcarousel .jcarousel-item .thumb-img:hover img {
+    transform:scale(1.025,1.025);
+    -webkit-transform:scale(1.025,1.025);
+    -ms-transform:scale(1.025,1.025);
+}
+.manufacturers-carousel .nop-jcarousel .jcarousel-item .thumb-img img{
+	position:absolute;
+	top:0;
+	bottom:0;
+	left:0;
+	right:0;
+	margin:auto;
+	transition:all 0.6s ease;
+	-webkit-transition:all 0.6s ease;
+	-ms-transition:all 0.6s ease;
+	max-height:100%;
+	max-width:100%;
+}
+
+.products-carousel .jcarousel-item .item-info{
+    padding-bottom:5px;
+    text-align: left;
+}
+
+.nop-jcarousel .jcarousel-product-name {
+    display: block;
+    overflow: hidden;
+    color: #888;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 5px;
+    font-family:open sans;
+    font-weight:lighter;
+}
+.fu-wrapper-left .nop-jcarousel .jcarousel-product-name{
+    text-align:center;
+    font-size:14px;
+    line-height:normal;
+    margin:0;
+    padding:0;
+}
+.products-carousel .nop-jcarousel .jcarousel-product-title {
+    height: 24px;
+    overflow: hidden;
+    margin: 0 0 5px;
+}
+.nop-jcarousel .jcarousel-item .short-description {
+    overflow: hidden;
+    margin: 0 0 5px;
+    color: #888;
+    font-size: 14px;
+    height: 18px;
+}
+.nop-jcarousel .jcarousel-item .prices {
+    height: 28px;
+    margin-bottom: 5px;    
+    border-top: 1px dotted #d8cfc8;
+    overflow: hidden;
+}
+.nop-jcarousel .jcarousel-item .prices > span {
+    display:inline-block;
+    margin-top: 5px;
+}
+.nop-jcarousel .product-rating-box {
+    display: inline-block;
+    margin: 5px 0;
+}
+.nop-jcarousel .product-rating-box .rating {
+    background: rgba(0, 0, 0, 0) url("images/rating_none.png") repeat-x scroll 0 0;
+    height: 15px;
+    width: 75px;
+}
+.nop-jcarousel .product-rating-box .rating div {
+    background: rgba(0, 0, 0, 0) url("images/rating_active.png") repeat-x scroll 0 0;
+    height: 15px;
+}
+.nop-jcarousel .jcarousel-item .prices > * {
+    display:inline-block;
+    margin:0 5px;
+    line-height: 18px;
+}
+
+.nop-jcarousel .jcarousel-item .actual-price {
+    color: #9ca34e;
+    font-weight: normal;
+    font-size:20px;
+    font-family:open sans;
+}
+
+.nop-jcarousel .jcarousel-item .old-price {
+    color: #999;
+    text-decoration: line-through;
+    font-size: 16px;
+}
+
+.nop-jcarousel .jcarousel-item .button {
+    background:#A59B92;
+    border: 1px solid #C9C3BE;
+    color: #FFFFFF;
+    display: inline-block;
+    font-family: 'open sans';
+    font-size: 16px;
+    margin: auto;
+    outline: 4px solid #A59B92;
+    padding: 0px 10px;
+    text-shadow: 0 1px 1px #847C75;
+    text-transform: uppercase;
+    transition: all 0.3s ease 0s;
+	display: none; /*hiding this button due to changing the overall height and inner heights in carousel, thus the lack of space,
+					 if you want to show this button, all sizes should be recalculated*/
+}
+
+.nop-jcarousel .jcarousel-item .button:hover {
+    border-color:#fff;
+    text-shadow: none;
+}
+
+.nop-jcarousel .jcarousel-next-horizontal,
+.nop-jcarousel .jcarousel-prev-horizontal {
+    position: absolute;
+    top: 50%;
+    margin: -11px 0 0;
+    width: 18px;
+    height: 22px;
+    cursor: pointer;
+}
+
+.nop-jcarousel .jcarousel-next-horizontal {
+    right: 0px;
+    top:-50px;
+    background: url("images/arrows_2_right.png") no-repeat center center;
+    transition:all .55s ease;
+    -webkit-transition:all .55s ease;
+    -ms-transition:all .55s ease;
+    width:38px;
+    height:40px;
+}
+
+.nop-jcarousel .jcarousel-next-horizontal:hover,
+.nop-jcarousel .jcarousel-next-horizontal:focus {
+    background-position:right center;
+}
+
+.nop-jcarousel .jcarousel-prev-horizontal {
+    left: 0px;
+    top:-50px;
+    background: url("images/arrows_2_left.png") no-repeat center center;
+    transition:all .55s ease;
+    -webkit-transition:all .55s ease;
+    -ms-transition:all .55s ease;
+    width:38px;
+    height:40px;
+}
+
+.nop-jcarousel .jcarousel-prev-horizontal:hover,
+.nop-jcarousel .jcarousel-prev-horizontal:focus {
+   background-position:left center;
+}
+
+.nop-jcarousel .jcarousel-prev-disabled:hover {
+
+}
+
+/* VERTICAL */
+
+.nop-jcarousel.vertical-holder {
+    margin: 0 0 15px;
+}
+
+.nop-jcarousel .jcarousel-container-vertical {
+    padding: 35px 13px 30px;
+}
+.nop-jcarousel .jcarousel-item-vertical {
+    margin-bottom: 5px;
+    width: 100%;
+    height:390px !important;
+}
+.nop-jcarousel .jcarousel-item-vertical .item-holder{
+    height:100%;
+}
+.nop-jcarousel .jcarousel-item-vertical .item-holder .item-picture{
+    width:100%;
+    height:270px;
+    position:relative;
+}
+.nop-jcarousel .jcarousel-item-vertical .item-holder .item-picture a{
+    position:absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    margin:auto;
+}
+.nop-jcarousel .jcarousel-item-vertical .item-holder .item-picture a img{
+    position:absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    margin:auto;
+    max-width:100%;
+}
+.nop-jcarousel .jcarousel-item-vertical .item-holder .item-info{
+    max-height:120px;
+}
+.nop-jcarousel .jcarousel-item-vertical .item-holder .item-info .prices>span{
+    display:inline-block;
+}
+.nop-jcarousel .jcarousel-item-vertical .item-holder .item-info .jcarousel-product-name{
+    font-size:16px;
+    line-height:normal;
+    height:50px;
+    padding:0 5px;
+    margin:0;
+}
+    .nop-jcarousel .jcarousel-item-vertical .item-holder .item-info .button{
+        margin-left:9px;
+    }
+.nop-jcarousel .jcarousel-item-vertical .item-holder .short-description{
+    height:30px;
+    max-height:none;
+    margin:0;
+    padding:0 5px;
+}
+.nop-jcarousel .jcarousel-next-vertical,
+.nop-jcarousel .jcarousel-prev-vertical {
+    position: absolute;
+    left: 50%;
+    margin: 0 0 0 -11px;
+    width: 22px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.nop-jcarousel .jcarousel-next-vertical {
+    bottom: 5px;
+    background: url("images/next-vertical.png") no-repeat 0 0;
+}
+
+.nop-jcarousel .jcarousel-next-vertical:hover,
+.nop-jcarousel .jcarousel-next-vertical:focus {
+    background-position: center bottom;
+}
+
+.nop-jcarousel .jcarousel-prev-vertical {
+    top: 10px;
+    background: url("images/prev-vertical.png") no-repeat 0 0;
+}
+
+.nop-jcarousel .jcarousel-prev-vertical:hover,
+.nop-jcarousel .jcarousel-prev-vertical:focus {
+    background-position: center bottom;
+}
+
+.nop-jcarousel .jcarousel-next-disabled-horizontal,
+.nop-jcarousel .jcarousel-next-disabled-horizontal:hover,
+.nop-jcarousel .jcarousel-next-disabled-horizontal:focus,
+.nop-jcarousel .jcarousel-next-disabled-horizontal:active,
+.nop-jcarousel .jcarousel-prev-disabled-horizontal,
+.nop-jcarousel .jcarousel-prev-disabled-horizontal:hover,
+.nop-jcarousel .jcarousel-prev-disabled-horizontal:focus,
+.nop-jcarousel .jcarousel-prev-disabled-horizontal:active,
+.nop-jcarousel .jcarousel-prev-disabled-vertical,
+.nop-jcarousel .jcarousel-prev-disabled-vertical:hover,
+.nop-jcarousel .jcarousel-prev-disabled-vertical:focus,
+.nop-jcarousel .jcarousel-prev-disabled-vertical:active,
+.nop-jcarousel .jcarousel-next-disabled-vertical,
+.nop-jcarousel .jcarousel-next-disabled-vertical:hover,
+.nop-jcarousel .jcarousel-next-disabled-vertical:focus,
+.nop-jcarousel .jcarousel-next-disabled-vertical:active {
+    opacity: 0.5;
+    cursor: default;
+}
+
+/* If the wrap is set to circular and the carousel skin can display more items than there are, the carousel adds additional <li> elements to fill the
+empty spaces. This class is added only for those empty elements. They should not be visible. */
+
+.nop-jcarousel .jcarousel-item-placeholder-horizontal {
+    visibility: hidden;
+}
+
+.nop-jcarousel .jcarousel-item-placeholder {
+    background: #fff;
+    color: #000;
+}
+/* homepage carousel item box size*/
+.master-home-page .home-page .manufacturers-carousel .nop-jcarousel .jcarousel-item-horizontal,
+.master-home-page .home-page .categories-carousel .nop-jcarousel .jcarousel-item-horizontal{
+    height:auto;
+}
+.master-home-page .home-page .manufacturers-carousel .item-picture a{
+    height:180px;
+}
+.master-home-page .home-page .categories-carousel .item-picture a{
+    height:230px;
+    position:relative;
+    display: block;
+    overflow: hidden;
+}
+.master-home-page .home-page .categories-carousel .item-picture a:hover img {
+    transform: scale(1.025,1.025);
+    -webkit-transform: scale(1.025,1.025);
+    -ms-transform: scale(1.025,1.025);
+}
+.master-home-page .home-page .categories-carousel .item-picture a img,
+.master-home-page .home-page .manufacturers-carousel .item-picture a img{
+    position:absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    margin:auto;
+    height:100%;
+    -webkit-transition: all 0.6s linear 0s;
+    transition: all 0.6s linear 0s;
+}
+.master-home-page .home-page .categories-carousel .item-info a,
+.master-home-page .home-page .manufacturers-carousel .item-info a{
+    font-size:20px;
+    line-height:normal;
+}
+.master-home-page .home-page .products-carousel .item-picture a{
+
+}
+
+@media all and (max-width: 768px) {
+    .jcarousel-item .item-info {
+        text-align: center;
+    }
+}
+@media all and (min-width: 481px) and (max-width: 768px) {
+    /*.products-carousel .jcarousel-item {
+        float: left;
+        width: 49%;
+    }
+    .products-carousel .jcarousel-item:nth-child(2n+1) {
+        clear: both;
+    }*/
+    
+}

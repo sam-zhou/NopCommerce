@@ -1,0 +1,114 @@
+﻿@** Copyright 2015 Seven Spikes Ltd. All rights reserved. (http://www.nop-templates.com)
+    * http://www.nop-templates.com/t/licensinginfo
+*@
+
+@using Nop.Core
+@using Nop.Core.Infrastructure
+@using Nop.Services.Configuration
+
+@model SevenSpikes.Nop.Plugins.CloudZoom.Models.CloudZoomModel
+
+@if (!string.IsNullOrEmpty(Model.DefaultPicture.FullSizeImageUrl))
+{
+    Html.AddCssFileParts("~/Plugins/SevenSpikes.Nop.Plugins.CloudZoom/Themes/" + Model.Theme + "/Content/cloud-zoom.1.0.2/CloudZoom.css");
+
+    var supportRtl = EngineContext.Current.Resolve<IWorkContext>().WorkingLanguage.Rtl;
+    if (supportRtl)
+    {
+        Html.AddCssFileParts("~/Plugins/SevenSpikes.Nop.Plugins.CloudZoom/Styles/CloudZoom.common.rtl.css");
+    }
+
+    Html.AddScriptParts("~/Plugins/SevenSpikes.Core/Scripts/SevenSpikesExtensions.min.js");
+    Html.AddScriptParts("~/Plugins/SevenSpikes.Nop.Plugins.CloudZoom/Scripts/cloud-zoom.1.0.2/cloud-zoom.1.0.2.min.js");
+    Html.AddScriptParts("~/Plugins/SevenSpikes.Nop.Plugins.CloudZoom/Scripts/CloudZoom.min.js");
+
+    var shouldShowPictureThumbnailsInCarousel = false;
+
+    if (Model.SettingsModel.EnablePictureThumbnailsInCarousel)
+    {
+        // Theme specific settings
+        var settingKeyNumberOfVisibleItemsInCarousel = string.Format("CloudZoomSettings.NumberOfPictureThumbnailsInCarousel-{0}", Model.Theme);
+
+        int storeId = EngineContext.Current.Resolve<IStoreContext>().CurrentStore.Id;
+        var settingService = EngineContext.Current.Resolve<ISettingService>();
+        int numberOfPictureThumbnailsInCarousel = settingService.GetSettingByKey(settingKeyNumberOfVisibleItemsInCarousel, 4, storeId, true);
+
+        if (Model.Pictures.Count > numberOfPictureThumbnailsInCarousel)
+        {
+            shouldShowPictureThumbnailsInCarousel = true;
+
+            // add css and javascript file for carousel of the thumbnails
+            Html.AddCssFileParts("~/Plugins/SevenSpikes.Nop.Plugins.CloudZoom/Themes/" + Model.Theme + "/Content/jcarousel/jcarousel.css");
+
+            if (supportRtl)
+            {
+                Html.AddCssFileParts("~/Plugins/SevenSpikes.Nop.Plugins.CloudZoom/Themes/" + Model.Theme + "/Content/jcarousel/jcarousel.rtl.css");
+            }
+
+            Html.AddScriptParts("~/Plugins/SevenSpikes.Nop.Plugins.CloudZoom/Scripts/jcarousel/jquery.jcarousel.min.js");
+            Html.AddScriptParts("~/Plugins/SevenSpikes.Nop.Plugins.CloudZoom/Scripts/jcarousel/jquery.disable.text.select.js");
+
+            // Theme specific settings
+            var settingKeyIsCarouselVertical = string.Format("CloudZoomSettings.IsPictureThumbnailsCarouselVertical-{0}", Model.Theme);
+
+            bool isPictureThumbnailsCarouselVertical = settingService.GetSettingByKey(settingKeyIsCarouselVertical, false, storeId, true);
+
+            <input type="hidden" class="cloudZoomPictureThumbnailsInCarouselData"
+                   data-vertical="@isPictureThumbnailsCarouselVertical.ToString().ToLowerInvariant()"
+                   data-numVisible="@numberOfPictureThumbnailsInCarousel"
+                   data-size="@Model.Pictures.Count"
+                   data-rtl="@supportRtl.ToString().ToLowerInvariant()" />
+        }
+    }
+
+    if (Model.EnableClickToZoom)
+    {
+        Html.AddCssFileParts("~/Content/magnific-popup/magnific-popup.css");
+        Html.AddScriptParts("~/Scripts/jquery.magnific-popup.js");
+
+        <input type="hidden" class="cloudZoomEnableClickToZoom" />
+    }
+
+    <input type="hidden" class="cloudZoomAdjustPictureOnProductAttributeValueChange" 
+           data-productId="@Model.ProductId"
+            data-isIntegratedByWidget="@Model.IsIntegratedByWidget.ToString().ToLowerInvariant()" />
+
+    <div class="gallery sevenspikes-cloudzoom-gallery">
+        <div class="picture-wrapper">
+            <div class="picture" id="sevenspikes-cloud-zoom" data-zoomwindowelementid="@Model.ElementId"
+                 data-selectoroftheparentelementofthecloudzoomwindow="@Model.SettingsModel.SelectorOfTheParentElementOfTheCloudZoomWindow"
+                 data-defaultimagecontainerselector="@Model.SettingsModel.DefaultImageContainerSelector">
+                <a href="@Model.DefaultPicture.FullSizeImageUrl" class="cloud-zoom" id="zoom1" rel="@Model.DefaultPicture.DefaultRelation">
+                    <img src="@Model.DefaultPicture.SmallImageUrl" alt="@Model.DefaultPicture.AlternateText" title="@Model.DefaultPicture.Title" id="cloudZoomImage" itemprop="image" />
+                </a>
+            </div>
+        </div>
+        @if (Model.Pictures.Count > 1)
+        {
+            <div class="picture-thumbs">
+                @if (shouldShowPictureThumbnailsInCarousel)
+                {
+                    <ul id="carousel" class="jcarousel jcarousel-skin-thumbs">
+                        @foreach (var picture in Model.Pictures)
+                        {
+                            <li>
+                                <a href="@picture.FullSizeImageUrl" class="cloud-zoom-gallery" title="@picture.Title" rel="@picture.GalleryRelation">
+                                    <img class="cloud-zoom-gallery-img" src="@picture.TinyImageUrl" alt="@picture.AlternateText" title="@picture.Title" />
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    foreach (var picture in Model.Pictures)
+                    {
+                        <a href="@picture.FullSizeImageUrl" class="cloud-zoom-gallery" title="@picture.Title" rel="@picture.GalleryRelation">
+                            <img class="cloud-zoom-gallery-img" src="@picture.TinyImageUrl" alt="@picture.AlternateText" title="@picture.Title" />
+                        </a>
+                    }
+                }
+            </div>
+        }
+    </div>
+}

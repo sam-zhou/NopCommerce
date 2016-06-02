@@ -1,0 +1,123 @@
+/* GLOBAL STYLES */
+
+.ui-tabs .product-specs-box,
+.ui-tabs .product-reviews-page {
+    display: block;
+    color: #888888;
+    font-family: open sans;
+}
+
+.ui-tabs .full-description {
+    display: block;
+    border: 0;
+    margin-bottom: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+/* TABS STYLES */
+
+.productTabs {
+    padding: 0;
+    clear: both;
+    margin: 10px;
+    overflow:hidden;
+}
+.productTabs-header{
+    float:none;
+}
+.productTabs ul.ui-tabs-nav {
+    border:none;
+    width:100%;
+}
+.productTabs-body{
+    float:none;
+}
+.ui-state-default.ui-corner-top:last-child {
+    margin-bottom: 0;
+}
+
+    .productTabs .ui-widget-header {
+        
+    }
+
+.productTabs li a {
+    outline: -webkit-focus-ring-color auto 0 !important; 
+}
+    .productTabs .product-specs-box {
+        display: block;
+    }
+    .productTabs .product-specs-box .title {
+        padding: 0;
+        margin-bottom: 10px;
+    }
+    .productTabs .product-specs-box .data-table {
+        margin: 0;
+    }
+.productTabs .ui-tabs-panel {
+    padding: 15px;
+    width:100%;
+    overflow:hidden;
+}
+.productTabs .product-reviews-page .write-review {
+    margin-top: 0;
+}
+.productTabs .write-review {
+    margin: 0;
+    color: #888;
+    font-family:open sans;
+}
+.productTabs .product-reviews-page .write-review .buttons input,
+.productTabs .write-review .buttons input{
+    background: #A59B92;
+    border: 1px solid #C9C3BE;
+    color: #FFFFFF;
+    font-family: 'open sans';
+    font-size: 16px;
+    outline: 4px solid #A59B92;
+    padding: 0px 10px;
+    text-shadow: 0 1px 1px #847C75;
+    text-transform: uppercase;
+    transition: all 0.3s ease 0s;
+    -webkit-transition: all 0.3s ease 0s;
+}
+    .productTabs .product-reviews-page .write-review .buttons input:hover,
+    .productTabs .write-review .buttons input:hover{
+        border-color: #fff;
+        text-shadow:none;
+    }
+#contact-us-tab .inputs {
+    margin-bottom: 12px;
+    clear: both;
+}
+#contact-us-tab .inputs label {
+    display: block;
+}
+#contact-us-tab .inputs input[type="text"] {
+    width: 350px;
+}
+#contact-us-tab .inputs textarea {
+    width: 350px;
+    height: 130px;
+}
+
+.custom-tab{
+    line-height: 22px;
+    font-size: 14px;
+    color: #888;
+    text-align: initial;
+}
+.custom-tab ul{
+    list-style: disc;
+    margin: 12px 0;
+    padding: 0 0 0 36px;
+}
+
+@media all and (min-width: 769px){
+    .productTabs-header{
+        float:left;
+    }
+    .productTabs-body{
+        float:left;
+    }
+}

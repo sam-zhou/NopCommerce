@@ -1,0 +1,120 @@
+﻿@** Copyright 2016 Seven Spikes Ltd. All rights reserved. (http://www.nop-templates.com)
+* http://www.nop-templates.com/t/licensinginfo
+*@
+
+@using Nop.Core.Infrastructure
+@using Nop.Services.Localization
+@using SevenSpikes.Nop.Plugins.MegaMenu
+@using SevenSpikes.Nop.Plugins.MegaMenu.Domain
+@using SevenSpikes.Nop.Plugins.MegaMenu.Helpers
+@using SevenSpikes.Nop.Plugins.MegaMenu.Models
+
+@model MegaMenuCategoriesModels
+
+@if (Model.CategoriesModels.Count > 0)
+{
+    var localizationHelper = EngineContext.Current.Resolve<ILocalizedSettingsHelper>();
+    var megaMenuSettings = EngineContext.Current.Resolve<MegaMenuSettings>();
+    var localizedMenuItemName = localizationHelper.GetLocalizedSettingValue(Constants.ResourceMenuItemName);
+    if (megaMenuSettings.ShowCategoriesInASingleMenuItem)
+    {
+    <li>
+        @if (Model.CategoriesModels.Count > 0)
+        {
+            <span class="with-subcategories labelForNextPlusButton">@localizedMenuItemName</span>
+            <div class="plus-button"></div>
+            <div class="sublist-wrap">
+                <ul class="sublist">
+                    <li class="back-button">
+                        <span>@T("SevenSpikes.MegaMenu.ResponsiveBackButton")</span>
+                    </li>
+                    @foreach (var category in Model.CategoriesModels)
+                    {
+                        <li>
+                            @if (category.SubCategories.Count > 0)
+                            {
+                                <a href="@Url.RouteUrl("Category", new { SeName = category.CategoryModel.SeName })" title="@category.CategoryModel.Name" class="with-subcategories">@category.CategoryModel.Name</a>
+                                <div class="plus-button"></div>
+                                <div class="sublist-wrap">
+                                    <ul class="sublist">
+                                        <li class="back-button">
+                                            <span>@T("SevenSpikes.MegaMenu.ResponsiveBackButton")</span>
+                                        </li>
+                                        @{
+                                var categoriesCounter = 0;
+                                foreach (var subCategory in category.SubCategories)
+                                {
+                                    categoriesCounter++;
+                                
+                                                <li>
+                                                    <a href="@Url.RouteUrl("Category", new { SeName = subCategory.CategoryModel.SeName })" title="@subCategory.CategoryModel.Name">@subCategory.CategoryModel.Name</a>
+                                                </li>
+                                
+                                }
+                                if (categoriesCounter == megaMenuSettings.NumberOfCategories && megaMenuSettings.NumberOfCategories != 0)
+                                {
+                                                <li>
+                                                    <a class="view-all" href="@Url.RouteUrl("Category", new { SeName = category.CategoryModel.SeName })" title="@T("SevenSpikes.MegaMenu.ViewAllCategories")">@T("SevenSpikes.MegaMenu.ViewAllCategories")</a>
+                                                </li>
+                                }
+                                        }
+                                    </ul>
+                                </div>
+                            }
+                            else
+                            {
+                                <a href="@Url.RouteUrl("Category", new { SeName = category.CategoryModel.SeName })" title="@category.CategoryModel.Name">@category.CategoryModel.Name</a>
+                            }
+                        </li>
+                    }
+                </ul>
+            </div>
+        }
+        else
+        {
+            <a href="#" title="@localizedMenuItemName">@localizedMenuItemName</a>
+        }
+    </li>
+    }
+    else
+    {
+        foreach (var category in Model.CategoriesModels)
+        {
+        <li>
+            @if (category.SubCategories.Count > 0)
+            {
+                <a href="@Url.RouteUrl("Category", new { SeName = category.CategoryModel.SeName })" title="@category.CategoryModel.Name" class="with-subcategories">@category.CategoryModel.Name</a>
+                <div class="plus-button"></div>
+                <div class="sublist-wrap">
+                    <ul class="sublist">
+                        <li class="back-button">
+                            <span>@T("SevenSpikes.MegaMenu.ResponsiveBackButton")</span>
+                        </li>
+                        @{
+                var categoriesCounter = 0;
+                foreach (var subCategory in category.SubCategories)
+                {
+                    categoriesCounter++;
+                                
+                                <li>
+                                    <a href="@Url.RouteUrl("Category", new { SeName = subCategory.CategoryModel.SeName })" title="@subCategory.CategoryModel.Name">@subCategory.CategoryModel.Name</a>
+                                </li>
+                }
+                if (categoriesCounter == megaMenuSettings.NumberOfCategories && megaMenuSettings.NumberOfCategories != 0)
+                {
+                                <li>
+                                    <a class="view-all" href="@Url.RouteUrl("Category", new { SeName = category.CategoryModel.SeName })" title="@T("SevenSpikes.MegaMenu.ViewAllCategories")">@T("SevenSpikes.MegaMenu.ViewAllCategories")</a>
+                                </li>
+                }
+                        }
+                    </ul>
+                </div>
+            }
+            else
+            {
+                <a href="@Url.RouteUrl("Category", new { SeName = category.CategoryModel.SeName })" title="@category.CategoryModel.Name">@category.CategoryModel.Name</a>
+		}
+        </li>
+        }
+    }
+}

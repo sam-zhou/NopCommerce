@@ -253,6 +253,13 @@ paket-files/
 
 *.dll
 *.pdb
-Presentation/Nop.Web/Plugins/*
 .vs/
+Presentation/Nop.Web/Plugins/bin*
+Presentation/Nop.Web/Plugins/D*
+Presentation/Nop.Web/Plugins/E*
+Presentation/Nop.Web/Plugins/F*
+Presentation/Nop.Web/Plugins/M*
+Presentation/Nop.Web/Plugins/P*
+Presentation/Nop.Web/Plugins/T*
+Presentation/Nop.Web/Plugins/W*
 Presentation/Nop.Web/Content/Images/Thumbs/*

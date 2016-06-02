@@ -1,0 +1,13 @@
+﻿* {
+	direction: rtl;
+}
+@media screen and (min-width: 769px) and (max-width: 980px) {
+	.product-essential .ribbon-wrapper {
+		float: left;
+	}
+}
+@media screen and (min-width: 981px) {
+	.product-details-page .gallery .ribbon-wrapper {
+		float: left;
+	}
+}

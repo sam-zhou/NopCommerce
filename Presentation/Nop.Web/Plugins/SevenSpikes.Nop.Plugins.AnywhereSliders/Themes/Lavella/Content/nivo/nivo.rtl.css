@@ -1,0 +1,41 @@
+.home-page-bottom-banner-wrapper .left-banner {
+	float: right;
+}
+.banners-right,
+.home-page-bottom-banner-wrapper .right-banner {
+	float: left;
+}
+/* DIRECTIONAL NAVIGATION */
+
+.nivo-controlNav{
+	right: 0;
+	left: 0;
+}
+.nivo-directionNav a{
+	right: 0;
+	left: auto;
+}
+a.nivo-nextNav{
+	right: auto;
+	left: 0;
+}
+.home-page-top-banner-wrapper .slider-left{
+	float: right;
+	padding-left: 4px;
+	padding-right: 0;
+}
+
+@media all and (max-width: 769px) {
+    .banners-right > div {
+        float: right;
+    }
+    /*change banner position*/
+    .home-page-top-banner-wrapper .slider-left {
+        padding-left: 0;
+    }
+
+    .banners-right > div:first-child {
+        margin-left: 1%;
+        margin-right: 0;
+    }
+}

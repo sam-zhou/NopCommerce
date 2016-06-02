@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Settings>
+  <Setting Name="JCarouselEntitySettings.NumberOfItems">
+    <Value>10</Value>
+  </Setting>
+  <Setting Name="JCarouselEntitySettings.NumberOfVisibleItems">
+    <Value>4</Value>
+  </Setting>
+  <Setting Name="JCarouselEntitySettings.ImageSize">
+    <Value>400</Value>
+  </Setting>
+  <Setting Name="JCarouselEntitySettings.ShowItemsName">
+    <Value>True</Value>
+  </Setting>
+  <Setting Name="JCarouselEntitySettings.ShowTitle">
+    <Value>True</Value>
+  </Setting>
+  <Setting Name="JCarouselEntitySettings.ShowProductsPrice">
+    <Value>True</Value>
+  </Setting>
+  <Setting Name="JCarouselEntitySettings.ShowProductsOldPrice">
+    <Value>True</Value>
+  </Setting>
+  <Setting Name="JCarouselEntitySettings.ShowShortDescription">
+    <Value>False</Value>
+  </Setting>
+  <Setting Name="JCarouselEntitySettings.ShowDetailsButton">
+    <Value>False</Value>
+  </Setting>
+  <Setting Name="JCarouselEntitySettings.ShowRatings">
+    <Value>False</Value>
+  </Setting>
+  <Setting Name="JCarouselEntitySettings.StartIndex">
+    <Value>1</Value>
+  </Setting>
+  <Setting Name="JCarouselEntitySettings.ScrollItems">
+    <Value>1</Value>
+  </Setting>
+  <Setting Name="JCarouselGeneralSettings.Enable">
+    <Value>true</Value>
+  </Setting>
+  <Setting Name="JCarouselGeneralSettings.JCarouselItemMinWidth">
+    <Value>200</Value>
+  </Setting>
+</Settings>

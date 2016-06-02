@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Language Name="English">
+  <LocaleResource Name="SevenSpikes.LavellaTheme">
+    <Value>Nop Lavella Theme</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.Themes.Lavella.Admin.Settings">
+    <Value>Settings</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.Themes.Lavella.Admin.Settings.ThemeSettings">
+    <Value>Lavella Theme Settings</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.Themes.Lavella.Admin.Settings.ThemeSettings.Preset">
+    <Value>Preset</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.Themes.Lavella.Admin.Settings.ThemeSettings.Preset.Hint">
+    <Value>Choose your color preset of the theme.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.Themes.Lavella.Admin.Settings.ThemeSettings.AssociatedProductsViewMode">
+    <Value>Associated products view mode</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.Themes.Lavella.Admin.Settings.ThemeSettings.AssociatedProductsViewMode.Hint">
+    <Value>Choose whether you want to display the associated products for a grouped product on the products page in grid or in list</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.Themes.Lavella.Common.CompanyInfo">
+    <Value>Company Info</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.Themes.Lavella.Common.Contact">
+    <Value>Contact</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.Themes.Lavella.Common.CustomerServices">
+    <Value>Customer services</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.Themes.Lavella.Common.EmailDomain">
+    <Value>store.com</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.Themes.Lavella.Common.EmailAt">
+    <Value>[at]</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.Themes.Lavella.Common.EmailName">
+    <Value>info</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.Themes.Lavella.Common.FAQ">
+    <Value>FAQ</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.Themes.Lavella.Common.Address">
+    <Value>Sofia, Bulgaria</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.Themes.Lavella.Common.FeaturedCategories">
+    <Value>Featured categories</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.Themes.Lavella.Common.GoTo">
+    <Value>Go to...</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.Themes.Lavella.Common.GoToPage">
+    <Value>Product's page</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.Themes.Lavella.Common.Help">
+    <Value>Help</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.Themes.Lavella.Common.Address">
+    <Value>London, UK</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.Themes.Lavella.Common.OurOffers">
+    <Value>Our Offers</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.Themes.Lavella.Common.Phone">
+    <Value>+555 (Mobile) 321654</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.Themes.Lavella.Common.Returns">
+    <Value>Returns</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.Themes.Lavella.Common.Skype">
+    <Value>motion_theme</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.Themes.Lavella.Common.Social">
+    <Value>Connect with us</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.Themes.Lavella.Common.Details">
+    <Value>Details</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.Plugins.PrevNextProduct.PrevButtonText">
+    <Value>Prev</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.Plugins.PrevNextProduct.NextButtonText">
+    <Value>Next</Value>
+  </LocaleResource>
+  <LocaleResource Name="ShoppingCart">
+    <Value>Shopping cart</Value>
+  </LocaleResource>
+  <LocaleResource Name="ShoppingCart.AddToCart">
+    <Value>Buy</Value>
+  </LocaleResource>
+  <LocaleResource Name="HomePage">
+    <Value>Home Page</Value>
+  </LocaleResource>
+  <LocaleResource Name="HomePage.Categories">
+    <Value>Featured Categories</Value>
+  </LocaleResource>
+  <LocaleResource Name="Newsletter">
+    <Value>Newsletter</Value>
+  </LocaleResource>
+  <LocaleResource Name="Newsletter.Title">
+    <Value>Newsletter</Value>
+  </LocaleResource>
+  <LocaleResource Name="Order.Shipments.ID">
+    <Value>Shipments ID</Value>
+  </LocaleResource>
+  <LocaleResource Name="shoppingcart.headerquantity">
+    <Value>({0}) items</Value>
+  </LocaleResource> 
+</Language>

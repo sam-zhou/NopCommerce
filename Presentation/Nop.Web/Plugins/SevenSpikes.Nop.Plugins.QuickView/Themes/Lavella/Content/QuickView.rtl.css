@@ -1,0 +1,88 @@
+﻿* {
+	direction: rtl;
+}
+.quickView .k-window-titlebar.k-header .k-window-actions {
+	left: 7px;
+	right: auto;
+}
+.quickView .k-window-titlebar.k-header .k-window-actions a {
+	right: 0px;
+	left: auto;
+}
+.product-grid .quick-view-button {
+	right: 50%;
+	left: auto;
+	margin-right: -70px;
+	margin-left: 0;
+}
+
+.quickViewWindow .overview .add-to-wishlist-button {
+	float: left;
+}
+.quickViewWindow .overview #accordion .purchase-area .add-to-cart div * {
+	float: right;
+}
+.quickViewWindow .overview #accordion .product-details .compare-products:hover {
+	background-position: 7px center;
+}
+.product-details .compare-products:hover input {
+	margin-right: 25px;
+	margin-left: 0;
+}
+.quickViewWindow .gallery {
+	margin-right: 10px;
+	margin-left: 0;
+}
+.quickViewWindow .product-grid .item-box {
+	margin: 0 1.33% 20px 0;
+}
+.quickViewWindow .overview .price-input .enter-price-label {
+	margin-left: 5px;
+	margin-right: 0;
+}
+.product-variant-list .product-variant .product-price {
+	right: -100%;
+	left: auto;
+}
+.product-variant-list .product-variant:hover .product-price {
+	right: 0;
+	left: auto;
+}
+.quickViewWindow .variant-info {
+	right: 0;
+	left: auto;
+}
+.product-variant .variant-info .tax-shipping-info {
+	right: -100%;
+	left: auto;
+}
+.product-variant:hover .variant-info .tax-shipping-info {
+	right: 0;
+	left: auto;
+}
+.quickViewWindow .giftcard label {
+	text-align: right;
+}
+.quickViewWindow .attributes dt {
+	float: right;
+	clear: right;
+}
+.quickViewWindow .attributes dt label {
+	float: right;
+	margin-left: 5px;
+	margin-right: 0;
+}
+.quickViewWindow .attributes dd {
+	float: right;
+}
+.quickViewWindow .attributes dd select {
+	margin-left: 5px;
+	margin-right: 0;
+}
+.quickViewWindow .attributes .option-list li > * {
+	float: right;
+}
+.quickViewWindow .attributes .option-list li > *:first-child {
+	margin-left: 5px;
+	margin-right: 0;
+}

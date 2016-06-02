@@ -1,0 +1,139 @@
+﻿@using SevenSpikes.Nop.Framework.Model
+
+@model ManageResourcesGridModel
+
+@{
+    Html.AppendCssFileParts("~/Plugins/SevenSpikes.Core/Styles/adminstyles.css");
+}
+
+<div>
+    <div class="section-header">
+        <div class="title">
+            <img src="@Url.Content("~/Administration/Content/images/ico-configuration.png")" alt="" />
+            @T("SevenSpikes.Plugins.Admin.ManageResources")
+        </div>
+    </div>
+    <div>
+
+        <div class="languages-wrapper" style="margin: 5px 0 10px;">
+            <div style="margin: 0 0 15px; overflow: hidden;">
+                <span class="title">@T("admin.configuration.languages.select")</span>
+                @Html.DropDownList("default-resources-languages", Model.AvailableLanguages)
+            </div>
+            <div>
+                <span class="title">@T("SevenSpikes.Plugins.Admin.ManageResources.IncludeAdminResources")</span>
+                <input type="checkbox" id="include-admin-resources-checkbox" />
+            </div>
+        </div>
+        <div>
+            @Html.AntiForgeryToken()
+            <table class="adminContent">
+                <tr>
+                    <td>
+                        <div id="default-resources-grid"></div>
+                    </td>
+                </tr>
+            </table>
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    function getlanguageAndAntiforgeryToken() {
+                        var data = {
+                            "languageId": parseInt($('#default-resources-languages').val()) || 0,
+                            "includeAdminResources": $('#include-admin-resources-checkbox').is(':checked')
+                        };
+                        data = addAntiForgeryToken(data);
+                        return data;
+                    }
+
+                    $("#default-resources-grid").kendoGrid({
+                        dataSource: {
+                            type: "json",
+                            transport: {
+                                read: {
+                                    url: "@Html.Raw(Url.Action("ManageResourcesRead", "ManageResourcesAdmin", new { pluginFolderName = Model.PluginFolderName }))",
+                                    type: "POST",
+                                    dataType: "json",
+                                    data: getlanguageAndAntiforgeryToken
+                                },
+                                update: {
+                                    url: "@Html.Raw(Url.Action("ManageResourcesUpdate", "ManageResourcesAdmin"))",
+                                    type: "POST",
+                                    dataType: "json",
+                                    data: getlanguageAndAntiforgeryToken
+                                },
+                                destroy: {
+                                    url: "@Html.Raw(Url.Action("ManageResourcesDelete", "ManageResourcesAdmin"))",
+                                    type: "POST",
+                                    dataType: "json",
+                                    data: getlanguageAndAntiforgeryToken
+                                }
+                            },
+                            sort: { field: "Key", dir: "asc" },
+                            schema: {
+                                data: "Data",
+                                total: "Total",
+                                errors: "Errors",
+                                model: {
+                                    id: "Key",
+                                    fields: {
+                                        Key: { editable: false, type: "string" },
+                                        CurrentValue: { editable: true, type: "string" },
+                                        DefaultValue: { editable: false, type: "string" }
+                                    }
+                                }
+                            },
+                            requestEnd: function (e) {
+                                if (e.type == "update") {
+                                    this.read();
+                                }
+                            },
+                            error: function (e) {
+                                display_kendoui_grid_error(e);
+                                this.cancelChanges();
+                            }
+                        },
+                        editable: {
+                            confirmation: true,
+                            mode: "inline"
+                        },
+                        filterable: {
+                            extra: false,
+                            operators: {
+                                string: {
+                                    contains: "Contains",
+                                    eq: "Is equal to",
+                                    startswith: "Starts with"
+                                }
+                            }
+                        },
+                        sortable: true,
+                        scrollable: false,
+                        columns: [{
+                            field: "Key",
+                            title: "@T("admin.configuration.languages.resources.fields.name")"
+                        }, {
+                            field: "CurrentValue",
+                            title: "@T("admin.configuration.languages.resources.fields.value")",
+                            editable: true
+                        }, {
+                            command: [{
+                                name: "edit",
+                                text: "@T("Admin.Common.Edit")"
+                            }@*, {
+                                name: "destroy",
+                                text: "@T("Admin.Common.Delete")"
+                            }*@],
+                            filterable: false,
+                            width: 200
+                        }]
+                    });
+
+                    $('#default-resources-languages, #include-admin-resources-checkbox').on('change', function () {
+                        $('#default-resources-grid').data('kendoGrid').dataSource.read();
+                    });
+                });
+            </script>
+        </div>
+
+    </div>
+</div>

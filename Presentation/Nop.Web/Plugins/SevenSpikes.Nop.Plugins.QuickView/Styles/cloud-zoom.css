@@ -1,0 +1,62 @@
+
+/* This is the main image centered. */
+
+.quickView #cloudZoomImage {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	margin: auto;
+}
+
+/* This is the thumbnails centered. */
+
+.quickView .cloud-zoom-gallery {
+	position: relative;
+}
+.quickView .cloud-zoom-gallery img {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	margin: auto;
+}
+
+/* This is the overlay element. */
+
+.quickView .cloud-zoom-lens {
+	display: none;
+	background-color: #444;	
+	cursor: crosshair;		
+}
+.quickView .mousetrap {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	margin: auto;
+}
+
+/* This is the zoom window. */
+
+.quickView  .cloud-zoom-big {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	margin: auto;
+	border: none;
+	overflow: hidden;
+}
+
+/* This is the loading message. */
+
+.quickView  .cloud-zoom-loading {
+	background-color: #000;
+	padding: 10px;
+	color: #fff;
+}

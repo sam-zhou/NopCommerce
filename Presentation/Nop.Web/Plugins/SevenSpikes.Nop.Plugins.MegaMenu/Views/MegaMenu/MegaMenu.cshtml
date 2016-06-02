@@ -1,0 +1,155 @@
+﻿@** Copyright 2016 Seven Spikes Ltd. All rights reserved. (http://www.nop-templates.com)
+    * http://www.nop-templates.com/t/licensinginfo
+*@
+
+@model SevenSpikes.Nop.Plugins.MegaMenu.Models.MegaMenuModel
+
+@{
+    Html.AddCssFileParts("~/Plugins/SevenSpikes.Nop.Plugins.MegaMenu/Themes/" + Model.Theme + "/Content/MegaMenu.css");
+
+    var supportRtl = this.ShouldUseRtlTheme();
+    if (supportRtl)
+    {
+        Html.AddCssFileParts("~/Plugins/SevenSpikes.Nop.Plugins.MegaMenu/Themes/" + Model.Theme + "/Content/MegaMenu.rtl.css");
+    }
+
+    Html.AddScriptParts("~/Plugins/SevenSpikes.Nop.Plugins.MegaMenu/Scripts/jquery.lazyload.min.js");
+    Html.AddScriptParts("~/Plugins/SevenSpikes.Core/Scripts/SevenSpikesExtensions.min.js");
+    Html.AddScriptParts("~/Plugins/SevenSpikes.Nop.Plugins.MegaMenu/Scripts/MegaMenu.min.js");
+}
+
+<input type="hidden" value="@supportRtl.ToString().ToLowerInvariant()" id="isRtlEnabled" />
+
+<ul class="mega-menu" data-enableClickForDropDown="@Model.Settings.EnableClickForDropdown.ToString().ToLowerInvariant()">
+    @RenderMegaMenu(isMegaMenuResponsive: false)
+</ul>
+<div class="menu-title"><span>@T("SevenSpikes.MegaMenu.ResponsiveMenuTitle")</span></div>
+<ul class="mega-menu-responsive">
+    @RenderMegaMenu(isMegaMenuResponsive: true)
+</ul>
+
+@helper RenderMegaMenu(bool isMegaMenuResponsive)
+{
+    if (Model.Settings.IncludeHomePageLink)
+    {
+        <li>
+            <a href="@Url.RouteUrl("HomePage")" title="@T("HomePage")">@T("HomePage")</a>
+        </li>
+    }
+    if (Model.Settings.EnableCategories)
+    {
+        if (isMegaMenuResponsive)
+        {
+            @Html.Action("GetCategoriesResponsive", "MegaMenu", Model.Categories)
+        }
+        else
+        {
+            @Html.Action("GetCategories", "MegaMenu", Model.Categories)
+        }
+    }
+    if (Model.Settings.EnableManufacturers)
+    {
+        if (isMegaMenuResponsive)
+        {
+            @Html.Action("GetManufacturersResponsive", "MegaMenu", Model.Manufacturers)
+        }
+        else
+        {
+            @Html.Action("GetManufacturers", "MegaMenu", Model.Manufacturers)
+        }
+    }
+    if (Model.Settings.EnableVendors)
+    {
+        @Html.Action("GetVendors", "MegaMenu", Model.Vendors)
+    }
+    if (Model.Settings.IncludeRecentlyAddedLink)
+    {
+        <li>
+            <a href="@Url.RouteUrl("NewProducts")" title="@T("Products.NewProducts")">@T("Products.NewProducts")</a>
+        </li>
+    }
+    if (Model.Settings.IncludeMyAccountLink)
+    {
+        <li>
+            <a href="@Url.RouteUrl("CustomerInfo")" title="@T("Account.MyAccount")">@T("Account.MyAccount")</a>
+        </li>
+    }
+    if (Model.Settings.IncludeContactUsLink)
+    {
+        <li>
+            <a href="@Url.RouteUrl("Topic", new { SeName = "ContactUs" })" title="@T("contactus")">@T("contactus")</a>
+        </li>
+    }
+    if (Model.Settings.IncludeBlogLink)
+    {
+        <li>
+            <a href="@Url.RouteUrl("Blog")" title="@T("Blog")">@T("Blog")</a>
+        </li>
+    }
+    if (Model.Settings.IncludeNewsLink)
+    {
+        <li>
+            <a href="@Url.RouteUrl("NewsArchive")" title="@T("News")">@T("News")</a>
+        </li>
+    }
+    if (Model.Settings.IncludeForumLink)
+    {
+        <li>
+            <a href="@Url.RouteUrl("Boards")" title="@T("Forum.Forums")">@T("Forum.Forums")</a>
+        </li>
+    }
+
+    foreach (var topic in Model.Topics)
+    {
+        <li class="mega-menu-topic-item">
+            <a href="@Url.RouteUrl("Topic", new {SeName = topic.SeName})" title="@topic.Name">@topic.Name</a>
+            @if (Model.Settings.ShowTopicsBodyInDropdown && !string.IsNullOrWhiteSpace(topic.Body) && !isMegaMenuResponsive)
+            {
+                <div class="dropdown">
+                    <div class="topic-wrapper">
+                        @Html.Raw(topic.Body)
+                    </div>
+                </div>
+            }
+        </li>
+    }
+
+    @*
+        #TOPICS IN DROPDOWN: You can comment the code above and uncomment this in order to have all topics in dropdown!
+
+        if (Model.Topics.Count > 0)
+        {
+            <li>
+                <span class="with-subcategories labelForNextPlusButton" title="Topics">@T("SevenSpikes.MegaMenu.TopicsTitle")</span>
+                <div class="plus-button"></div>
+                <div class="sublist-wrap">
+                    <ul class="sublist">
+                        <li class="back-button">
+                            <span>@T("SevenSpikes.MegaMenu.ResponsiveBackButton")</span>
+                        </li>
+                        @foreach (var topic in Model.Topics)
+                        {
+                            <li><a href="@Url.RouteUrl("Topic", new {SeName = topic.SeName})" title="@topic.Name">@topic.Name</a></li>
+                        }
+                    </ul>
+                </div>
+            </li>
+        }
+    *@
+
+    @*
+        This shows hard-coded About Us and Contact Us menu items
+        @Html.Action("TopicBlock", "MegaMenu", new { systemName = "AboutUs", enableDropDown = !isMegaMenuResponsive })
+
+        @Html.Action("TopicBlock", "MegaMenu", new { systemName = "ContactUs", enableDropDown = !isMegaMenuResponsive })
+    *@
+
+    if (Model.StickyCategory != null)
+    {
+        <li class="sticky-category">
+            <a href="@Url.RouteUrl("Category", new { SeName = Model.StickyCategory.SeName })" title="@Model.StickyCategory.Name">@Model.StickyCategory.Name</a>
+        </li>
+    }
+
+    @Html.Widget("header_menu_after")
+}

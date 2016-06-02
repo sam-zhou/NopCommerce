@@ -1,0 +1,117 @@
+
+@media all and (max-width: 980px) {
+
+    #sevenspikes-cloud-zoom:before {
+        display: none;
+    }
+    #sevenspikes-cloud-zoom img {
+        position: static;
+    }
+
+}
+
+@media all and (min-width: 981px) {
+
+    /* Initial positions until the cloud zoom initializes, so that the image does not jump until the wrap elemet is added, because currently the image is position through this wrap element */
+    #sevenspikes-cloud-zoom .cloud-zoom {
+        position: relative;
+    }
+    #sevenspikes-cloud-zoom .cloud-zoom img {
+        position: static;
+    }
+
+    /* theme overwritting */
+
+        .gallery {
+            font-size: 0;
+        }
+        .gallery .picture-wrapper:only-child,
+        .gallery .picture-wrapper:only-child > .picture {
+            /*line-height: 580px;*/
+            line-height:530px;
+        }
+        .gallery .picture-wrapper,
+        .gallery .picture-wrapper > .picture {
+            line-height: 480px;
+        }
+
+        .gallery .picture-wrapper .picture:before {
+            display: none;
+        }
+
+    /* main picture styling */
+
+        #sevenspikes-cloud-zoom {
+            overflow: visible;
+            text-align: center;
+            font-size: 0;
+            margin: 0;
+            width:100%;
+        }
+        #wrap {
+            line-height: 0;
+            display: inline-block;
+            vertical-align: middle;
+            width:100%;
+        }
+            #wrap img {
+                position: static !important;
+            }
+
+    /* This is the overlay element. */
+
+        #wrap > .mousetrap {
+            right: 0;
+            bottom: 0;
+            margin: auto;
+        }
+        .cloud-zoom-lens {
+            margin: 0;
+            border: none;
+            background-color: #fff;
+            cursor: crosshair;
+        }
+
+    /* This is the zoom window. */
+
+        #cloudZoomWindowElement {
+            left: 0;
+            top: 0;
+            z-index: 2;
+        }
+        #cloud-zoom-big {
+            border: none;
+            overflow: hidden;
+        }
+        .overview #cloud-zoom-big {
+            position: static !important; /* fix for the zoom window so that its wrapper takes the dimensions */
+        }
+
+    /* This is for the title text. */
+
+        .cloud-zoom-title {
+            background-color: #000;
+            padding: 5px;
+            text-align: center;
+            font-size: 11px;
+            font-weight: bold;
+            color: #fff;
+            line-height: 14px;
+        }
+
+    /* This is the loading message. */
+
+        .cloud-zoom-loading {
+            background: #000;
+            padding: 3px;
+            color: #fff;
+            font-size: 12px;
+        }
+
+    /* with product ribbons enabled */
+
+        .gallery .ribbon-wrapper:hover .ribbon-position {
+            opacity: 0;
+        }
+
+}

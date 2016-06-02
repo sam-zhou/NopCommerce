@@ -1,0 +1,43 @@
+﻿@** Copyright 2016 Seven Spikes Ltd. All rights reserved. (http://www.nop-templates.com)
+    * http://www.nop-templates.com/t/licensinginfo
+*@
+
+@using Nop.Core.Infrastructure
+@using Nop.Services.Localization
+@using Nop.Web.Models.Catalog
+@using SevenSpikes.Nop.Framework.MVCExtensions
+@using SevenSpikes.Nop.Plugins.MegaMenu
+@using SevenSpikes.Nop.Plugins.MegaMenu.Domain
+@using SevenSpikes.Nop.Plugins.MegaMenu.Helpers
+@using SevenSpikes.Nop.Plugins.MegaMenu.Models
+
+@model MegaMenuManufacturersModels
+
+@if (Model.ManufacturersModels.Count > 0)
+{
+    var megaMenuSettings = EngineContext.Current.Resolve<MegaMenuSettings>();
+    var localizationHelper = EngineContext.Current.Resolve<ILocalizedSettingsHelper>();
+    var localizedManufacturersItemName = localizationHelper.GetLocalizedSettingValue(Constants.ResourceManufacturersItemName);
+
+    <li>
+        <a href="@Url.RouteUrl("ManufacturerList")" title="@localizedManufacturersItemName">@localizedManufacturersItemName</a>
+        <div class="dropdown manufacturers fullWidth">
+            <div class="row-wrapper">
+                @(Html.DataTable<ManufacturerModel>(Model.ManufacturersModels, megaMenuSettings.NumberOfManufacturersPerRow, "row", "box",
+                @<text>
+                    <div class="title">
+                        <a class="manufacturer" href="@Url.RouteUrl("Manufacturer", new { SeName = item.SeName })" title="@item.Name"><strong>@item.Name</strong></a>
+                    </div>
+                    <ul>
+                        <li>
+                            <a class="manufacturer" href="@Url.RouteUrl("Manufacturer", new { SeName = item.SeName })" title="@item.Name">
+                                <span><img class="lazy" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-original="@item.PictureModel.ImageUrl" alt="@item.PictureModel.AlternateText" title="@item.PictureModel.AlternateText" /></span>
+                            </a>
+                        </li>
+                    </ul>
+                </text>
+                ))
+            </div>
+        </div>
+    </li>
+}

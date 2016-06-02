@@ -1,0 +1,58 @@
+﻿/*
+* Copyright 201 Seven Spikes Ltd. All rights reserved. (http://www.nop-templates.com)
+* http://www.nop-templates.com/t/licensinginfo
+*/
+@media all and (min-width: 981px) {
+.dropdown .box,
+.mega-menu .picture {
+	float: right;
+}
+.mega-menu .title,
+.mega-menu .box li {
+	text-align: right;
+}
+.dropdown.categories li a:hover,
+        .dropdown.manufacturers li a:hover{
+	padding-right: 5px;
+	padding-left: 0;
+}
+/*styles for menu with images*/
+    .mega-menu .dropdown.fullWidth{
+	right: 50%;
+	left: auto;
+	margin-right: -500px;
+	margin-left: 0;
+}
+.mega-menu .dropdown.fullWidth .title a{
+	padding-right: 10px;
+	padding-left: 0;
+}
+.mega-menu .dropdown.fullWidth .subcategories li{
+    background:url(images/bigger-arrow-rtl.png);
+    background-repeat:no-repeat;
+    background-position: right center;
+}
+.mega-menu .dropdown.fullWidth .subcategories a{
+	padding-right: 15px;
+	padding-left: 0;
+}
+.mega-menu .dropdown.fullWidth .subcategories a:hover{
+	padding-right: 20px;
+	padding-left: 0;
+}
+.categories .box:first-child{
+	margin-left: 8px;
+	margin-right: 0;
+}
+.mega-menu .subcategories{
+	margin-right: 100px;
+	margin-left: 0;
+}
+.mega-menu .box li a{
+	padding-right: 10px;
+	padding-left: 0;
+}
+.manufacturers.fullWidth li *{
+	padding-right: 0;
+}
+}

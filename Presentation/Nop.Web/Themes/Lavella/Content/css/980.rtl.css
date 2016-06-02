@@ -95,7 +95,7 @@
 	}
 	.header-links li span {
 		overflow: hidden;
-		font-family: open sans;
+		font-family: tahoma,arial,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53",open sans;
 		color: #888;
 		padding-right: 0;
 		padding-left: 0;
@@ -365,7 +365,7 @@
 		padding: 5px 15px;
 		font-size: 18px;
 		cursor: pointer;
-		font-family: open sans;
+		font-family: tahoma,arial,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53",open sans;
 		text-transform: uppercase;
 		color: #555;
 		font-weight: lighter;

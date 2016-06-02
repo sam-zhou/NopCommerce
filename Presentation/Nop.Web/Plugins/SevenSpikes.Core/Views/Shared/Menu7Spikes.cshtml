@@ -1,0 +1,179 @@
+﻿@using System;
+@using Nop.Web.Framework.Menu;
+@using Nop.Services.Security;
+@using Nop.Core.Domain.Security;
+@using Nop.Core.Infrastructure;
+@using SevenSpikes.Nop.Framework.Plugin;
+@{
+    //load sitemap
+    var siteMap = new Nop.Web.Framework.Menu.XmlSiteMap();
+    siteMap.LoadFrom("~/Administration/sitemap.config");
+
+    //menu plugin
+    var adminMenuPlugins = EngineContext.Current.Resolve<Nop.Core.Plugins.IPluginFinder>()
+        .GetPlugins<IAdminMenuPlugin>()
+        .ToList();
+
+    var permissionService = EngineContext.Current.Resolve<IPermissionService>();
+
+    string url = Request.Url.ToString();
+
+    if (url.Contains("?"))
+    {
+        url = url.Split('?').FirstOrDefault();
+    }
+
+    var urlSplited = url.Split('/');
+
+    var lastUrlParameter = urlSplited[urlSplited.Length - 1];
+
+    int lastParameterInt;
+
+    var currentControllerName = string.Empty;
+
+    if (Int32.TryParse(lastUrlParameter, out lastParameterInt))
+    {
+        currentControllerName = urlSplited[urlSplited.Length - 3];
+    }
+    else
+    {
+        currentControllerName = urlSplited[urlSplited.Length - 2];
+    }
+
+    var tempPlugin = new Nop.Web.Framework.Menu.SiteMapNode();
+    var currentPlugin = new Nop.Web.Framework.Menu.SiteMapNode();
+    var allPluginsMenu = new List<Nop.Web.Framework.Menu.SiteMapNode>();
+    var isPluginFound = false;
+
+    if (adminMenuPlugins.Any())
+    {
+        foreach (var adminMenuPlugin in adminMenuPlugins)
+        {
+            BaseAdminPlugin7Spikes base7SpikesPlugin = adminMenuPlugin as BaseAdminPlugin7Spikes;
+            if (base7SpikesPlugin != null)
+            {
+                tempPlugin = base7SpikesPlugin.BuildMenuItem();
+                if(tempPlugin != null)
+                { 
+                    allPluginsMenu.Add(tempPlugin);
+                    if (!isPluginFound)
+                    {
+                        if (tempPlugin.Url.ToLower().Contains(currentControllerName.ToLower()))
+                        {
+                            currentPlugin = tempPlugin;
+                            isPluginFound = true;
+                        }
+                    }
+                    if (!isPluginFound)
+                    {
+                        foreach (var child in tempPlugin.ChildNodes)
+                        {
+                            if (child.Url.ToLower().Contains(currentControllerName.ToLower()))
+                            {
+                                currentPlugin = tempPlugin;
+                                isPluginFound = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+@if (!string.IsNullOrEmpty(currentPlugin.Title)) 
+{ 
+    <div class="section-header">
+        <div class="title">@currentPlugin.Title</div>
+    </div>
+}
+
+@if (currentPlugin.ChildNodes.Count > 0) 
+{ 
+    <ul id="current-plugin-menu">
+        @foreach (var item in currentPlugin.ChildNodes)
+        {
+            string pluginUrl = null;
+            if (!string.IsNullOrEmpty(item.ControllerName) && !string.IsNullOrEmpty(item.ActionName))
+            {
+                pluginUrl = Url.Action(item.ActionName, item.ControllerName, item.RouteValues, null, null);
+            }
+            else if (!string.IsNullOrEmpty(item.Url))
+            {
+                pluginUrl = item.Url.StartsWith("~/", StringComparison.Ordinal) ? Url.Content(item.Url) : item.Url;
+            }
+            <li>
+                @if (!String.IsNullOrEmpty(pluginUrl))
+                {
+                    <a href="@pluginUrl">
+                        @if (!String.IsNullOrEmpty(item.ImageUrl))
+                        {
+                            <text>
+                                <img alt="" src="@Url.Content(item.ImageUrl)" />
+                            </text>
+                        }
+                        @item.Title
+                    </a>
+                }
+                else
+                {
+                    if (!String.IsNullOrEmpty(item.ImageUrl))
+                    {
+                        <text>
+                            <img alt="" src="@Url.Content(item.ImageUrl)" />
+                        </text>
+                    }
+                    @item.Title
+                }
+            </li>
+        }
+    </ul>
+}
+
+<ul id="Admin7Spikes">
+    @foreach (var item in allPluginsMenu)
+    {
+        @RenderMenuItem(item)
+    }
+</ul>
+
+<script>
+    $(document).ready(function () {
+        $("#current-plugin-menu").kendoMenu({
+            orientation: "vertical"
+        });
+        $("#Admin7Spikes").kendoMenu({
+            orientation: "vertical"
+        });
+    });
+</script>
+
+@helper RenderMenuItem(Nop.Web.Framework.Menu.SiteMapNode item)
+{
+    string pluginUrl = null;
+    if (!string.IsNullOrEmpty(item.Url))
+    {
+        pluginUrl = item.Url.StartsWith("~/", StringComparison.Ordinal) ? Url.Content(item.Url) : item.Url;
+    }
+    <li>
+        @if (!String.IsNullOrEmpty(pluginUrl))
+        {
+            <a href="@pluginUrl">@item.Title</a>
+        }
+        else
+        {
+            <span>@item.Title</span>
+        }
+        @if (item.ChildNodes.Any(x => x.Visible))
+        {
+            <ul>
+                @foreach (var childItem in item.ChildNodes.Where(x => x.Visible))
+                {
+                    @RenderMenuItem(childItem)
+                }
+            </ul>
+        }
+    </li>
+}

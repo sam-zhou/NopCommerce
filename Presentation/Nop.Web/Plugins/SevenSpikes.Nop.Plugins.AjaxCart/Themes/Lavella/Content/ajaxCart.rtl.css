@@ -1,0 +1,65 @@
+﻿* {
+	direction: rtl;
+}
+.productQuantityTextBox {
+	margin: 0 0 0 4px;
+}
+.nopAjaxCartProductListAddToCartButton {
+	float: right;
+}
+.productAddedToCartWindowImage {
+	margin-left: 2%;
+	margin-right: 0;
+}
+.ajaxCart {
+	text-align: right;
+}
+.ajaxCart .k-window-titlebar.k-header {
+	padding: 10px 10px 10px 32px;
+}
+.ajaxCart .k-window-titlebar.k-header .k-window-actions {
+	left: 4px;
+	right: auto;
+}
+.miniProductDetailsView .product-essential .gallery {
+	margin: 0 0 0 1%;
+}
+.miniProductDetailsView .overview .prices {
+	float: right;
+	margin: 0 0 0 10px;
+}
+.miniProductDetailsView .overview .add-info {
+	float: left;
+}
+.ajaxCart .attributes dl > * {
+	margin: 0 !important 10px 0;
+}
+.ajaxCart .attributes dt {
+	padding: 0 0 0 25px;
+}
+.ajaxCart .attributes dt label {
+	float: right;
+	margin-left: 5px;
+	margin-right: 0;
+}
+.ajaxCart .attributes dd {
+	float: right;
+}
+.ajaxCart .attributes .option-list li > * {
+	float: right;
+}
+.ajaxCart .attributes .option-list li > *:first-child {
+	margin-left: 5px;
+	margin-right: 0;
+}
+.ajax-cart-button-wrapper .productQuantityDropdown {
+	float: right;
+}
+.ajaxCart .item-box .product-rating-box {
+	right: -100%;
+	left: auto;
+}
+.ajaxCart .item-box:hover .product-rating-box {
+	right: 0;
+	left: auto;
+}

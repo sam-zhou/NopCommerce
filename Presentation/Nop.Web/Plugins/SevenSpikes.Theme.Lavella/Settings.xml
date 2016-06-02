@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Settings>
+  <Setting Name="lavellathemesettings.preset">
+    <Value>9aba6b</Value>
+  </Setting>
+  <Setting Name="lavellathemesettings.defaultpreset">
+    <Value>9aba6b</Value>
+  </Setting>
+  <Setting Name="lavellathemesettings.associatedproductsviewmode">
+    <Value>grid</Value>
+  </Setting>
+  <Setting Name="ordersettings.onepagecheckoutenabled">
+    <Value>false</Value>
+  </Setting>
+  <Setting Name="mediasettings.categorythumbpicturesize">
+    <Value>310</Value>
+  </Setting>
+  <Setting Name="mediasettings.associatedproductpicturesize">
+    <Value>310</Value>
+  </Setting>
+  <Setting Name="mediasettings.manufacturerthumbpicturesize">
+    <Value>230</Value>
+  </Setting>
+  <Setting Name="mediasettings.productdetailspicturesize">
+    <Value>540</Value>
+  </Setting>
+  <Setting Name="mediasettings.productthumbpicturesize">
+    <Value>360</Value>
+  </Setting>
+  <Setting Name="mediasettings.productthumbpicturesizeonproductdetailspage">
+    <Value>90</Value>
+  </Setting>
+  <Setting Name="mediasettings.maximumimagesize">
+    <Value>1920</Value>
+  </Setting>
+  <Setting Name="nopajaxcartsettings.enableproductquantitytextbox">
+    <Value>false</Value>
+  </Setting>
+  <Setting Name="CloudZoomSettings.ZoomPosition">
+    <Value>inside</Value>
+  </Setting>
+  <Setting Name="CloudZoomSettings.IsPictureThumbnailsCarouselVertical-Lavella">
+    <Value>true</Value>
+  </Setting>
+  <Setting Name="CloudZoomSettings.NumberOfPictureThumbnailsInCarousel-Lavella">
+    <Value>4</Value>
+  </Setting>
+  <Setting Name="MegaMenuSettings.MegaMenuCategoryTemplate">
+    <Value>CategoryMenuTemplate.WithPictures</Value>
+  </Setting>
+  <Setting Name="MegaMenuSettings.MegaMenuManufacturerTemplate">
+    <Value>ManufacturerMenuTemplate.WithPictures</Value>
+  </Setting>
+  <Setting Name="MegaMenuSettings.CategoriesImageSize">
+    <Value>240</Value>
+  </Setting>
+  <Setting Name="InstantSearchSettings.PictureSize">
+    <Value>100</Value>
+  </Setting>
+  <Setting Name="QuickViewSettings.ProductItemSelectorChild">
+    <Value>.buttons</Value>
+  </Setting>
+  <Setting Name="QuickViewSettings.ProductDetailsPictureSize">
+    <Value>375</Value>
+  </Setting>
+  <Setting Name="QuickViewSettings.ProductThumbPictureSize">
+    <Value>85</Value>
+  </Setting>
+</Settings>

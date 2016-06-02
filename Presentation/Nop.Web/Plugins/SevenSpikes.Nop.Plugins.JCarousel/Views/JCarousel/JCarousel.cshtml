@@ -1,0 +1,169 @@
+﻿@** Copyright 2016 Seven Spikes Ltd. All rights reserved. (http://www.nop-templates.com)
+    * http://www.nop-templates.com/t/licensinginfo
+*@
+
+@using Nop.Core;
+@using Nop.Core.Infrastructure;
+
+@model SevenSpikes.Nop.Plugins.JCarousel.Models.JCarouselModel
+
+@if (Model.Items.Count > 0)
+{
+    Html.AddCssFileParts("~/Plugins/SevenSpikes.Nop.Plugins.JCarousel/Themes/" + Model.Theme + "/Content/JCarousel.css");
+
+    bool supportRtl = EngineContext.Current.Resolve<IWorkContext>().WorkingLanguage.Rtl;
+    if (supportRtl)
+    {
+        Html.AddCssFileParts("~/Plugins/SevenSpikes.Nop.Plugins.JCarousel/Themes/" + Model.Theme + "/Content/JCarousel.rtl.css");
+    }
+
+    Html.AddScriptParts("~/Plugins/SevenSpikes.Core/Scripts/swipeEvents.min.js");
+    Html.AddScriptParts("~/Plugins/SevenSpikes.Nop.Plugins.JCarousel/Scripts/jquery.disable.text.select.js");
+    Html.AddScriptParts("~/Plugins/SevenSpikes.Nop.Plugins.JCarousel/Scripts/jquery.jcarousel.min.js");
+
+    var carouselItemMinWidth = Model.Settings.JCarouselEntitySettings.JCarouselItemMinWidth;
+
+    if (carouselItemMinWidth <= 0)
+    {
+        carouselItemMinWidth = Model.GeneralSettings.JCarouselItemMinWidth;
+    }
+
+    var vertical = "";
+    var verticalBlock = "";
+    if (Model.Settings.JCarouselEntitySettings.CarouselOrientation)
+    {
+        vertical = "vertical-holder";
+        verticalBlock = "block";
+    }
+
+    var carouselHtmlElementId = Model.Settings.CarouselHtmlElementId;
+
+    var animationSpeed = string.Empty;
+    var easing = string.Empty;
+    var wrap = string.Empty;
+
+    if (Model.Settings.JCarouselEntitySettings.AnimationSpeed != "none")
+    {
+        animationSpeed = Model.Settings.JCarouselEntitySettings.AnimationSpeed;
+    }
+
+    if (Model.Settings.JCarouselEntitySettings.Easing != "none")
+    {
+        easing = Model.Settings.JCarouselEntitySettings.Easing;
+    }
+
+    if (Model.Settings.JCarouselEntitySettings.WrapItems != "none")
+    {
+        wrap = Model.Settings.JCarouselEntitySettings.WrapItems;
+    }
+
+    if (Model.Settings.JCarouselEntitySettings.WrapItems == "circular" && Model.Settings.JCarouselEntitySettings.Autoscroll > 0 && Model.Items.Count <= Model.Settings.JCarouselEntitySettings.NumberOfVisibleItems)
+    {
+        Model.Settings.JCarouselEntitySettings.Autoscroll = 0;
+        wrap = string.Empty;
+    }
+
+    var numberOfVisibleItems = Model.Settings.JCarouselEntitySettings.NumberOfVisibleItems;
+
+    if (numberOfVisibleItems > 0)
+    {
+        // in order to prevent js errors set the number of visible items to be the count of all product items from the model,
+        // if the model contains less products than the numberOfVisibleItems
+        if (Model.Items.Count < numberOfVisibleItems)
+        {
+            numberOfVisibleItems = Model.Items.Count;
+        }
+    }
+
+    <div class="jCarouselMainWrapper @carouselHtmlElementId @Model.Settings.JCarouselEntitySettings.Skin @Model.DataSourceTypeClass @verticalBlock"
+         data-carouselHtmlElementId="@carouselHtmlElementId"
+         data-supportRtl="@supportRtl.ToString().ToLowerInvariant()"
+         data-carouselItemMinWidth="@carouselItemMinWidth"
+         data-numberOfVisibleItems="@numberOfVisibleItems"
+         data-vertical="@Model.Settings.JCarouselEntitySettings.CarouselOrientation.ToString().ToLowerInvariant()"
+         data-startIndex="@Model.Settings.JCarouselEntitySettings.StartIndex"
+         data-scrollItems="@Model.Settings.JCarouselEntitySettings.ScrollItems"
+         data-animationSpeed="@Html.Raw(animationSpeed)"
+         data-autoscroll="@Model.Settings.JCarouselEntitySettings.Autoscroll"
+         data-size="@Model.Items.Count"
+         data-easing="@Html.Raw(easing)"
+         data-wrap="@Html.Raw(wrap)">
+
+        <div class="nop-jcarousel @vertical">
+            @if (!string.IsNullOrEmpty(Model.Settings.Title) && Model.Settings.JCarouselEntitySettings.ShowTitle)
+            {
+                if (Model.Settings.JCarouselEntitySettings.CarouselOrientation)
+                {
+                    <h2 class="carousel-title vertical"><span>@Model.Settings.Title</span></h2>
+                }
+                else
+                {
+                    <h2 class="carousel-title"><span>@Model.Settings.Title</span></h2>
+                }
+            }
+            <ul id="@carouselHtmlElementId">
+                @foreach (var item in Model.Items)
+                {
+                    var dataProductIdAttribute = string.Empty;
+
+                    if (item.IsProduct)
+                    {
+                        dataProductIdAttribute = string.Format("data-productid=\"{0}\"", item.Id);
+                    }
+
+                    <li>
+                        <div class="item-holder" @Html.Raw(dataProductIdAttribute)>
+                            <div class="item-picture">
+                                <a class="thumb-img" href="@item.Url" title="@item.PictureModel.Title">
+                                    <img alt="@item.PictureModel.AlternateText" src="@item.PictureModel.ImageUrl" title="@item.PictureModel.Title" />
+                                </a>
+                            </div>
+                            <div class="item-info">
+                                @if (Model.Settings.JCarouselEntitySettings.ShowItemsName)
+                                {
+                                    <h3 class="jcarousel-product-title">
+                                        <a class="jcarousel-product-name" href="@item.Url" title="@item.PictureModel.Title">
+                                            @item.Name
+                                        </a>
+                                    </h3>
+                                }
+                                @if (Model.Settings.JCarouselEntitySettings.ShowShortDescription)
+                                {
+                                    <p class="short-description">@item.ShortDescription</p>
+                                }
+                                @if (Model.Settings.JCarouselEntitySettings.ShowProductsPrice)
+                                {
+                                    <div class="prices">
+                                        @if (Model.Settings.JCarouselEntitySettings.ShowProductsOldPrice && !string.IsNullOrEmpty(@item.ProductPriceModel.OldPrice))
+                                        {
+                                            <span class="price old-price">@item.ProductPriceModel.OldPrice</span>
+                                        }
+                                        <span class="price actual-price">@item.ProductPriceModel.Price</span>
+                                    </div>
+                                }
+                                @if (Model.Settings.JCarouselEntitySettings.ShowRatings && item.AllowCustomerReviews)
+                                {
+                                    int ratingPercent = 0;
+                                    if (item.TotalReviews != 0)
+                                    {
+                                        ratingPercent = ((item.RatingSum * 100) / item.TotalReviews) / 5;
+                                    }
+                                    <div class="product-rating-box" title="@string.Format(T("Reviews.TotalReviews").Text, item.TotalReviews)">
+                                        <div class="rating">
+                                            <div style="width: @(ratingPercent)%">
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                @if (Model.Settings.JCarouselEntitySettings.ShowDetailsButton)
+                                {
+                                    <a class="button" href="@item.Url">@T("SevenSpikes.JCarousel.Admin.DetailsButton")</a>
+                                }
+                            </div>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+}
