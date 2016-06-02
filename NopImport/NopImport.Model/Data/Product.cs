@@ -24,6 +24,10 @@ namespace NopImport.Model.Data
 
         public virtual string LocalPicture { get; set; }
 
+        public virtual string Manufacturer { get; set; }
+
+        public virtual string Category { get; set; }
+
         public virtual string Price { get; set; }
 
         public virtual string OriginalPrice { get; set; }

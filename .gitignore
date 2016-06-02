@@ -255,3 +255,4 @@ paket-files/
 *.pdb
 Presentation/Nop.Web/Plugins/*
 .vs/
+Presentation/Nop.Web/Content/Images/Thumbs/*

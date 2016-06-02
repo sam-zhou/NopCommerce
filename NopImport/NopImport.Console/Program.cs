@@ -4,6 +4,8 @@ using Nop.Services.Catalog;
 using NopImport.Console.ChemistWarehouse;
 using NopImport.Console.Export;
 using NopImport.Console.Import;
+using NopImport.GoogleTranslate;
+using SevenSpikes.Nop.Plugins.NopQuickTabs.Domain;
 using SevenSpikes.Nop.Plugins.NopQuickTabs.Services;
 
 namespace NopImport.Console
@@ -14,8 +16,6 @@ namespace NopImport.Console
 
         private static void Main(string[] args)
         {
-
-
 
             //GetList();
             //GetDetails();
@@ -28,9 +28,8 @@ namespace NopImport.Console
         private static void GetDetails()
         {
             System.Console.WriteLine("GetDetails        ");
-            var reader = new CWProductReader();
-            reader.ProgressChanged += ReaderOnProgressChanged;
-            
+            var reader = new CWProductHtmlReader();
+            reader.ProgressChanged += OnProgressChanged;
             reader.Process();
         }
 
@@ -38,26 +37,19 @@ namespace NopImport.Console
         private static void GetList(bool resetDb = false)
         {
             System.Console.WriteLine("GetList           ");
-            var reader = new CWProductListReader(resetDb);
-            reader.ProgressChanged += ReaderOnProgressChanged;
-            
+            var reader = new CWProductListHtmlReader(resetDb);
+            reader.ProgressChanged += OnProgressChanged;
             reader.Process();
 
             
             
         }
 
-        private static void ReaderOnProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            System.Console.Write("Completed: \r{0}% ", e.ProgressPercentage);
-        }
-
-
         static void RunExport()
         {
             System.Console.WriteLine("RunExport            ");
             var exporter = new ExcelExporter();
-            exporter.ProgressChanged += ExporterOnProgressChanged;
+            exporter.ProgressChanged += OnProgressChanged;
             exporter.Completed += ExporterOnCompleted;
             exporter.RunAsync("d:\\products.xlsx");
             System.Console.ReadLine();
@@ -68,7 +60,7 @@ namespace NopImport.Console
             System.Console.WriteLine("Export Completed !         ");
         }
 
-        private static void ExporterOnProgressChanged(object sender, ProgressChangedEventArgs e)
+        private static void OnProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             System.Console.Write("\r{0}% Completed", e.ProgressPercentage);
         }
@@ -76,9 +68,12 @@ namespace NopImport.Console
 
         static void ImportToNop()
         {
+            System.Console.WriteLine("ImportToNop              ");
             var linker = new NopLinker();
-
-            linker.ImportItems();
+            linker.ProgressChanged += OnProgressChanged;
+            //var output = linker.IsProductExists("CW", "40649");
+            //System.Console.WriteLine(output);
+            linker.Process();
         }
     }
 }

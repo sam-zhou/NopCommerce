@@ -19,6 +19,8 @@ namespace NopImport.Model.Map
             Map(q => q.ExternalId).Length(10).Nullable();
             Map(q => q.Picture).Length(200).Nullable();
             Map(q => q.LocalPicture).Length(200).Nullable();
+            Map(q => q.Manufacturer).Length(10).Nullable();
+            Map(q => q.Category).Length(10).Nullable();
             Map(q => q.Price).Length(10).Default("0.00");
             Map(q => q.OriginalPrice).Length(10).Default("0.00");
             Map(q => q.Description).Length(10000).Nullable();

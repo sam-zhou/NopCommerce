@@ -105,9 +105,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ChemistWarehouse\CWProductListReader.cs" />
-    <Compile Include="ChemistWarehouse\CWProductReader.cs" />
-    <Compile Include="Common\AbstractReader.cs" />
+    <Compile Include="ChemistWarehouse\CWProductListHtmlReader.cs" />
+    <Compile Include="ChemistWarehouse\CWProductHtmlReader.cs" />
+    <Compile Include="Common\AbstractHtmlReader.cs" />
+    <Compile Include="Common\BaseWorker.cs" />
     <Compile Include="Common\Excel\WorkSheetBase.cs" />
     <Compile Include="Common\Excel\WorkSheetFactory.cs" />
     <Compile Include="Common\FileDownloader.cs" />
@@ -115,11 +116,11 @@
     <Compile Include="Export\ProductWorkSheet.cs" />
     <Compile Include="Helper\NopProductHelper.cs" />
     <Compile Include="Common\NodeHelper.cs" />
-    <Compile Include="Common\ProductReader.cs" />
+    <Compile Include="Common\ProductHtmlReader.cs" />
     <Compile Include="Import\NopLinker.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Common\ProductListReader.cs" />
+    <Compile Include="Common\ProductListHtmlReader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -151,6 +152,10 @@
     <ProjectReference Include="..\NopImport.Common.Services\NopImport.Common.Services.csproj">
       <Project>{6eaa3562-8691-495a-add3-0995775d35bb}</Project>
       <Name>NopImport.Common.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NopImport.GoogleTranslate\NopImport.GoogleTranslate.csproj">
+      <Project>{55937f43-63fa-44cc-ba0f-60468e625fc3}</Project>
+      <Name>NopImport.GoogleTranslate</Name>
     </ProjectReference>
     <ProjectReference Include="..\NopImport.Model\NopImport.Model.csproj">
       <Project>{abdec396-c0c1-4d18-a8c4-d0f629cad48f}</Project>

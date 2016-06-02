@@ -7,20 +7,26 @@ using System.Web;
 using Autofac;
 using Autofac.Core;
 using dotless.Core.Parser.Infrastructure;
+using HtmlAgilityPack;
+using NHibernate.Impl;
 using Nop.Core;
 using Nop.Core.Data;
 using Nop.Core.Domain.Catalog;
+using Nop.Core.Domain.Localization;
 using Nop.Core.Infrastructure;
 using Nop.Core.Infrastructure.DependencyManagement;
 using Nop.Core.Plugins;
 using Nop.Data;
 using Nop.Services.Catalog;
 using Nop.Services.Directory;
+using Nop.Services.Localization;
 using Nop.Services.Media;
 using Nop.Services.Seo;
 using NopImport.Common;
 using NopImport.Common.Services;
+using NopImport.Console.Common;
 using NopImport.Console.Helper;
+using NopImport.GoogleTranslate;
 using SevenSpikes.Nop.Conditions.Helpers;
 using SevenSpikes.Nop.Conditions.Services;
 using SevenSpikes.Nop.Mappings.Data;
@@ -30,16 +36,26 @@ using SevenSpikes.Nop.Plugins.NopQuickTabs.Database;
 using SevenSpikes.Nop.Plugins.NopQuickTabs.Domain;
 using SevenSpikes.Nop.Plugins.NopQuickTabs.EFMapping;
 using SevenSpikes.Nop.Plugins.NopQuickTabs.Services;
+using SevenSpikes.Nop.Services.Configuration;
 using NopProduct = Nop.Core.Domain.Catalog.Product;
 using Product = NopImport.Model.Data.Product;
 
 namespace NopImport.Console.Import
 {
-    public class NopLinker
+    public class NopLinker : BaseWorker
     {
+
         public NopLinker()
         {
 
+            Initialise();
+
+
+            //EngineContext.Current.Resolve<ITabService>();
+        }
+        #region Initialise
+        private void Initialise()
+        {
             EngineContext.Initialize(false);
             var builder = new ContainerBuilder();
             builder.RegisterType<EntityMappingService>().As<IEntityMappingService>().InstancePerLifetimeScope();
@@ -47,6 +63,7 @@ namespace NopImport.Console.Import
             builder.RegisterType<TabService>().As<ITabService>().InstancePerLifetimeScope();
             builder.RegisterType<ConditionService>().As<IConditionService>().InstancePerLifetimeScope();
             builder.RegisterType<ConditionChecker>().As<IConditionChecker>().InstancePerLifetimeScope();
+            builder.RegisterType<LocalizedSettingService>().As<ILocalizedSettingService>().InstancePerLifetimeScope();
             RegisterHelper<NopQuickTabsObjectContext>(builder, "nop_object_context_quick_tabs");
 
             //override required repository with our custom context
@@ -64,12 +81,9 @@ namespace NopImport.Console.Import
                 .InstancePerLifetimeScope();
 
             builder.Update(EngineContext.Current.ContainerManager.Container);
-            
-            
-            //EngineContext.Current.Resolve<ITabService>();
         }
 
-        public void RegisterHelper<T>(ContainerBuilder builder, string contextName)
+        private void RegisterHelper<T>(ContainerBuilder builder, string contextName)
              where T : IDbContext
         {
             //data layer
@@ -98,93 +112,133 @@ namespace NopImport.Console.Import
             }
         }
 
+        #endregion
 
-        public void ImportItems()
+
+
+        #region properties
+
+        private IProductService _productService;
+        protected IProductService ProductService
         {
-            using (var db = new DatabaseService("DefaultConnectionString", "NopImport"))
+            get
             {
-                var productService = EngineContext.Current.Resolve<IProductService>();
-                var tabService = EngineContext.Current.Resolve<ITabService>();
-                var pictureService = EngineContext.Current.Resolve<IPictureService>();
-                var urlRecordService = EngineContext.Current.Resolve<IUrlRecordService>();
-                var products = db.Session.QueryOver<Product>().Where(q => q.IsUpdated && !q.IsSynced).List();
-                foreach (var product in products)
+                if (_productService == null)
                 {
-                    try
-                    {
-                        var nopProduct =
-                            productService.GetProductBySku(string.Format("{0}-{1}", product.ExternalStoreCode,
-                                product.ExternalId));
-                        if (nopProduct == null)
-                        {
-                            nopProduct = new NopProduct();
-                            nopProduct.UpdateFrom(product);
-
-                            productService.InsertProduct(nopProduct);
-                            urlRecordService.SaveSlug(nopProduct, nopProduct.ValidateSeName(StringExtension.GenerateSlug(product.Name), product.Name, true), 0);
-                            if (!string.IsNullOrWhiteSpace(product.LocalPicture))
-                            {
-                                var fullPath = Path.Combine(
-                                    @"I:\NopCommerce\Presentation\Nop.Web\Content\Images\Thumbs", product.LocalPicture);
-
-                                var newPictureBinary = File.ReadAllBytes(fullPath);
-                                var newPicture = pictureService.InsertPicture(newPictureBinary,
-                                    GetMimeTypeFromFilePath(fullPath), pictureService.GetPictureSeName(product.Name));
-                                nopProduct.ProductPictures.Add(new ProductPicture
-                                {
-                                    PictureId = newPicture.Id,
-                                    DisplayOrder = 1,
-                                });
-                                
-                            }
-
-
-                            nopProduct.ProductCategories.Add(new ProductCategory
-                            {
-                                CategoryId = 5
-                            });
-                            productService.UpdateProduct(nopProduct);
-
-
-                            var tabs = GetTabs(product);
-
-                            foreach (var tab in tabs)
-                            {
-                                tabService.InsertTab(tab);
-                            }
-                            
-                            
-
-                            tabService.AddTabsForProductByIds(nopProduct.Id, tabs.Select(q => q.Id).ToArray());
-
-                        }
-                        else
-                        {
-                            
-                            System.Console.WriteLine("product exists");
-                            //nopProduct.UpdateFrom(product);
-                            //productService.UpdateProduct(nopProduct);
-                        }
-
-
-                        db.BeginTransaction();
-                        product.IsSynced = true;
-                        db.Session.Save(product);
-                        db.CommitTransaction();
-                    }
-                    catch (Exception ex)
-                    {
-                        System.Console.WriteLine("Error when syncing product to NopCommerce, Rolling back");
-                        db.RollBackTransaction();
-                        throw ex;
-                    }
-                    
-                    
+                    _productService = EngineContext.Current.Resolve<IProductService>();
                 }
+                return _productService;
             }
         }
 
-        public static string GetMimeTypeFromFilePath(string filePath)
+        private ITabService _tabService;
+        protected ITabService TabService
+        {
+            get
+            {
+                if (_tabService == null)
+                {
+                    _tabService = EngineContext.Current.Resolve<ITabService>();
+                }
+                return _tabService;
+            }
+        }
+
+        private IPictureService _pictureService;
+        protected IPictureService PictureService
+        {
+            get
+            {
+                if (_pictureService == null)
+                {
+                    _pictureService = EngineContext.Current.Resolve<IPictureService>();
+                }
+                return _pictureService;
+            }
+        }
+
+
+
+
+        private IUrlRecordService _urlRecordService;
+        protected IUrlRecordService UrlRecordService
+        {
+            get
+            {
+                if (_urlRecordService == null)
+                {
+                    _urlRecordService = EngineContext.Current.Resolve<IUrlRecordService>();
+                }
+                return _urlRecordService;
+            }
+        }
+
+
+        private ILocalizationService _localizationService;
+        protected ILocalizationService LocalizationService
+        {
+            get
+            {
+                if (_localizationService == null)
+                {
+                    _localizationService = EngineContext.Current.Resolve<ILocalizationService>();
+                }
+                return _localizationService;
+            }
+        }
+
+
+        private ILocalizedSettingService _localizedSettingService;
+        protected ILocalizedSettingService LocalizedSettingService
+        {
+            get
+            {
+                if (_localizedSettingService == null)
+                {
+                    _localizedSettingService = EngineContext.Current.Resolve<ILocalizedSettingService>();
+                }
+                return _localizedSettingService;
+            }
+        }
+
+
+
+        private ILocalizedEntityService _localizedEntityService;
+        protected ILocalizedEntityService LocalizedEntityService
+        {
+            get
+            {
+                if (_localizedEntityService == null)
+                {
+                    _localizedEntityService = EngineContext.Current.Resolve<ILocalizedEntityService>();
+                }
+                return _localizedEntityService;
+            }
+        }
+
+        private Translator _translator;
+
+        protected Translator Translator
+        {
+            get
+            {
+                if (_translator == null)
+                {
+                    _translator = new Translator();
+                }
+                return _translator;
+            }
+        }
+
+        #endregion
+
+        public bool IsProductExists(string code, string id)
+        {
+            return ProductService.GetProductBySku(string.Format("{0}-{1}", code,
+                id)) != null;
+        }
+
+        private static string GetMimeTypeFromFilePath(string filePath)
         {
             var mimeType = MimeMapping.GetMimeMapping(filePath);
 
@@ -195,23 +249,103 @@ namespace NopImport.Console.Import
             return mimeType;
         }
 
+        private void TranslateToAllLanguages<T>(T property, string propertyName) where T : BaseEntity
+        {
+            foreach (var googleLanguage in GoogleLanguage.Languages)
+            {
+                if (googleLanguage.Id != 1)
+                {
+                    TranslateProperty(property, propertyName, googleLanguage.Id);
+                }
+            }
+        }
+
+        private void TranslateProperty<T>(T property, string propertyName, int languageId) where T : BaseEntity
+        {
+            var propertyValue = (typeof (T)).GetProperty(propertyName).GetValue(property, null).ToString();
+            var lan = GetLocalizedProperty(property.Id, typeof(T).Name, propertyName, propertyValue, languageId);
+            LocalizedEntityService.InsertLocalizedProperty(lan);
+        }
+
+
+        private LocalizedProperty GetLocalizedProperty(int entityId, string keyGroup, string key, string value, int languageId)
+        {
+            var language = GoogleLanguage.GetLanguageById(languageId);
+
+            string translatedText = null;
+
+            if (language != null && languageId != 1)
+            {
+                translatedText = NopDictionary.GetTranslate(value, languageId);
+
+                if (string.IsNullOrWhiteSpace(translatedText))
+                {
+                    if (value.Contains("<") && value.Contains(">"))
+                    {
+                        translatedText = GetTranslateHtml(value, languageId);
+                    }
+                    else
+                    {
+                        translatedText = Translator.Translate(value, "English", GoogleLanguage.GetLanguageById(languageId).Name);
+                    }
+
+                    translatedText = translatedText.Replace("\\r \\n", "<br/>").Replace("\\r\\n", "<br/>").Replace("\\r", "<br/>").Replace("\\n", "<br/>");
+
+                }
+            }
+
+
+
+
+
+            return  new LocalizedProperty
+            {
+                EntityId = entityId,
+                LanguageId = languageId,
+                LocaleKey = key,
+                LocaleKeyGroup = keyGroup,
+                LocaleValue = translatedText
+            };
+
+            
+
+
+
+            //LocalizedSettingService.SaveSetting(lan, 1);
+        }
+
+        private string GetTranslateHtml(string text, int languageId)
+        {
+            var htmlDocument = new HtmlDocument();
+            htmlDocument.LoadHtml(text);
+
+
+            TranslateNode(htmlDocument.DocumentNode, languageId);
+
+
+            return htmlDocument.DocumentNode.OuterHtml;
+        }
+
+        private void TranslateNode(HtmlNode node, int languageId)
+        {
+            if (!node.HasChildNodes)
+            {
+                node.InnerHtml = Translator.Translate(node.InnerText, "English",
+                    GoogleLanguage.GetLanguageById(languageId).Name);
+            }
+            else
+            {
+                foreach (var childNode in node.ChildNodes)
+                {
+                    TranslateNode(childNode, languageId);
+                }
+            }
+        }
+
 
         private List<Tab> GetTabs(Product product)
         {
             var output = new List<Tab>();
-
-            if (!string.IsNullOrWhiteSpace(product.GeneralInfo))
-            {
-                output.Add(new Tab
-                {
-                    SystemName = "general_info_" + product.ExternalStoreCode + "_" + product.ExternalId,
-                    DisplayName = "General Information",
-                    Description = product.GeneralInfo,
-                    TabMode = TabMode.Mappings,
-                    DisplayOrder = 3
-                });
-
-            }
 
             if (!string.IsNullOrWhiteSpace(product.Directions))
             {
@@ -254,6 +388,106 @@ namespace NopImport.Console.Import
             }
 
             return output;
-        } 
+        }
+
+        public override void Process()
+        {
+            using (var db = new DatabaseService("DefaultConnectionString", "NopImport"))
+            {
+
+                var products = db.Session.QueryOver<Product>().Where(q => q.IsUpdated && !q.IsSynced).List();
+                var count = 0;
+                foreach (var product in products)
+                {
+                    count ++;
+                    try
+                    {
+                        var nopProduct =
+                            ProductService.GetProductBySku(string.Format("{0}-{1}", product.ExternalStoreCode,
+                                product.ExternalId));
+                        if (nopProduct == null)
+                        {
+                            nopProduct = new NopProduct();
+                            nopProduct.UpdateFrom(product);
+
+                            ProductService.InsertProduct(nopProduct);
+
+                            TranslateToAllLanguages(nopProduct, "Name");
+                            TranslateToAllLanguages(nopProduct, "ShortDescription");
+                            TranslateToAllLanguages(nopProduct, "FullDescription");
+                            TranslateToAllLanguages(nopProduct, "MetaDescription");
+                            TranslateToAllLanguages(nopProduct, "MetaKeywords");
+
+                            UrlRecordService.SaveSlug(nopProduct, nopProduct.ValidateSeName(StringExtension.GenerateSlug(product.Name), product.Name, true), 0);
+                            if (!string.IsNullOrWhiteSpace(product.LocalPicture))
+                            {
+                                var directory = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..\\..\\Presentation\\Nop.Web\\Content\\Images\\Thumbs"));
+
+                                var fullPath = Path.Combine(directory, product.LocalPicture);
+
+                                var newPictureBinary = File.ReadAllBytes(fullPath);
+                                var newPicture = PictureService.InsertPicture(newPictureBinary,
+                                    GetMimeTypeFromFilePath(fullPath), PictureService.GetPictureSeName(product.Name));
+                                nopProduct.ProductPictures.Add(new ProductPicture
+                                {
+                                    PictureId = newPicture.Id,
+                                    DisplayOrder = 1,
+                                });
+
+                            }
+
+                            nopProduct.ProductManufacturers.Add(new ProductManufacturer
+                            {
+                                ManufacturerId = int.Parse(product.Manufacturer)
+                            });
+
+                            nopProduct.ProductCategories.Add(new ProductCategory
+                            {
+                                CategoryId = int.Parse(product.Category)
+                            });
+
+
+                            ProductService.UpdateProduct(nopProduct);
+
+
+                            var tabs = GetTabs(product);
+
+                            foreach (var tab in tabs)
+                            {
+                                TabService.InsertTab(tab);
+                                TranslateToAllLanguages(tab, "Description");
+                                TranslateToAllLanguages(tab, "DisplayName");
+                            }
+
+
+                            TabService.AddTabsForProductByIds(nopProduct.Id, tabs.Select(q => q.Id).ToArray());
+
+                        }
+                        else
+                        {
+
+                            System.Console.WriteLine("product exists");
+                            //nopProduct.UpdateFrom(product);
+                            //productService.UpdateProduct(nopProduct);
+                        }
+
+
+                        db.BeginTransaction();
+                        product.IsSynced = true;
+                        db.Session.Save(product);
+                        db.CommitTransaction();
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Console.WriteLine("Error when syncing product to NopCommerce, Rolling back");
+                        db.RollBackTransaction();
+                        throw ex;
+                    }
+
+                    ChangeProgress(count * 100 / products.Count);
+
+                }
+            }
+        }
     }
 }
