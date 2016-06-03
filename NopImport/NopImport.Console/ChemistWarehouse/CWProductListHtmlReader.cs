@@ -22,27 +22,27 @@ namespace NopImport.Console.ChemistWarehouse
             //    },
             //};
 
+
             
 
+            //AddSearchModel("http://www.chemistwarehouse.com.au/Shop-Online/513/Blackmores?page={0}", 8, "5");
+            //AddSearchModel("http://www.chemistwarehouse.com.au/Shop-Online/587/Swisse?page={0}", 5, "4");
+            //AddSearchModel("http://www.chemistwarehouse.com.au/Shop-Online/722/Healthy-Care?page={0}", 5, "17");
+            //AddSearchModel("http://www.chemistwarehouse.com.au/Shop-Online/505/Nature-39-s-Own?page={0}", 4, "6");
+            //AddSearchModel("http://www.chemistwarehouse.com.au/Shop-Online/660/Nature-39-s-Way?page={0}", 5, "11");
+            //AddSearchModel("http://www.chemistwarehouse.com.au/Shop-Online/511/Cenovis?page={0}", 3, "8");
+            //AddSearchModel("http://www.chemistwarehouse.com.au/Shop-Online/519/Ethical-Nutrients?page={0}", 4, "9");
 
-            AddSearchModel("http://www.chemistwarehouse.com.au/Shop-Online/513/Blackmores?page={0}", 8, "5");
-            AddSearchModel("http://www.chemistwarehouse.com.au/Shop-Online/587/Swisse?page={0}", 5, "4");
-            AddSearchModel("http://www.chemistwarehouse.com.au/Shop-Online/722/Healthy-Care?page={0}", 5, "17");
-            AddSearchModel("http://www.chemistwarehouse.com.au/Shop-Online/505/Nature-39-s-Own?page={0}", 4, "6");
-            AddSearchModel("http://www.chemistwarehouse.com.au/Shop-Online/660/Nature-39-s-Way?page={0}", 5, "11");
-            AddSearchModel("http://www.chemistwarehouse.com.au/Shop-Online/511/Cenovis?page={0}", 3, "8");
-            AddSearchModel("http://www.chemistwarehouse.com.au/Shop-Online/519/Ethical-Nutrients?page={0}", 4, "9");
-
-            AddSearchModel("http://www.chemistwarehouse.com.au/Shop-Online/547/Bioglan?page={0}", 4, "10");
-            AddSearchModel("http://www.chemistwarehouse.com.au/Shop-Online/506/Bio-Organics?page={0}", 1, "7");
-            AddSearchModel("http://www.chemistwarehouse.com.au/Shop-Online/889/Wagner?page={0}", 2, "12");
-
-
-            AddSearchModel("http://www.chemistwarehouse.com.au/Shop-Online/958/Aptamil?page={0}", 1, "15", "37");
-            AddSearchModel("http://www.chemistwarehouse.com.au/Shop-Online/1267/Bellamy-39-s-Organic-Formula?page={0}", 1, "16", "37");
-            
+            //AddSearchModel("http://www.chemistwarehouse.com.au/Shop-Online/547/Bioglan?page={0}", 4, "10");
+            //AddSearchModel("http://www.chemistwarehouse.com.au/Shop-Online/506/Bio-Organics?page={0}", 1, "7");
+            //AddSearchModel("http://www.chemistwarehouse.com.au/Shop-Online/889/Wagner?page={0}", 2, "12");
 
 
+            //AddSearchModel("http://www.chemistwarehouse.com.au/Shop-Online/958/Aptamil?page={0}", 1, "15", "37");
+            //AddSearchModel("http://www.chemistwarehouse.com.au/Shop-Online/1267/Bellamy-39-s-Organic-Formula?page={0}", 1, "16", "37");
+
+            //AddSearchModel("https://www.chemistwarehouse.com.au/Shop-Online/1387/Bellamy-39-s-Organic?page={0}", 2, "16", "2");
+            AddSearchModel("https://www.chemistwarehouse.com.au/Shop-Online/967/Baby-Medical-and-Vitamins?page={0}", 1, "18", "38");
         }
 
 

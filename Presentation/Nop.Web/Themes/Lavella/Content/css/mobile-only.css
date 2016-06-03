@@ -158,6 +158,8 @@
             background-repeat:no-repeat;
             background-position:20px center;
             cursor: pointer;
+            height: 50px;
+            width: 100%;
         }
             .close-menu span {
                 display: block;
@@ -168,6 +170,16 @@
                 line-height: 15px;
                 text-align: right;
                 font-family:open sans;
+            }
+
+            .close-menu div.close-menu-logo {
+                        height: 40px;
+                        float: right;
+                        margin-top: 5px;
+            }
+
+            .close-menu div.close-menu-logo img {
+                    height: 40px;
             }
     .header-menu > ul li {
         background: #f6f6f6;
