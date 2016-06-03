@@ -1,6 +1,19 @@
 @media all and (min-width: 240px) and (max-width: 980px) {
+    .item-box {
+        width: 49%; 
+        margin-left: 2%;
+    }
 
-
+        .item-box:nth-child(2n+1) {
+            clear: both;
+            margin-left: 0;
+        }
+        .manufacturer-grid .item-box .picture, .vendor-grid .item-box .picture {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    max-height: none;
+}
      
     .accepted-payment-methods, .footer-middle, .footer-upper, .desktop-header-right .desktop-cart {
         display: none;

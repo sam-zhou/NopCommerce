@@ -12,80 +12,108 @@ namespace NopImport.Console.Common
     {
         private readonly bool _resetDb;
 
-        protected CategorySearchModel CategorySearch;
+        private List<CategorySearchModel> _searchModels;
+
+
+        protected List<CategorySearchModel> SearchModels
+        {
+            get
+            {
+                if (_searchModels == null)
+                {
+                    _searchModels = new List<CategorySearchModel>();
+                }
+                return _searchModels;
+            }
+        }
 
         protected ProductListHtmlReader(bool resetDb = false)
         {
             _resetDb = resetDb;
         }
 
-        protected ProductListHtmlReader(CategorySearchModel categorySearchModel, bool resetDb = false) : this(resetDb)
+        protected ProductListHtmlReader(List<CategorySearchModel> searchModels, bool resetDb = false)
         {
-            CategorySearch = categorySearchModel;
-            
+            _searchModels = searchModels;
+            _resetDb = resetDb;
+        }
+
+        public void AddCategorySearchModel(CategorySearchModel model)
+        {
+            SearchModels.Add(model);
         }
 
 
         public override void Process()
         {
-            if (CategorySearch.PageSize > 0)
+            var count = 0;
+            foreach (var searchModel in SearchModels)
             {
-                using (var db = new DatabaseService("DefaultConnectionString", "NopImport"))
+                count ++;
+                if (searchModel.PageSize > 0)
                 {
-                    if (_resetDb)
+                    using (var db = new DatabaseService("DefaultConnectionString", "NopImport"))
                     {
-                        db.ResetDatabase();
-                    }
-                    
-
-                    for (int i = 1; i <= CategorySearch.PageSize; i++)
-                    {
-                        var catePageUrl = GetUrl(i);
-                        var htmlString = ReadHtml(catePageUrl);
-                        var listResult = GetProductFromHtml(htmlString).ToList();
-                        
-
-                        for (int j = 0; j < listResult.Count; j++)
+                        if (_resetDb)
                         {
-                            if (!db.Get(new IsProductUrlExist(listResult[j].Url)))
-                            {
-                                var product = listResult[j];
-                                db.Save(product);
-                            }
-                            
-                            
-
+                            db.ResetDatabase();
                         }
-                        ChangeProgress(i * 100 / CategorySearch.PageSize);
+
+                        var percentage = 100 * count / SearchModels.Count;
+
+                        for (int i = 1; i <= searchModel.PageSize; i++)
+                        {
+                            var catePageUrl = GetUrl(i, searchModel);
+                            var htmlString = ReadHtml(catePageUrl);
+                            var listResult = GetProductFromHtml(htmlString, searchModel).ToList();
+
+
+                            for (int j = 0; j < listResult.Count; j++)
+                            {
+                                if (!db.Get(new IsProductUrlExist(listResult[j].Url)))
+                                {
+                                    var product = listResult[j];
+                                    db.Save(product);
+                                }
+
+
+
+                            }
+
+                            
+                            ChangeProgress(i * percentage / searchModel.PageSize);
+                        }
+
+
+
+
+                        //Console.WriteLine(db.Get(new IsProductByExist("/buy/67491/Swisse-Ultiboost-Calcium-Vitamin-D-150-Tablets")));
+
+
+
                     }
-
-
-                    
-
-                    //Console.WriteLine(db.Get(new IsProductByExist("/buy/67491/Swisse-Ultiboost-Calcium-Vitamin-D-150-Tablets")));
-
-                    
 
                 }
-
             }
+
+            
         }
 
-        private string GetUrl(int page)
+        private string GetUrl(int page, CategorySearchModel searchModel)
         {
-            return string.Format(CategorySearch.UrlTemplate, page);
+            return string.Format(searchModel.UrlTemplate, page);
         }
 
-        protected IEnumerable<Product> GetProductFromHtml(string html)
+        protected IEnumerable<Product> GetProductFromHtml(string html, CategorySearchModel searchModel)
         {
             var output = new List<Product>();
             var htmlDocument = new HtmlDocument();
             htmlDocument.LoadHtml(html);
-            var nodes = htmlDocument.DocumentNode.GetNodesFromIdentifier(CategorySearch.ProductItemIdentifier);//("//*[@class='" + classValue + "']");
+            var nodes = htmlDocument.DocumentNode.GetNodesFromIdentifier(searchModel.ProductItemIdentifier);//("//*[@class='" + classValue + "']");
 
             foreach (var node in nodes)
             {
-                output.Add(node.GetEntity(CategorySearch));
+                output.Add(node.GetEntity(searchModel));
             }
 
             return output;

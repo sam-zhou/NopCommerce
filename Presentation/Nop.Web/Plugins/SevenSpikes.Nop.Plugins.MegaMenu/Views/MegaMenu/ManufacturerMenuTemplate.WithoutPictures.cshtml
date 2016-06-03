@@ -35,8 +35,8 @@
 
                         @if (Model.ManufacturersModels.Count == megaMenuSettings.NumberOfManufacturers)
                         {
-                            <li>
-                                <a class="view-all" href="@Url.RouteUrl("ManufacturerList")" title="@T("SevenSpikes.MegaMenu.ViewAllManufacturers")">@T("SevenSpikes.MegaMenu.ViewAllManufacturers")</a>
+                            <li class="view-all">
+                                <a href="@Url.RouteUrl("ManufacturerList")" title="@T("SevenSpikes.MegaMenu.ViewAllManufacturers")">@T("SevenSpikes.MegaMenu.ViewAllManufacturers")</a>
                             </li>
                         }
                     </ul>

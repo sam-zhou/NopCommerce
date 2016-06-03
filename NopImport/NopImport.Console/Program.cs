@@ -17,8 +17,8 @@ namespace NopImport.Console
         private static void Main(string[] args)
         {
 
-            //GetList();
-            //GetDetails();
+            GetList();
+            GetDetails();
             //RunExport();
             ImportToNop();
             System.Console.WriteLine("All Done!");

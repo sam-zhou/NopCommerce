@@ -34,8 +34,8 @@
 
                 @if (Model.VendorsModels.Count >= megaMenuSettings.NumberOfVendors)
                 {
-                    <li>
-                        <a class="view-all" href="@Url.RouteUrl("VendorList")" title="@T("SevenSpikes.MegaMenu.ViewAllVendors")">@T("SevenSpikes.MegaMenu.ViewAllVendors")</a>
+                    <li class="view-all">
+                        <a href="@Url.RouteUrl("VendorList")" title="@T("SevenSpikes.MegaMenu.ViewAllVendors")">@T("SevenSpikes.MegaMenu.ViewAllVendors")</a>
                     </li>
                 }
             </ul>

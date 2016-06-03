@@ -46,15 +46,7 @@
 
     /* CATEGORY PAGE & GRIDS */
 
-    .item-box {
-        width: 49%; 
-        margin-left: 2%;
-    }
-
-        .item-box:nth-child(2n+1) {
-            clear: both;
-            margin-left: 0;
-        }
+    
 
     .product-grid.home-page-category-grid .item-box:nth-child(2n){
         margin-left:2%;

@@ -79,8 +79,8 @@
 
             @if (item.SubCategories.Count == megaMenuSettings.NumberOfCategories)
             {
-                <li>
-                    <a class="view-all" href="@Url.RouteUrl("Category", new {SeName = item.CategoryModel.SeName})" title="@T("SevenSpikes.MegaMenu.ViewAllCategories")">@T("SevenSpikes.MegaMenu.ViewAllCategories")</a>
+                <li class="view-all">
+                    <a  href="@Url.RouteUrl("Category", new {SeName = item.CategoryModel.SeName})" title="@T("SevenSpikes.MegaMenu.ViewAllCategories")">@T("SevenSpikes.MegaMenu.ViewAllCategories")</a>
                 </li>
             }
         </ul>

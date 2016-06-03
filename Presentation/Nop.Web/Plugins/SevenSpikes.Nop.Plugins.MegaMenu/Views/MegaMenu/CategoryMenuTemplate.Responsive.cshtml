@@ -53,8 +53,8 @@
                                 }
                                 if (categoriesCounter == megaMenuSettings.NumberOfCategories && megaMenuSettings.NumberOfCategories != 0)
                                 {
-                                                <li>
-                                                    <a class="view-all" href="@Url.RouteUrl("Category", new { SeName = category.CategoryModel.SeName })" title="@T("SevenSpikes.MegaMenu.ViewAllCategories")">@T("SevenSpikes.MegaMenu.ViewAllCategories")</a>
+                                                <li class="view-all" >
+                                                    <a href="@Url.RouteUrl("Category", new { SeName = category.CategoryModel.SeName })" title="@T("SevenSpikes.MegaMenu.ViewAllCategories")">@T("SevenSpikes.MegaMenu.ViewAllCategories")</a>
                                                 </li>
                                 }
                                         }
@@ -102,8 +102,8 @@
                 }
                 if (categoriesCounter == megaMenuSettings.NumberOfCategories && megaMenuSettings.NumberOfCategories != 0)
                 {
-                                <li>
-                                    <a class="view-all" href="@Url.RouteUrl("Category", new { SeName = category.CategoryModel.SeName })" title="@T("SevenSpikes.MegaMenu.ViewAllCategories")">@T("SevenSpikes.MegaMenu.ViewAllCategories")</a>
+                                <li  class="view-all">
+                                    <a href="@Url.RouteUrl("Category", new { SeName = category.CategoryModel.SeName })" title="@T("SevenSpikes.MegaMenu.ViewAllCategories")">@T("SevenSpikes.MegaMenu.ViewAllCategories")</a>
                                 </li>
                 }
                         }

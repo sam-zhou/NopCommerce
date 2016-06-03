@@ -135,10 +135,16 @@
     .mega-menu .dropdown.manufacturers.fullWidth .box{
         width:16.66%;
         margin:0;
+        opacity: 0.6;
     }
+
+    .mega-menu .dropdown.manufacturers.fullWidth .box:hover{
+        opacity: 1;
+    }
+
     .mega-menu .dropdown.fullWidth .picture {
         width: 100%;
-        height: 164px;
+        height: 114px;
         float: none;
         border: 1px solid;
         margin-bottom: 35px;
@@ -152,7 +158,7 @@
         display: block;
         width: 100%;
         position: absolute;
-        top: 164px;
+        top: 114px;
         background: #eeece7;
         font-size: 18px;
         color: #888;
@@ -192,7 +198,7 @@
 
         .mega-menu .dropdown.fullWidth .subcategories a {
             color: #888;
-            font-size: 14px;
+            font-size: 12px;
             display: block;
             padding-left: 15px;
             transition: all 0.3s ease;
@@ -314,8 +320,8 @@
 
         .mega-menu .box li a{
             padding-left: 10px;
-            font-size: 14px;
-            line-height: 40px;
+            font-size: 12px;
+            line-height: 30px;
             display: block;
             width:100%;
         }
@@ -361,9 +367,11 @@
     }
     .mega-menu .box li:nth-child(even) a:hover {
     }
-    .mega-menu li a.view-all {
-	    font-weight: bold;
-        background: none;
+    .mega-menu li.view-all {
+        background: none !important;
+        color: inherit;
+        font-size: 10px;
+        text-align: right;
     }
 
     .manufacturers.fullWidth .box {
