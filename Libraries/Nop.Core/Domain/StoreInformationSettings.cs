@@ -54,5 +54,15 @@ namespace Nop.Core.Domain
         /// Gets or sets a value of Google+ page URL of the site
         /// </summary>
         public string GooglePlusLink { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value of Wechat page URL of the site
+        /// </summary>
+        public string WechatLink { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value of Weibo page URL of the site
+        /// </summary>
+        public string WeiboLink { get; set; }
     }
 }

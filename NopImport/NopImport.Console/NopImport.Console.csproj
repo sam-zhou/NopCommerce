@@ -79,9 +79,8 @@
     <Reference Include="SevenSpikes.Nop.Plugins.Core">
       <HintPath>..\..\Presentation\Nop.Web\Plugins\SevenSpikes.Core\SevenSpikes.Nop.Plugins.Core.dll</HintPath>
     </Reference>
-    <Reference Include="SevenSpikes.Nop.Plugins.NopQuickTabs, Version=3.7.913.20674, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Plugins\SevenSpikes.Nop.Plugins.NopQuickTabs\SevenSpikes.Nop.Plugins.NopQuickTabs.dll</HintPath>
+    <Reference Include="SevenSpikes.Nop.Plugins.NopQuickTabs">
+      <HintPath>..\..\Presentation\Nop.Web\Plugins\SevenSpikes.Nop.Plugins.NopQuickTabs\SevenSpikes.Nop.Plugins.NopQuickTabs.dll</HintPath>
     </Reference>
     <Reference Include="SevenSpikes.Nop.Scheduling">
       <HintPath>..\..\Presentation\Nop.Web\Plugins\SevenSpikes.Core\SevenSpikes.Nop.Scheduling.dll</HintPath>

@@ -764,6 +764,19 @@ label, label + * {
 	background-position: center center;
 }
 
+.footer-middle .soc-icon li a.weibo {
+	background: url(../img/weibo.png);
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+
+.footer-middle .soc-icon li a.wechat {
+	background: url(../img/wechat.png);
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
 .footer-middle .soc-icon li a.fb {
 	background-position: 1px center;
 }

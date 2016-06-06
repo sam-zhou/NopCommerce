@@ -494,6 +494,8 @@ namespace Nop.Web.Controllers
                 TwitterLink = _storeInformationSettings.TwitterLink,
                 YoutubeLink = _storeInformationSettings.YoutubeLink,
                 GooglePlusLink = _storeInformationSettings.GooglePlusLink,
+                WechatLink = _storeInformationSettings.WechatLink,
+                WeiboLink = _storeInformationSettings.WeiboLink,
                 BlogEnabled = _blogSettings.Enabled,
                 CompareProductsEnabled = _catalogSettings.CompareProductsEnabled,
                 ForumEnabled = _forumSettings.ForumsEnabled,

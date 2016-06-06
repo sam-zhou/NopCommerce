@@ -50,6 +50,14 @@
                     {
                         <li><a target="_blank" class="yt" href="@Model.YoutubeLink"></a></li>
                     }
+                    @if (!String.IsNullOrEmpty(Model.WechatLink))
+                    {
+                        <li><a target="_blank" class="wechat" href="@Model.WechatLink"></a></li>
+                    }
+                    @if (!String.IsNullOrEmpty(Model.WeiboLink))
+                    {
+                        <li><a target="_blank" class="weibo" href="@Model.WeiboLink"></a></li>
+                    }
                     @if (Model.NewsEnabled)
                     {
                         <li><a class="rss" target="_blank" href="@Url.RouteUrl("NewsRSS", new {languageId = Model.WorkingLanguageId})"></a></li>

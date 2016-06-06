@@ -417,8 +417,14 @@ namespace NopImport.Console.Import
                             TranslateToAllLanguages(nopProduct, "FullDescription");
                             TranslateToAllLanguages(nopProduct, "MetaDescription");
                             TranslateToAllLanguages(nopProduct, "MetaKeywords");
+                            TranslateToAllLanguages(nopProduct, "MetaTitle");
 
-                            UrlRecordService.SaveSlug(nopProduct, nopProduct.ValidateSeName(StringExtension.GenerateSlug(product.Name), product.Name, true), 0);
+                            var slug = nopProduct.ValidateSeName(StringExtension.GenerateSlug(product.Name),
+                                product.Name, true);
+                            UrlRecordService.SaveSlug(nopProduct, slug, 0);
+                            UrlRecordService.SaveSlug(nopProduct, slug, 1);
+                            UrlRecordService.SaveSlug(nopProduct, slug, 2);
+                            UrlRecordService.SaveSlug(nopProduct, slug, 3);
                             if (!string.IsNullOrWhiteSpace(product.LocalPicture))
                             {
                                 var directory = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..\\..\\Presentation\\Nop.Web\\Content\\Images\\Thumbs"));

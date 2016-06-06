@@ -2318,6 +2318,8 @@ namespace Nop.Admin.Controllers
             model.StoreInformationSettings.TwitterLink = storeInformationSettings.TwitterLink;
             model.StoreInformationSettings.YoutubeLink = storeInformationSettings.YoutubeLink;
             model.StoreInformationSettings.GooglePlusLink = storeInformationSettings.GooglePlusLink;
+            model.StoreInformationSettings.WechatLink = storeInformationSettings.WechatLink;
+            model.StoreInformationSettings.WeiboLink = storeInformationSettings.WeiboLink;
             //contact us
             model.StoreInformationSettings.SubjectFieldOnContactUsForm = commonSettings.SubjectFieldOnContactUsForm;
             model.StoreInformationSettings.UseSystemEmailForContactUsForm = commonSettings.UseSystemEmailForContactUsForm;
@@ -2332,6 +2334,8 @@ namespace Nop.Admin.Controllers
                 model.StoreInformationSettings.TwitterLink_OverrideForStore = _settingService.SettingExists(storeInformationSettings, x => x.TwitterLink, storeScope);
                 model.StoreInformationSettings.YoutubeLink_OverrideForStore = _settingService.SettingExists(storeInformationSettings, x => x.YoutubeLink, storeScope);
                 model.StoreInformationSettings.GooglePlusLink_OverrideForStore = _settingService.SettingExists(storeInformationSettings, x => x.GooglePlusLink, storeScope);
+                model.StoreInformationSettings.WechatLink_OverrideForStore = _settingService.SettingExists(storeInformationSettings, x => x.WechatLink, storeScope);
+                model.StoreInformationSettings.WeiboLink_OverrideForStore = _settingService.SettingExists(storeInformationSettings, x => x.WeiboLink, storeScope);
                 model.StoreInformationSettings.SubjectFieldOnContactUsForm_OverrideForStore = _settingService.SettingExists(commonSettings, x => x.SubjectFieldOnContactUsForm, storeScope);
                 model.StoreInformationSettings.UseSystemEmailForContactUsForm_OverrideForStore = _settingService.SettingExists(commonSettings, x => x.UseSystemEmailForContactUsForm, storeScope);
             }
@@ -2458,6 +2462,8 @@ namespace Nop.Admin.Controllers
             storeInformationSettings.TwitterLink = model.StoreInformationSettings.TwitterLink;
             storeInformationSettings.YoutubeLink = model.StoreInformationSettings.YoutubeLink;
             storeInformationSettings.GooglePlusLink = model.StoreInformationSettings.GooglePlusLink;
+            storeInformationSettings.WechatLink = model.StoreInformationSettings.WechatLink;
+            storeInformationSettings.WeiboLink = model.StoreInformationSettings.WeiboLink;
             //contact us
             commonSettings.SubjectFieldOnContactUsForm = model.StoreInformationSettings.SubjectFieldOnContactUsForm;
             commonSettings.UseSystemEmailForContactUsForm = model.StoreInformationSettings.UseSystemEmailForContactUsForm;
@@ -2505,6 +2511,16 @@ namespace Nop.Admin.Controllers
                 _settingService.SaveSetting(storeInformationSettings, x => x.GooglePlusLink, storeScope, false);
             else if (storeScope > 0)
                 _settingService.DeleteSetting(storeInformationSettings, x => x.GooglePlusLink, storeScope);
+
+            if (model.StoreInformationSettings.WechatLink_OverrideForStore || storeScope == 0)
+                _settingService.SaveSetting(storeInformationSettings, x => x.WechatLink, storeScope, false);
+            else if (storeScope > 0)
+                _settingService.DeleteSetting(storeInformationSettings, x => x.WechatLink, storeScope);
+
+            if (model.StoreInformationSettings.WeiboLink_OverrideForStore || storeScope == 0)
+                _settingService.SaveSetting(storeInformationSettings, x => x.WeiboLink, storeScope, false);
+            else if (storeScope > 0)
+                _settingService.DeleteSetting(storeInformationSettings, x => x.WeiboLink, storeScope);
 
             if (model.StoreInformationSettings.SubjectFieldOnContactUsForm_OverrideForStore || storeScope == 0)
                 _settingService.SaveSetting(commonSettings, x => x.SubjectFieldOnContactUsForm, storeScope, false);

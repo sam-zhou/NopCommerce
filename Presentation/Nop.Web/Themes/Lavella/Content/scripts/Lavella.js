@@ -2,14 +2,15 @@
 
     // set height to the wrapper of the home page sliders and banners so that they are aligned all the same in height
     function resizeSliders() {
+        console.log("resizing");
         var mainSliderHeight = $('.slider-left').height();
-        if (mainSliderHeight != null && mainSliderHeight > 0) {
-            if (sevenSpikes.getViewPort().width > 768) {
-                $('.home-page-top-banner-wrapper').height(mainSliderHeight);
-            }
-            else {
-                $('.home-page-top-banner-wrapper').css('height', '');
-            }
+        if (mainSliderHeight == null || mainSliderHeight <= 0) {
+            mainSliderHeight = $(window).width() * 0.2296875;
+        } 
+        if (sevenSpikes.getViewPort().width > 768) {
+            $('.home-page-top-banner-wrapper').height(mainSliderHeight);
+        } else {
+            $('.home-page-top-banner-wrapper').css('height', '');
         }
     }
 
@@ -56,7 +57,7 @@
                 overlayEffectDelay: 300
             }
         };
-
+        
         // CUSTOM SELECTS
         $(".product-selectors select").simpleSelect();
 

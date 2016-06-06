@@ -29,6 +29,11 @@ namespace NopImport.Console.Helper
             nopProduct.Published = true;
             nopProduct.VisibleIndividually = true;
             nopProduct.AllowCustomerReviews = true;
+            nopProduct.OrderMinimumQuantity = 1;
+            nopProduct.OrderMaximumQuantity = 10000;
+            nopProduct.IsShipEnabled = true;
+
+            
             nopProduct.Sku = string.Format("{0}-{1}", product.ExternalStoreCode, product.ExternalId);
             
 

@@ -191,6 +191,27 @@
         </tr>
         <tr>
             <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.StoreInformationSettings.WechatLink_OverrideForStore, model => model.StoreInformationSettings.WechatLink, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.StoreInformationSettings.WechatLink):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.StoreInformationSettings.WechatLink)
+                @Html.ValidationMessageFor(model => model.StoreInformationSettings.WechatLink)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.StoreInformationSettings.WeiboLink_OverrideForStore, model => model.StoreInformationSettings.WeiboLink, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.StoreInformationSettings.WeiboLink):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.StoreInformationSettings.WeiboLink)
+                @Html.ValidationMessageFor(model => model.StoreInformationSettings.WeiboLink)
+            </td>
+        </tr>
+
+        <tr>
+            <td class="adminTitle">
                 @Html.OverrideStoreCheckboxFor(model => model.StoreInformationSettings.SubjectFieldOnContactUsForm_OverrideForStore, model => model.StoreInformationSettings.SubjectFieldOnContactUsForm, Model.ActiveStoreScopeConfiguration)
                 @Html.NopLabelFor(model => model.StoreInformationSettings.SubjectFieldOnContactUsForm):
             </td>

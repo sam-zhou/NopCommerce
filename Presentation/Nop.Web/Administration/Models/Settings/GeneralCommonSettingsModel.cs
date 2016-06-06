@@ -68,6 +68,14 @@ namespace Nop.Admin.Models.Settings
             public string YoutubeLink { get; set; }
             public bool YoutubeLink_OverrideForStore { get; set; }
 
+            [NopResourceDisplayName("Admin.Configuration.Settings.GeneralCommon.WechatLink")]
+            public string WechatLink { get; set; }
+            public bool WechatLink_OverrideForStore { get; set; }
+
+            [NopResourceDisplayName("Admin.Configuration.Settings.GeneralCommon.WeiboLink")]
+            public string WeiboLink { get; set; }
+            public bool WeiboLink_OverrideForStore { get; set; }
+
             [NopResourceDisplayName("Admin.Configuration.Settings.GeneralCommon.GooglePlusLink")]
             public string GooglePlusLink { get; set; }
             public bool GooglePlusLink_OverrideForStore { get; set; }
