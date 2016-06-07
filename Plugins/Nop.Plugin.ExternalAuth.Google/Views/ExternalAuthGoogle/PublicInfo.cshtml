@@ -4,11 +4,11 @@
 
     Html.AddCssFileParts("~/Plugins/ExternalAuth.Google/Content/googlestyles.css");    
 }
-<div class="google-login-block">
+<div class="external-login-block google-login-block col-md-4">
     <div class="title">
         @T("Plugins.ExternalAuth.Google.Login")
     </div>
-    <div class="buttons">
+    <div class="btn btn-block btn-social btn-google">
         <a href="@Url.RouteUrl("Plugin.ExternalAuth.Google.Login", new { ReturnUrl = HttpContext.Current.Request.QueryString["ReturnUrl"] })" class="google-btn"></a>
     </div>
 </div>
