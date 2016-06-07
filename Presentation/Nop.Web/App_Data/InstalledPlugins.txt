@@ -36,3 +36,7 @@ SevenSpikes.Nop.Plugins.ProductRibbons
 SevenSpikes.Nop.Plugins.NopQuickTabs
 SevenSpikes.Nop.Plugins.QuickView
 SevenSpikes.Theme.Lavella
+Payments.AliPay
+SevenSpikes.Nop.Plugins.FacebookShop
+ExternalAuth.WeiXin
+ExternalAuth.Google

@@ -53,5 +53,7 @@ namespace NopImport.Model.Data
         public virtual bool IsUpdated { get; set; }
 
         public virtual bool IsSynced { get; set; }
+
+        public virtual string NopId { get; set; }
     }
 }

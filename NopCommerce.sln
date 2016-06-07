@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{E4ACA93B-D3DE-4557-B069-F1DB42925A4B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{B09156FB-8291-46A2-AF37-67CE97CFB5A6}"
+	ProjectSection(SolutionItems) = preProject
+		C:\Users\Sam.Zhou\Downloads\logo-28.ico = C:\Users\Sam.Zhou\Downloads\logo-28.ico
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{A340B280-C12B-47E7-90B7-89C650F8AAFC}"
 EndProject
@@ -98,6 +101,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NopImport.Common", "NopImport\NopImport.Common\NopImport.Common.csproj", "{6ED3F996-5302-4E04-A400-DBE8855154F9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NopImport.GoogleTranslate", "NopImport\NopImport.GoogleTranslate\NopImport.GoogleTranslate.csproj", "{55937F43-63FA-44CC-BA0F-60468E625FC3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nop.Plugin.ExternalAuth.WeiXin", "Plugins\Nop.Plugin.ExternalAuth.WeiXin\Nop.Plugin.ExternalAuth.WeiXin.csproj", "{0DE96A8E-F057-4DB5-9789-721F23CC61DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nop.Plugin.ExternalAuth.Google", "Plugins\Nop.Plugin.ExternalAuth.Google\Nop.Plugin.ExternalAuth.Google.csproj", "{2C5CDF82-B291-4A67-8B53-F6D519D0668F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -547,6 +554,26 @@ Global
 		{55937F43-63FA-44CC-BA0F-60468E625FC3}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{55937F43-63FA-44CC-BA0F-60468E625FC3}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{55937F43-63FA-44CC-BA0F-60468E625FC3}.Release|x86.ActiveCfg = Release|Any CPU
+		{0DE96A8E-F057-4DB5-9789-721F23CC61DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DE96A8E-F057-4DB5-9789-721F23CC61DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DE96A8E-F057-4DB5-9789-721F23CC61DE}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{0DE96A8E-F057-4DB5-9789-721F23CC61DE}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{0DE96A8E-F057-4DB5-9789-721F23CC61DE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0DE96A8E-F057-4DB5-9789-721F23CC61DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DE96A8E-F057-4DB5-9789-721F23CC61DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DE96A8E-F057-4DB5-9789-721F23CC61DE}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{0DE96A8E-F057-4DB5-9789-721F23CC61DE}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{0DE96A8E-F057-4DB5-9789-721F23CC61DE}.Release|x86.ActiveCfg = Release|Any CPU
+		{2C5CDF82-B291-4A67-8B53-F6D519D0668F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C5CDF82-B291-4A67-8B53-F6D519D0668F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C5CDF82-B291-4A67-8B53-F6D519D0668F}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{2C5CDF82-B291-4A67-8B53-F6D519D0668F}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{2C5CDF82-B291-4A67-8B53-F6D519D0668F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2C5CDF82-B291-4A67-8B53-F6D519D0668F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C5CDF82-B291-4A67-8B53-F6D519D0668F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C5CDF82-B291-4A67-8B53-F6D519D0668F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{2C5CDF82-B291-4A67-8B53-F6D519D0668F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{2C5CDF82-B291-4A67-8B53-F6D519D0668F}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -595,6 +622,8 @@ Global
 		{6EAA3562-8691-495A-ADD3-0995775D35BB} = {78874555-DF10-4E54-A02A-C3CC0EB053A7}
 		{6ED3F996-5302-4E04-A400-DBE8855154F9} = {78874555-DF10-4E54-A02A-C3CC0EB053A7}
 		{55937F43-63FA-44CC-BA0F-60468E625FC3} = {78874555-DF10-4E54-A02A-C3CC0EB053A7}
+		{0DE96A8E-F057-4DB5-9789-721F23CC61DE} = {7881B112-7843-4542-B1F7-F99553FB9BB7}
+		{2C5CDF82-B291-4A67-8B53-F6D519D0668F} = {7881B112-7843-4542-B1F7-F99553FB9BB7}
 	EndGlobalSection
 	GlobalSection(NDepend) = preSolution
 		Project = ".\NopCommerce.ndproj"

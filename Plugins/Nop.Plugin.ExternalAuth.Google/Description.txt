@@ -1,0 +1,8 @@
+﻿Group: WSL
+FriendlyName: Google authentication
+SystemName: ExternalAuth.Google
+Version: 1.00
+SupportedVersions: 3.20,3.30,3.40,3.50,3.60,3.70
+Author: Web studio lab S.r.l. (Leonardo Cavone)
+DisplayOrder: 1
+FileName: Nop.Plugin.ExternalAuth.Google.dll

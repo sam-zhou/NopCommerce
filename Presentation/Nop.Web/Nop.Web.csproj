@@ -493,6 +493,7 @@
     <Content Include="Content\files\ExportImport\Index.htm" />
     <Content Include="Content\files\Index.htm" />
     <Content Include="Content\Images\default-image.png" />
+    <Content Include="Content\Images\logo-108.png" />
     <Content Include="Content\kendo\2014.1.318\Black\editor.png" />
     <Content Include="Content\kendo\2014.1.318\Black\imagebrowser.png" />
     <Content Include="Content\kendo\2014.1.318\Black\indeterminate.gif" />
@@ -1079,6 +1080,7 @@
     <Content Include="Content\tinymce\skins\lightgray\skin.min.css" />
     <Content Include="Content\tinymce\themes\modern\theme.min.js" />
     <Content Include="Content\tinymce\tinymce.min.js" />
+    <Content Include="favicon.ico" />
     <Content Include="Plugins\SevenSpikes.Core\Description.txt" />
     <Content Include="Plugins\SevenSpikes.Core\dotless.Core.dll" />
     <Content Include="Plugins\SevenSpikes.Core\logo.jpg" />
@@ -1531,7 +1533,6 @@
     <Content Include="Plugins\SevenSpikes.Nop.Plugins.QuickView\Themes\Lavella\Content\images\quick-view-arrow.png" />
     <Content Include="Plugins\SevenSpikes.Nop.Plugins.QuickView\Themes\Lavella\Content\QuickView.css" />
     <Content Include="Plugins\SevenSpikes.Nop.Plugins.QuickView\Themes\Lavella\Content\QuickView.rtl.css" />
-    <Content Include="Properties\PublishProfiles\Aliyun.pubxml.user" />
     <Content Include="Scripts\fineuploader\edit.gif" />
     <Content Include="Scripts\fineuploader\fineuploader-4.2.2.css" />
     <Content Include="Scripts\fineuploader\fineuploader-4.2.2.min.css" />
@@ -1575,7 +1576,6 @@
     <Content Include="Content\tinymce\plugins\jbimages\langs\ru_dlg.js" />
     <Content Include="Content\tinymce\plugins\jbimages\plugin.js" />
     <Content Include="Content\tinymce\plugins\jbimages\plugin.min.js" />
-    <Content Include="favicon.ico" />
     <Content Include="Scripts\admin.common.js" />
     <Content Include="Scripts\farbtastic.js" />
     <Content Include="Content\tinymce\plugins\jbimages\readme" />
@@ -1709,8 +1709,6 @@
     <Content Include="Plugins\SevenSpikes.Nop.Plugins.ProductRibbons\Views\ProductRibbons\ProductRibbonsHtml.cshtml" />
     <Content Include="Plugins\SevenSpikes.Nop.Plugins.ProductRibbons\Views\ProductRibbons\ProductRibbonsWidget.cshtml" />
     <Content Include="Plugins\SevenSpikes.Nop.Plugins.ProductRibbons\Views\web.config" />
-    <None Include="Properties\PublishProfiles\Aliyun.pubxml" />
-    <None Include="Properties\PublishProfiles\NopNew.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\fineuploader\iframe.xss.response-4.2.2.js" />
     <Content Include="Scripts\fineuploader\jquery.fineuploader-4.2.2.js" />
@@ -3077,6 +3075,7 @@
   <ItemGroup>
     <Folder Include="Content\Roxy_Fileman\tmp\" />
     <Folder Include="Plugins\bin\" />
+    <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Nop.Core\Nop.Core.csproj">

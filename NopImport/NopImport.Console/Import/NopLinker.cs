@@ -249,6 +249,47 @@ namespace NopImport.Console.Import
             return mimeType;
         }
 
+        private void TranslateMetaKeywords(NopProduct nopProduct)
+        {
+            foreach (var googleLanguage in GoogleLanguage.Languages)
+            {
+                if (googleLanguage.Id != 1)
+                {
+                    var keywords = nopProduct.MetaKeywords.Replace(" ", "/");
+                    var language = GoogleLanguage.GetLanguageById(googleLanguage.Id);
+
+                    string translatedText = null;
+
+                    if (language != null && googleLanguage.Id != 1)
+                    {
+                        translatedText = NopDictionary.GetTranslate(keywords, googleLanguage.Id);
+
+                        if (string.IsNullOrWhiteSpace(translatedText))
+                        {
+                            translatedText = Translator.Translate(keywords, "English", GoogleLanguage.GetLanguageById(googleLanguage.Id).Name);
+
+                            translatedText = translatedText.Replace("/", " ");
+                        }
+                    }
+
+
+
+
+
+                    var lan = new LocalizedProperty
+                    {
+                        EntityId = nopProduct.Id,
+                        LanguageId = googleLanguage.Id,
+                        LocaleKey = "MetaKeywords",
+                        LocaleKeyGroup = "Prodcut",
+                        LocaleValue = translatedText
+                    };
+
+                    LocalizedEntityService.InsertLocalizedProperty(lan);
+                }
+            }
+        }
+
         private void TranslateToAllLanguages<T>(T property, string propertyName) where T : BaseEntity
         {
             foreach (var googleLanguage in GoogleLanguage.Languages)
@@ -416,7 +457,7 @@ namespace NopImport.Console.Import
                             TranslateToAllLanguages(nopProduct, "ShortDescription");
                             TranslateToAllLanguages(nopProduct, "FullDescription");
                             TranslateToAllLanguages(nopProduct, "MetaDescription");
-                            TranslateToAllLanguages(nopProduct, "MetaKeywords");
+                            TranslateMetaKeywords(nopProduct);
                             TranslateToAllLanguages(nopProduct, "MetaTitle");
 
                             var slug = nopProduct.ValidateSeName(StringExtension.GenerateSlug(product.Name),
@@ -464,19 +505,12 @@ namespace NopImport.Console.Import
                                 TranslateToAllLanguages(tab, "Description");
                                 TranslateToAllLanguages(tab, "DisplayName");
                             }
-
-
                             TabService.AddTabsForProductByIds(nopProduct.Id, tabs.Select(q => q.Id).ToArray());
-
                         }
                         else
                         {
-
                             System.Console.WriteLine("product exists");
-                            //nopProduct.UpdateFrom(product);
-                            //productService.UpdateProduct(nopProduct);
                         }
-
 
                         db.BeginTransaction();
                         product.IsSynced = true;
