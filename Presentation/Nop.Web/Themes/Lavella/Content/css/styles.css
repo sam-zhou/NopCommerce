@@ -865,23 +865,29 @@ label, label + * {
 }
 .accepted-payment-methods li {
 	display: inline-block;
-	width: 50px;
-	height: 30px;
-	background: url('../img/payment_icons.png');
+	width: 60px;
+	height: 38px;
 	background-repeat: no-repeat;
 	margin: 15px 5px;
 }
 .accepted-payment-methods .method1 {
-	background-position: 0 0;
+	background: url('../img/1465414331_UnionPay.png');
 }
 .accepted-payment-methods .method2 {
-	background-position: -58px 0;
+	background: url('../img/1465414353_PayPal.png');
 }
 .accepted-payment-methods .method3 {
-	background-position: -116px 0;
+	background: url('../img/1465414388_Visa.png');
 }
 .accepted-payment-methods .method4 {
-	background-position: -176px 0;
+	background: url('../img/1465414393_Maestro-2.png');
+}
+
+.accepted-payment-methods .method5 {
+	background: url('../img/alipay_payment_methods-128.png');
+}
+.accepted-payment-methods .method6 {
+	background: url('../img/wechatpay.png');
 }
 .social-sharing {
 }

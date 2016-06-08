@@ -2557,8 +2557,13 @@
     <Content Include="Themes\Lavella\Content\css\tables.css" />
     <Content Include="Themes\Lavella\Content\css\tables.rtl.css" />
     <Content Include="Themes\Lavella\Content\fonts\fontawesome-webfont.svg" />
+    <Content Include="Themes\Lavella\Content\img\1465414331_UnionPay.png" />
+    <Content Include="Themes\Lavella\Content\img\1465414353_PayPal.png" />
+    <Content Include="Themes\Lavella\Content\img\1465414388_Visa.png" />
+    <Content Include="Themes\Lavella\Content\img\1465414393_Maestro-2.png" />
     <Content Include="Themes\Lavella\Content\img\3-arrow-l.png" />
     <Content Include="Themes\Lavella\Content\img\3arrow-r.png" />
+    <Content Include="Themes\Lavella\Content\img\alipay_payment_methods-128.png" />
     <Content Include="Themes\Lavella\Content\img\arrows_2_left.png" />
     <Content Include="Themes\Lavella\Content\img\arrows_2_right.png" />
     <Content Include="Themes\Lavella\Content\img\arrows_3_left.png" />
@@ -2642,6 +2647,7 @@
     <Content Include="Themes\Lavella\Content\img\variant-wishlist.png" />
     <Content Include="Themes\Lavella\Content\img\vm.png" />
     <Content Include="Themes\Lavella\Content\img\wechat.png" />
+    <Content Include="Themes\Lavella\Content\img\wechatpay.png" />
     <Content Include="Themes\Lavella\Content\img\weibo.png" />
     <Content Include="Themes\Lavella\Content\img\youtube_icon.png" />
     <Content Include="Themes\Lavella\Content\scripts\jquery.livequery.js" />
