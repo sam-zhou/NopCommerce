@@ -1,7 +1,11 @@
-﻿.google-btn {
-    display: inline-block;
-    width: 150px;
-    height: 23px;
-    background-image: url('images/weixin-signing.png');
-    background-repeat: no-repeat;
+﻿.btn-weixin {
+    color: #fff;
+    background-color: #62c462;
+    border-color: rgba(0,0,0,0.2);
+}
+
+.btn-weixin:hover, .btn-weixin:focus, .btn-weixin.active, .btn-weixin:active {
+
+    background-color: #5cb85c;
+
 }

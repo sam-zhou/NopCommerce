@@ -4,11 +4,8 @@
 
     Html.AddCssFileParts("~/Plugins/ExternalAuth.Facebook/Content/facebookstyles.css");    
 }
-<div class="external-login-block facebook-login-block col-md-4">
-    <div class="title">
-        @T("Plugins.ExternalAuth.Facebook.Login")
-    </div>
-    <div class="btn btn-block btn-social btn-facebook">
-        <a href="@Url.RouteUrl("Plugin.ExternalAuth.Facebook.Login", new { ReturnUrl = HttpContext.Current.Request.QueryString["ReturnUrl"] })" class="facebook-btn"></a>
-    </div>
+<div class="external-login-block">
+    <a href="@Url.RouteUrl("Plugin.ExternalAuth.Facebook.Login", new { ReturnUrl = HttpContext.Current.Request.QueryString["ReturnUrl"] })" class="btn btn-block btn-social btn-facebook">
+        <i class="fa fa-facebook"></i>@T("Plugins.ExternalAuth.Facebook.Login")
+    </a>
 </div>

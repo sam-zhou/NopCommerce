@@ -2544,6 +2544,7 @@
     <Content Include="Themes\Lavella\Content\css\768.rtl.css" />
     <Content Include="Themes\Lavella\Content\css\980.css" />
     <Content Include="Themes\Lavella\Content\css\980.rtl.css" />
+    <Content Include="Themes\Lavella\Content\css\font-awesome.min.css" />
     <Content Include="Themes\Lavella\Content\css\forum.css" />
     <Content Include="Themes\Lavella\Content\css\forum.rtl.css" />
     <Content Include="Themes\Lavella\Content\css\ie8-fix.css" />
@@ -2555,6 +2556,7 @@
     <Content Include="Themes\Lavella\Content\css\styles.rtl.css" />
     <Content Include="Themes\Lavella\Content\css\tables.css" />
     <Content Include="Themes\Lavella\Content\css\tables.rtl.css" />
+    <Content Include="Themes\Lavella\Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Themes\Lavella\Content\img\3-arrow-l.png" />
     <Content Include="Themes\Lavella\Content\img\3arrow-r.png" />
     <Content Include="Themes\Lavella\Content\img\arrows_2_left.png" />
@@ -3071,6 +3073,11 @@
     <Content Include="Themes\Lavella\Views\ShoppingCart\Wishlist.cshtml" />
     <Content Include="Themes\Lavella\Views\Web.config" />
     <Content Include="Themes\Lavella\Views\Common\StoreSelector.cshtml" />
+    <Content Include="Themes\Lavella\Content\fonts\fontawesome-webfont.eot" />
+    <Content Include="Themes\Lavella\Content\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Themes\Lavella\Content\fonts\fontawesome-webfont.woff" />
+    <Content Include="Themes\Lavella\Content\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Themes\Lavella\Content\fonts\FontAwesome.otf" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Roxy_Fileman\tmp\" />

@@ -1,13 +1,11 @@
-﻿.facebook-btn {
-    display: inline-block;
-    width: 150px;
-    height: 23px;
-    background-image: url('images/facebook-signing.png');
-    background-repeat: no-repeat;
+﻿.btn-facebook {
+    color: #fff;
+    background-color: #3b5998;
+    border-color: rgba(0,0,0,0.2);
 }
-.facebook-btn:hover {
-    background-position: 0px -24px;
-}
-.facebook-btn:active {
-    background-position: 0px -48px;
+
+.btn-facebook:hover, .btn-facebook:focus, .btn-facebook.active, .btn-facebook:active {
+
+    background-color: #205081;
+
 }

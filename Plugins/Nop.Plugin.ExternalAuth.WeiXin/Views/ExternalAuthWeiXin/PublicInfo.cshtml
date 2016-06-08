@@ -2,13 +2,10 @@
 @{
     Layout = "";
 
-    Html.AddCssFileParts("~/Plugins/ExternalAuth.Facebook/Content/weixinstyles.css");
+    Html.AddCssFileParts("~/Plugins/ExternalAuth.WeiXin/Content/weixinstyles.css");
 }
-<div class="external-login-block weixin-login-block col-md-4">
-    <div class="title">
-        @T("Plugins.ExternalAuth.WeiXin.Login")
-    </div>
-    <div class="btn btn-block btn-social btn-weixin">
-        <a href="@Url.RouteUrl("Plugin.ExternalAuth.WeiXin.Login", new {ReturnUrl = HttpContext.Current.Request.QueryString["ReturnUrl"]})" class="weixin-btn">微信授权登录</a>
-    </div>
+<div class="external-login-block">
+    <a href="@Url.RouteUrl("Plugin.ExternalAuth.WeiXin.Login", new {ReturnUrl = HttpContext.Current.Request.QueryString["ReturnUrl"]})" class="btn btn-block btn-social btn-weixin">
+        <i class="fa fa-weixin"></i>@T("Plugins.ExternalAuth.WeiXin.Login")
+    </a>
 </div>
