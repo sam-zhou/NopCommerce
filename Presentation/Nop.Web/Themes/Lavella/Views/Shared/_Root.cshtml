@@ -1,15 +1,24 @@
-﻿@using Nop.Web.Models.Catalog;
+﻿@using Nop.Core
+@using Nop.Core.Infrastructure
+@using Nop.Services.Localization
+@using Nop.Web.Framework.Themes
+@using Nop.Web.Models.Catalog;
 @{
     Layout = "~/Views/Shared/_Root.Head.cshtml";
 
     var additionalClass = String.Empty;
-    
+
     var controllerName = System.Web.HttpContext.Current.Request.RequestContext.RouteData.GetRequiredString("controller");
     var isHomePage = controllerName.Equals("home", StringComparison.InvariantCultureIgnoreCase);
     if (isHomePage)
     {
         additionalClass = "master-home-page";
     }
+
+    var currentThemeName = EngineContext.Current.Resolve<IThemeContext>().WorkingThemeName;
+    var logoPath = "~/Themes/" + currentThemeName + "/Content/img/logo.png";
+
+    var lavellaLogo = @Html.Widget("lavella_theme_logo");
 }
 @Html.Widget("body_start_html_tag_after")
 @Html.Partial("_Notifications")
@@ -17,23 +26,71 @@
 @Html.Partial("OldInternetExplorerWarning")
 <div class="master-wrapper-page @additionalClass">
     @Html.Action("AdminHeaderLinks", "Common")
-    @Html.Partial("Header")
+    <div class="h-wrapper">
+        <div class="header">
+            @Html.Widget("header")
+            <div class="header-links-wrapper">
+                <div class="header-content-wrapper">
+                    <div class="desktop-header-right">
+                        <div class="search-box store-search-box">
+                            @Html.Action("SearchBox", "Catalog")
+                        </div>
+                        <div class="header-selectors-wrapper">
+                            @Html.Action("TaxTypeSelector", "Common")
+                            @Html.Action("CurrencySelector", "Common")
+                            @Html.Action("StoreSelector", "Common")
+                            @Html.Action("LanguageSelector", "Common")
+
+                            @Html.Widget("header_selectors")
+                        </div>
+                    </div>
+                    @Html.Action("HeaderLinks", "Common")
+                </div>
+            </div>
+        </div>
+        <div class="header-logo">
+            <a href="@Url.RouteUrl("homepage")" class="logo">
+            @if (!MvcHtmlString.IsNullOrEmpty(lavellaLogo))
+            {
+                    @lavellaLogo
+                }
+                else
+                {
+                    string storeName = EngineContext.Current.Resolve<IStoreContext>().CurrentStore.GetLocalized(x => x.Name);
+                    <img title="" alt="@storeName" src="@Url.Content(logoPath)">
+                }
+            </a>
+        </div>
+    </div>
     <div class="overlayOffCanvas"></div>
     <div class="responsive-nav-wrapper-parent">
         <div class="responsive-nav-wrapper">
-            <div class="menu-title">
+            <div class="menu-title responsive-nav-btn">
                 <span>@T("SevenSpikes.Themes.Common.MenuTitle")</span>
             </div>
-            <div class="search-wrap">
+            <div class="responsive-header-logo">
+                <a href="@Url.RouteUrl("homepage")" class="logo">
+                    @if (!MvcHtmlString.IsNullOrEmpty(lavellaLogo))
+            {
+                        @lavellaLogo
+                    }
+                    else
+                    {
+                        string storeName = EngineContext.Current.Resolve<IStoreContext>().CurrentStore.GetLocalized(x => x.Name);
+                        <img title="" alt="@storeName" src="@Url.Content(logoPath)">
+                    }
+                </a>
+            </div>
+            <div class="search-wrap responsive-nav-btn">
                 <span>@T("Search")</span>
             </div>
-            <div class="shopping-cart-link">
+            <div class="shopping-cart-link responsive-nav-btn">
                 <a href="@Url.RouteUrl("ShoppingCart")">@T("ShoppingCart")</a>
             </div>
-            <div class="filters-button">
+            <div class="filters-button responsive-nav-btn">
                 <span>@T("SevenSpikes.Themes.Common.Filters")</span>
             </div>
-            <div class="personal-button" id="header-links-opener">
+            <div class="personal-button responsive-nav-btn" id="header-links-opener">
                 <span>@T("SevenSpikes.Themes.Common.Personal")</span>
             </div>
         </div>

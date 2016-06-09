@@ -1406,7 +1406,7 @@
     .todays-poll-box {
         background: rgba(237,215,206,.4);
         color: #888;
-        font-family: tahoma,arial,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53",open sans;
+        font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
         margin-bottom: 50px;
     }
 
@@ -2467,7 +2467,7 @@
         text-align: center;
         text-transform: uppercase;
         color: #888;
-        font-family: tahoma,arial,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53",open sans;
+        font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
     }
 
     .overview .manufacturers {
@@ -2609,7 +2609,7 @@
         border-top: 1px dotted #D8CFC8;
         border-bottom: 1px dotted #D8CFC8;
         padding: 10px;
-        font-family: tahoma,arial,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53",open sans;
+        font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
         color: #888;
     }
 
@@ -3020,7 +3020,7 @@
                     background: #eeece7;
                     padding: 13px 0;
                     font-size: 14px;
-                    font-family: tahoma,arial,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53",open sans;
+                    font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
                     color: #888;
                 }
 
@@ -3081,7 +3081,7 @@
 
     .attributes {
         margin: 0 0 20px;
-        font-family: tahoma,arial,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53",open sans;
+        font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
         color: #888;
     }
 
@@ -3192,7 +3192,7 @@
     /********** PRODUCT REVIEWS **********/
 
     .product-reviews-page {
-        font-family: tahoma,arial,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53",open sans;
+        font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
         color: #888;
     }
 
@@ -3381,7 +3381,7 @@
     .wishlist-content {
         margin: 0 0 30px;
         color: #888888;
-        font-family: tahoma,arial,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53",open sans;
+        font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
         font-size: 14px;
     }
 
@@ -3424,7 +3424,7 @@
             display: inline-block;
             margin: 0 0 20px;
             color: #9CA34E;
-            font-family: tahoma,arial,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53",open sans;
+            font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
             font-size: 14px;
             font-weight: lighter;
             border-bottom: 1px solid transparent;
@@ -3632,7 +3632,7 @@
     .page.registration-page,
     .contact-page {
         color: #888888;
-        font-family: tahoma,arial,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53",open sans;
+        font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
         font-size: 13px;
     }
 
@@ -5246,7 +5246,7 @@
             margin: 0 0 15px;
             font-size: 20px;
             color: #888;
-            font-family: tahoma,arial,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53",open sans;
+            font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
             text-transform: uppercase;
             line-height: 46px;
         }

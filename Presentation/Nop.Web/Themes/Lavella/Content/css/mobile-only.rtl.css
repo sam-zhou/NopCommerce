@@ -311,7 +311,7 @@
         -moz-transition: all .1s ease-in-out;
         transition: all .1s ease-in-out;
         color: #888888;
-        font-family: tahoma,arial,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53",open sans;
+        font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
     }
         .header-links-wrapper.open {
             display: block;

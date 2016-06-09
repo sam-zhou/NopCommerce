@@ -23,7 +23,7 @@
 
     .responsive-nav-wrapper-parent {
         min-height: 50px;
-        margin: 0 0 15px;
+        margin-bottom: 15px;
     }
     .responsive-nav-wrapper {
         position: relative;
@@ -198,7 +198,7 @@
         display: block;
         padding: 16px 18px !important;
         line-height: 17px;
-        font-family: tahoma,arial,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53",open sans;
+        font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
         color: #888;
         font-size: 18px;
         text-transform: uppercase;
@@ -333,7 +333,7 @@
         -moz-transition: all .1s ease-in-out;
         transition: all .1s ease-in-out;
         color: #888888;
-        font-family: tahoma,arial,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53",open sans;
+        font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
     }
         .header-links-wrapper.open {
             display: block;
@@ -356,4 +356,43 @@
         padding: 8px 12px 8px 8px;
     }
 
+    .responsive-nav-wrapper div.menu-title.responsive-nav-btn, .responsive-nav-wrapper .responsive-header-logo {
+        float: left;
+        
+    }
+
+    .responsive-nav-wrapper div.menu-title {
+        border-right: 1px solid #ddd; 
+    }
+
+    .responsive-nav-wrapper div.responsive-nav-btn {
+        float: right;
+    }
+
+    .responsive-nav-wrapper div.responsive-nav-btn:hover {
+        opacity: 0.6;
+    }
+
+    .responsive-nav-wrapper > .responsive-header-logo {
+        background: #fff;
+    }
+
+    .responsive-nav-wrapper > .responsive-header-logo > a.logo {
+        width: auto;
+        text-indent: 0;
+        padding-top: 8px;
+    }
+
+    .responsive-nav-wrapper > .responsive-header-logo > a.logo > img {
+        height: 42px;
+        padding-bottom: 4px;
+    }
+
+    .master-wrapper-page .h-wrapper .header-logo {
+        display: none;
+    }
+
+    .master-wrapper-page .h-wrapper {
+        padding-top: 0;
+    }
 }

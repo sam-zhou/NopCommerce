@@ -512,7 +512,7 @@
 
 .quickView .giftcard{
     color: #888888;
-    font-family: tahoma,arial,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53",open sans;
+    font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
     font-size: 12px;
 }
 .quickView .giftcard > div{

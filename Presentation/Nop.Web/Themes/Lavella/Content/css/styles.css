@@ -7,7 +7,7 @@
 	outline: none;
 	padding: 0;
 	text-decoration: none;
-    font-family: tahoma,arial,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53"
+    font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 }
 *, *:before, *:after {
 	-webkit-box-sizing: border-box;
@@ -496,7 +496,7 @@ label, label + * {
 .header {
 	position: relative;
 	z-index: 1002;
-	margin: 0 auto 10px;
+	margin: 0 auto 0;
 	text-align: center;
 	width: 95%;
 }
@@ -734,7 +734,7 @@ label, label + * {
 	transition: all 0.3s ease;
 	-webkit-transition: all 0.3s ease;
 	-ms-transition: all 0.3s ease;
-	font-family: tahoma,arial,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53",open sans;
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	display: block;
 }
 .footer-middle ul li a:hover {
@@ -1095,7 +1095,7 @@ label, label + * {
 .todays-poll-box {
 	background: rgba(237,215,206,.4);
 	color: #888;
-	font-family: tahoma,arial,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53",open sans;
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	margin-bottom: 50px;
 }
 .home-page-polls {
@@ -1406,7 +1406,7 @@ label, label + * {
 }
 .item-box .product-title a,  .item-box .title a {
 	display: block;
-    font-family: tahoma,arial,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53",open sans;
+    font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	font-weight: normal;
 }
 .item-box .product-rating-box {
@@ -1945,7 +1945,7 @@ label, label + * {
 	text-align: center;
 	text-transform: uppercase;
 	color: #888;
-	font-family: tahoma,arial,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53",open sans;
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 }
 .overview .manufacturers {
 	margin: 0 0 10px; /*not present in variant-overview*/
@@ -2053,7 +2053,7 @@ label, label + * {
 	border-top: 1px dotted #D8CFC8;
 	border-bottom: 1px dotted #D8CFC8;
 	padding: 10px;
-	font-family: tahoma,arial,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53",open sans;
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	color: #888;
 }
 .customer-entered-price > div {
@@ -2387,7 +2387,7 @@ label, label + * {
 	background: #eeece7;
 	padding: 13px 0;
 	font-size: 14px;
-	font-family: tahoma,arial,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53",open sans;
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	color: #888;
 }
 .ui-tabs .ui-tabs-nav li.ui-tabs-selected a,  .ui-tabs .ui-state-active.ui-tabs-active a {
@@ -2434,7 +2434,7 @@ label, label + * {
 }
 .attributes {
 	margin: 0 0 20px;
-	font-family: tahoma,arial,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53",open sans;
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	color: #888;
 }
 .attributes dl {
@@ -2528,7 +2528,7 @@ label, label + * {
 
 
 .product-reviews-page {
-	font-family: tahoma,arial,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53",open sans;
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	color: #888;
 }
 .product-reviews-page h1 a {
@@ -2681,7 +2681,7 @@ label, label + * {
 .wishlist-content {
 	margin: 0 0 30px;
 	color: #888888;
-	font-family: tahoma,arial,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53",open sans;
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	font-size: 14px;
 }
 .wishlist-content .message-error {
@@ -2716,7 +2716,7 @@ label, label + * {
 	display: inline-block;
 	margin: 0 0 20px;
 	color: #9CA34E;
-	font-family: tahoma,arial,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53",open sans;
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	font-size: 14px;
 	font-weight: lighter;
 	border-bottom: 1px solid transparent;
@@ -2892,7 +2892,7 @@ label, label + * {
 
 .page.registration-page,  .contact-page {
 	color: #888888;
-	font-family: tahoma,arial,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53",open sans;
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	font-size: 13px;
 }
 .registration-page .buttons input,  .registration-result-page .buttons input,  .contact-page .buttons input {
@@ -4161,7 +4161,7 @@ label, label + * {
 	margin: 0 0 15px;
 	font-size: 20px;
 	color: #888;
-	font-family: tahoma,arial,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53",open sans;
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	text-transform: uppercase;
 	line-height: 46px;
 }

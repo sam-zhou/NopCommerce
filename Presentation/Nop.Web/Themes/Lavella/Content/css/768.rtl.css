@@ -505,7 +505,7 @@
 	}
 	.product-collateral .product-variant-line .variant-name {
 		font-size: 18px;
-		font-family: tahoma,arial,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53",open sans;
+		font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 		color: #888;
 		height: 26px;
 	}
