@@ -33,7 +33,6 @@ namespace NopImport.Model.Map
             Map(q => q.Directions).Length(10000).Nullable();
             Map(q => q.Indications).Length(10000).Nullable();
             Map(q => q.IsUpdated).Not.Nullable().Default("0");
-            Map(q => q.IsSynced).Not.Nullable().Default("0");
             Map(q => q.NopId).Length(10).Nullable();
         }
         

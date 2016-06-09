@@ -494,6 +494,7 @@
     <Content Include="Content\files\Index.htm" />
     <Content Include="Content\Images\default-image.png" />
     <Content Include="Content\Images\logo-108.png" />
+    <Content Include="Content\Images\social\qrcode_for_gh_a2e5f1069d1b_430.jpg" />
     <Content Include="Content\kendo\2014.1.318\Black\editor.png" />
     <Content Include="Content\kendo\2014.1.318\Black\imagebrowser.png" />
     <Content Include="Content\kendo\2014.1.318\Black\indeterminate.gif" />
@@ -1081,6 +1082,8 @@
     <Content Include="Content\tinymce\themes\modern\theme.min.js" />
     <Content Include="Content\tinymce\tinymce.min.js" />
     <Content Include="favicon.ico" />
+    <Content Include="admin_favicon.ico" />
+    <Content Include="google3d70b9b650583cb0.html" />
     <Content Include="Plugins\SevenSpikes.Core\Description.txt" />
     <Content Include="Plugins\SevenSpikes.Core\dotless.Core.dll" />
     <Content Include="Plugins\SevenSpikes.Core\logo.jpg" />

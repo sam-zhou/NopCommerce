@@ -22,7 +22,7 @@ namespace NopImport.Console.Export
         {
             using (var db = new DatabaseService("DefaultConnectionString", "NopImport"))
             {
-                var products = db.Session.QueryOver<Product>().Where(q => q.IsUpdated && !q.IsSynced).List();
+                var products = db.Session.QueryOver<Product>().Where(q => q.IsUpdated && string.IsNullOrWhiteSpace(q.NopId)).List();
                 for (int i = 0; i < products.Count; i++)
                 {
                     var product = products[i];
@@ -133,7 +133,7 @@ namespace NopImport.Console.Export
                     //Worksheet.Cells[i + 2, 98] = "TRUE";
                     //Worksheet.Cells[i + 2, 99] = "TRUE";
                     db.BeginTransaction();
-                    product.IsSynced = true;
+                    //product.NopId = "0";
                     db.Save(product);
                     db.CommitTransaction();
                     ProgressChange((i + 1)*100/products.Count, "");

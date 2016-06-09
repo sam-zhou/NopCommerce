@@ -52,7 +52,7 @@
                     }
                     @if (!String.IsNullOrEmpty(Model.WechatLink))
                     {
-                        <li><a target="_blank" class="wechat" href="@Model.WechatLink"></a></li>
+                        <li><a target="_blank" class="wechat" href="weixin://profile/lynexshop"></a></li>
                     }
                     @if (!String.IsNullOrEmpty(Model.WeiboLink))
                     {
@@ -63,17 +63,30 @@
                         <li><a class="rss" target="_blank" href="@Url.RouteUrl("NewsRSS", new {languageId = Model.WorkingLanguageId})"></a></li>
                     }
                 </ul>
-                <ul>
-                    <li>
-                        @T("SevenSpikes.Themes.Lavella.Common.Phone")
-                    </li>
-                    <li>
-                        <a href="javascript:sevenSpikes.AntiSpam('@T("SevenSpikes.Themes.Lavella.Common.EmailName")', '@T("SevenSpikes.Themes.Lavella.Common.EmailDomain")')">@T("SevenSpikes.Themes.Lavella.Common.EmailName")@T("SevenSpikes.Themes.Lavella.Common.EmailAt")@T("SevenSpikes.Themes.Lavella.Common.EmailDomain")</a>
-                    </li>
-                    <li>
-                        @T("SevenSpikes.Themes.Lavella.Common.Address")
-                    </li>
-                </ul>
+                @if (!String.IsNullOrEmpty(Model.WechatLink))
+                {
+                    <div class="qrcode">
+                        <div class="qr-title">微信扫码</div>
+                        <div class="qr-image">
+                            <img src="/Content/Images/social/qrcode_for_gh_a2e5f1069d1b_430.jpg" height="180" width="180" />
+                        </div>
+
+                    </div>
+                }
+                else
+                {
+                    <ul>
+                        <li>
+                            @T("SevenSpikes.Themes.Lavella.Common.Phone")
+                        </li>
+                        <li>
+                            <a href="javascript:sevenSpikes.AntiSpam('@T("SevenSpikes.Themes.Lavella.Common.EmailName")', '@T("SevenSpikes.Themes.Lavella.Common.EmailDomain")')">@T("SevenSpikes.Themes.Lavella.Common.EmailName")@T("SevenSpikes.Themes.Lavella.Common.EmailAt")@T("SevenSpikes.Themes.Lavella.Common.EmailDomain")</a>
+                        </li>
+                        <li>
+                            @T("SevenSpikes.Themes.Lavella.Common.Address")
+                        </li>
+                    </ul>
+                }
             </div>
             <div class="fb-two">
                 <h3><span>@T("SevenSpikes.Themes.Lavella.Common.CompanyInfo")</span></h3>

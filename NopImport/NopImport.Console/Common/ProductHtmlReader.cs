@@ -23,7 +23,7 @@ namespace NopImport.Console.Common
         {
             using (var db = new DatabaseService("DefaultConnectionString", "NopImport"))
             {
-                var products = db.Session.QueryOver<Product>().Where(q => !q.IsSynced && !q.IsUpdated).List();
+                var products = db.Session.QueryOver<Product>().Where(q => !q.IsUpdated).List();
                 for (int i = 0; i < products.Count; i++)
                 {
                     db.BeginTransaction();

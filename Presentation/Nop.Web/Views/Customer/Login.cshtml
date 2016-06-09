@@ -23,10 +23,10 @@
     @Html.Partial("_ExternalAuthentication.AssociateMessage")
     @Html.Partial("_ExternalAuthentication.Errors")
     <div class="page-body">
-        <div class="customer-blocks">
+        <div class="customer-blocks l-row">
             @if (Model.CheckoutAsGuest)
             {
-                <div class="new-wrapper checkout-as-guest-or-register-block">
+                <div class="new-wrapper checkout-as-guest-or-register-block l-col-6">
                     <div class="title">
                         <strong>@T("Account.Login.CheckoutAsGuestOrRegister")</strong>
                     </div>
@@ -41,7 +41,7 @@
             }
             else
             {
-                <div class="new-wrapper register-block">
+                <div class="new-wrapper register-block l-col-6">
                     <div class="title">
                         <strong>@T("Account.Login.NewCustomer")</strong>
                     </div>
@@ -53,7 +53,7 @@
                     </div>
                 </div>
             }
-            <div class="returning-wrapper fieldset">
+            <div class="returning-wrapper fieldset l-col-6">
                 @using (Html.BeginForm())
                 {
                     var validationSummary = Html.ValidationSummary(true, T("Account.Login.Unsuccessful").Text);
@@ -106,7 +106,7 @@
                 }
             </div>
         </div>
-        <div class="external-authentication">
+        <div class="external-authentication l-row">
             @Html.Action("ExternalMethods", "ExternalAuthentication")
         </div>
         @Html.Action("TopicBlock", "Topic", new { systemName = "LoginRegistrationInfo" })

@@ -25,6 +25,10 @@
             text-align: right;
         }
 
+        .returning-wrapper .inputs label {
+            width: 55px;
+        }
+
     .master-column-wrapper {
         margin: 20px auto 0;
         position: relative;
@@ -1095,7 +1099,7 @@
 
     .footer-middle .fm-wrapper > div {
         float: left;
-        margin: 50px 5px 0;
+        margin: 5px 5px 0;
         width: 240px;
         min-height: 230px;
         text-align: left;
@@ -1149,7 +1153,7 @@
 		top: 0;
 		left: 0;
 		width: 100%;
-		height: 100px;
+		height: 50px;
 		background: #d1e7a0;
 	}
     .fb-two>ul,
@@ -1164,6 +1168,10 @@
     .footer-upper {
         width: 1000px;
         margin: 0 auto 80px;
+    }
+
+    .external-login-block {
+        width: 33%;
     }
     
 } 

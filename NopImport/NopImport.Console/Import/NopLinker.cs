@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -436,7 +437,7 @@ namespace NopImport.Console.Import
             using (var db = new DatabaseService("DefaultConnectionString", "NopImport"))
             {
 
-                var products = db.Session.QueryOver<Product>().Where(q => q.IsUpdated && !q.IsSynced).List();
+                var products = db.Session.QueryOver<Product>().Where(q => q.IsUpdated && string.IsNullOrWhiteSpace(q.NopId)).List();
                 var count = 0;
                 foreach (var product in products)
                 {
@@ -513,7 +514,7 @@ namespace NopImport.Console.Import
                         }
 
                         db.BeginTransaction();
-                        product.IsSynced = true;
+                        product.NopId = nopProduct.Id.ToString(CultureInfo.InvariantCulture);
                         db.Session.Save(product);
                         db.CommitTransaction();
                     }

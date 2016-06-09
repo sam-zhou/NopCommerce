@@ -930,7 +930,8 @@ label, label + * {
 	overflow: hidden;
 	font-size: 11px;
 	background: #ad9d8f;
-	padding-top: 15px;
+	padding-top: 10px;
+    padding-bottom: 10px;
 }
 .lower-footer .accepted-payment-methods li {
 	display: inline-block;
@@ -940,7 +941,6 @@ label, label + * {
 	border: 1px solid;
 }
 .footer-lower > div {
-	margin: 0 0 5px;
 	color: #625c56;
 	font-size: 12px;
 }
@@ -3000,8 +3000,10 @@ label, label + * {
 	font-weight: normal;
 }
 .login-page .new-wrapper {
-	margin: 0 0 30px;
+	margin: 0 0 10px;
 	color: #888;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 .login-page .new-wrapper .buttons input,  .password-recovery-page .buttons input {
 	background: none repeat scroll 0 0 #A59B92;
@@ -4362,7 +4364,7 @@ pre {
 }
 
 .external-login-block {
-    width: 33%;
+    width: 100%;
     float: left;
     height: 80px;
     padding-left: 30px;
@@ -4408,4 +4410,23 @@ pre {
     font-size: 1.6em;
     text-align: center;
     border-right: 1px solid rgba(50,50,50,0.3);
+}
+
+.l-row {
+    clear: both;
+}
+
+.l-col-1, .l-col-2, .l-col-3, .l-col-4, .l-col-6, .l-col-12 {
+    float: left;
+    width: 100%;
+}
+
+
+
+.hidden {
+    display: none;
+}
+
+.qr-title {
+    color: #888;
 }
