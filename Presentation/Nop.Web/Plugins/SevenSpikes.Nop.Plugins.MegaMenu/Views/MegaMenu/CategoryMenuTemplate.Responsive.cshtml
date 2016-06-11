@@ -18,15 +18,17 @@
     var localizedMenuItemName = localizationHelper.GetLocalizedSettingValue(Constants.ResourceMenuItemName);
     if (megaMenuSettings.ShowCategoriesInASingleMenuItem)
     {
-    <li>
+    <li class="no-hover">
         @if (Model.CategoriesModels.Count > 0)
         {
+            <i class="fa fa-list-ul" aria-hidden="true"></i>
             <span class="with-subcategories labelForNextPlusButton">@localizedMenuItemName</span>
             <div class="plus-button"></div>
             <div class="sublist-wrap">
                 <ul class="sublist">
                     <li class="back-button">
-                        <span>@T("SevenSpikes.MegaMenu.ResponsiveBackButton")</span>
+                        <div class="sublist-title">@localizedMenuItemName</div>
+                        <span></span>
                     </li>
                     @foreach (var category in Model.CategoriesModels)
                     {
@@ -38,7 +40,8 @@
                                 <div class="sublist-wrap">
                                     <ul class="sublist">
                                         <li class="back-button">
-                                            <span>@T("SevenSpikes.MegaMenu.ResponsiveBackButton")</span>
+                                            <div class="sublist-title">@category.CategoryModel.Name</div>
+                                            <span></span>
                                         </li>
                                         @{
                                 var categoriesCounter = 0;
@@ -80,7 +83,7 @@
     {
         foreach (var category in Model.CategoriesModels)
         {
-        <li>
+        <li><i class="fa fa-list-ul" aria-hidden="true"></i>
             @if (category.SubCategories.Count > 0)
             {
                 <a href="@Url.RouteUrl("Category", new { SeName = category.CategoryModel.SeName })" title="@category.CategoryModel.Name" class="with-subcategories">@category.CategoryModel.Name</a>
@@ -88,7 +91,7 @@
                 <div class="sublist-wrap">
                     <ul class="sublist">
                         <li class="back-button">
-                            <span>@T("SevenSpikes.MegaMenu.ResponsiveBackButton")</span>
+                            <span></span>
                         </li>
                         @{
                 var categoriesCounter = 0;

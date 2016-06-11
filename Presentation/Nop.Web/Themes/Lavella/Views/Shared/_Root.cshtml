@@ -99,8 +99,17 @@
     <div class="header-menu">
         <div class="close-menu">
             <div class="close-menu-logo">
-                <img src="/Content/Images/logo-white-transparent.png"/>
+                @if (!MvcHtmlString.IsNullOrEmpty(lavellaLogo))
+                {
+                    @lavellaLogo
+                }
+                else
+                {
+                    string storeName = EngineContext.Current.Resolve<IStoreContext>().CurrentStore.GetLocalized(x => x.Name);
+                    <img title="" alt="@storeName" src="@Url.Content(logoPath)">
+                }
             </div>
+            <div class="close-btn"></div>
         </div>
         @{
             var menuHtml = Html.Widget("theme_header_menu");

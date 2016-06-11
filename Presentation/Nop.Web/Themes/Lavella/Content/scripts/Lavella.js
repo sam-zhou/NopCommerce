@@ -39,7 +39,7 @@
             selectors: {
                 menuTitle: ".menu-title",
                 headerMenu: ".header-menu",
-                closeMenu: ".close-menu",
+                closeMenu: ".close-btn",
                 movedElements: ".admin-header-links, .h-wrapper, .header, .responsive-nav-wrapper, .master-wrapper-content, .footer",
                 sublist: ".header-menu .sublist",
                 overlayOffCanvas: ".overlayOffCanvas",

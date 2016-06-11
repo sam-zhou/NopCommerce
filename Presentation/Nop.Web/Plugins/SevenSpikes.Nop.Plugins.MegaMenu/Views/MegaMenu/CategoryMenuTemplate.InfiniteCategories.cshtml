@@ -19,13 +19,13 @@
 
     if (megaMenuSettings.ShowCategoriesInASingleMenuItem)
     {
-        <li>
+        <li><i class="fa fa-list-ul" aria-hidden="true"></i>
             <span class="with-subcategories products-item-menu labelfornextplusbutton">@localizedMenuItemName</span>
             <div class="plus-button"></div>
             <div class="sublist-wrap">
                 <ul class="sublist">
                     <li class="back-button">
-                        <span>@T("SevenSpikes.MegaMenu.ResponsiveBackButton")</span>
+                        <span></span>
                     </li>
                     @CreateSubLists(Model.CategoriesModels)
                 </ul>
@@ -42,7 +42,7 @@
 {
     foreach (var subCategory in category)
     {
-        <li>
+        <li><i class="fa fa-list-ul" aria-hidden="true"></i>
             @if (subCategory.SubCategories.Count > 0)
             {
                 <a href="@Url.RouteUrl("Category", new { SeName = subCategory.CategoryModel.SeName })" title="@subCategory.CategoryModel.Name" class="with-subcategories">@subCategory.CategoryModel.Name</a>
@@ -50,7 +50,7 @@
                 <div class="sublist-wrap">
                     <ul class="sublist">
                         <li class="back-button">
-                            <span>@T("SevenSpikes.MegaMenu.ResponsiveBackButton")</span>
+                            <span></span>
                         </li>
                         @CreateSubLists(subCategory.SubCategories)
                     </ul>

@@ -17,7 +17,7 @@
     var megaMenuSettings = EngineContext.Current.Resolve<MegaMenuSettings>();
     var localizedManufacturersItemName = localizationHelper.GetLocalizedSettingValue(Constants.ResourceManufacturersItemName);
 
-    <li>
+    <li><i class="fa fa-tags" aria-hidden="true"></i>
         @if (Model.ManufacturersModels.Count > 0)
         {
             <a href="@Url.RouteUrl("ManufacturerList")" class="with-subcategories" title="@localizedManufacturersItemName">@localizedManufacturersItemName</a>
@@ -25,7 +25,7 @@
             <div class="sublist-wrap">
                 <ul class="sublist">
                     <li class="back-button">
-                        <span>@T("SevenSpikes.MegaMenu.ResponsiveBackButton")</span>
+                        <span></span>
                     </li>
                     @{
             foreach (var manufacturer in Model.ManufacturersModels)

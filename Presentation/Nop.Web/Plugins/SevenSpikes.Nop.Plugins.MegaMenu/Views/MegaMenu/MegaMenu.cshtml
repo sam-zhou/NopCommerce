@@ -24,15 +24,39 @@
     @RenderMegaMenu(isMegaMenuResponsive: false)
 </ul>
 <div class="menu-title"><span>@T("SevenSpikes.MegaMenu.ResponsiveMenuTitle")</span></div>
-<ul class="mega-menu-responsive">
+<ul class="mega-menu-responsive noselect">
     @RenderMegaMenu(isMegaMenuResponsive: true)
 </ul>
-
+<ul class="service-menu">
+    <li>
+        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+        <a href="@Url.RouteUrl("ShoppingCart")" title="@T("ShoppingCart")">@T("ShoppingCart")</a>
+    </li>
+    @if (HttpContext.Current.User.Identity.IsAuthenticated)
+    {
+        @*<li><i class="fa fa-user" aria-hidden="true"></i>
+                <a href="@Url.RouteUrl("CustomerInfo")" class="ico-account">@HttpContext.Current.User.Identity.Name</a></li>*@
+        if (Model.Settings.IncludeMyAccountLink)
+        {
+            <li>
+                <i class="fa fa-user" aria-hidden="true"></i>
+                <a href="@Url.RouteUrl("CustomerInfo")" title="@T("Account.MyAccount")">@T("Account.MyAccount")</a>
+            </li>
+        }
+        <li><i class="fa fa-sign-out" aria-hidden="true"></i><a href="@Url.RouteUrl("Logout")" class="ico-logout">@T("Account.Logout")</a></li>
+    }
+    else
+    {
+        <li><i class="fa fa-user-plus" aria-hidden="true"></i><a href="@Url.RouteUrl("Register")" class="ico-register">@T("Account.Register")</a></li>
+        <li><i class="fa fa-sign-in" aria-hidden="true"></i><a href="@Url.RouteUrl("Login")" class="ico-login">@T("Account.Login")</a></li>
+    }
+</ul>
 @helper RenderMegaMenu(bool isMegaMenuResponsive)
 {
     if (Model.Settings.IncludeHomePageLink)
     {
         <li>
+            <i class="fa fa-home" aria-hidden="true"></i>
             <a href="@Url.RouteUrl("HomePage")" title="@T("HomePage")">@T("HomePage")</a>
         </li>
     }
@@ -64,19 +88,14 @@
     }
     if (Model.Settings.IncludeRecentlyAddedLink)
     {
-        <li>
+        <li><i class="fa fa-check-square" aria-hidden="true"></i>
             <a href="@Url.RouteUrl("NewProducts")" title="@T("Products.NewProducts")">@T("Products.NewProducts")</a>
         </li>
     }
-    if (Model.Settings.IncludeMyAccountLink)
-    {
-        <li>
-            <a href="@Url.RouteUrl("CustomerInfo")" title="@T("Account.MyAccount")">@T("Account.MyAccount")</a>
-        </li>
-    }
+    
     if (Model.Settings.IncludeContactUsLink)
     {
-        <li>
+        <li><i class="fa fa-envelope" aria-hidden="true"></i>
             <a href="@Url.RouteUrl("Topic", new { SeName = "ContactUs" })" title="@T("contactus")">@T("contactus")</a>
         </li>
     }
@@ -146,7 +165,7 @@
 
     if (Model.StickyCategory != null)
     {
-        <li class="sticky-category">
+        <li class="sticky-category"><i class="fa fa-usd" aria-hidden="true"></i>
             <a href="@Url.RouteUrl("Category", new { SeName = Model.StickyCategory.SeName })" title="@Model.StickyCategory.Name">@Model.StickyCategory.Name</a>
         </li>
     }

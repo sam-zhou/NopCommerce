@@ -66,9 +66,9 @@
                 @if (!String.IsNullOrEmpty(Model.WechatLink))
                 {
                     <div class="qrcode">
-                        <div class="qr-title">微信扫码</div>
+                        <div class="qr-title">欢迎关注我们的微信公众号</div>
                         <div class="qr-image">
-                            <img src="/Content/Images/social/qrcode_for_gh_a2e5f1069d1b_430.jpg" height="180" width="180" />
+                            <img src="/Content/Images/social/qrcode_for_gh_a2e5f1069d1b_430.jpg" height="180" width="180"/>
                         </div>
 
                     </div>
@@ -93,7 +93,7 @@
                 <ul>
                     @foreach (var topic in Model.Topics.Where(x => x.IncludeInFooterColumn1).ToList())
                     {
-                        <li><a href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a></li>
+                        <li><a href="@Url.RouteUrl("Topic", new {SeName = topic.SeName})">@topic.Name</a></li>
                     }
                 </ul>
             </div>
@@ -107,7 +107,7 @@
                     }
                     @foreach (var topic in Model.Topics.Where(x => x.IncludeInFooterColumn2).ToList())
                     {
-                        <li><a href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a></li>
+                        <li><a href="@Url.RouteUrl("Topic", new {SeName = topic.SeName})">@topic.Name</a></li>
                     }
                 </ul>
             </div>
@@ -133,12 +133,24 @@
                     }
                     @foreach (var topic in Model.Topics.Where(x => x.IncludeInFooterColumn3).ToList())
                     {
-                        <li><a href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a></li>
+                        <li><a href="@Url.RouteUrl("Topic", new {SeName = topic.SeName})">@topic.Name</a></li>
                     }
                 </ul>
             </div>
         </div>
-    </div>
+    </div>@if (!String.IsNullOrEmpty(Model.WechatLink))
+          {
+              <div class="wechat-only">
+                  <div class="qrcode">
+                      <div class="qr-title">欢迎关注我们的微信公众号</div>
+                      <div class="qr-image">
+                          <img src="/Content/Images/social/qrcode_for_gh_a2e5f1069d1b_430.jpg" height="180" width="180"/>
+                      </div>
+
+                  </div>
+              </div>
+          }
+
     <div class="footer-lower">
         @if (!removeCopyright)
         {
@@ -161,7 +173,7 @@
         {
             var inclTax = EngineContext.Current.Resolve<IWorkContext>().TaxDisplayType == TaxDisplayType.IncludingTax;
             <div class="footer-tax-shipping">
-                @T(inclTax ? "Footer.TaxShipping.InclTax" : "Footer.TaxShipping.ExclTax", Url.RouteUrl("Topic", new { SeName = Html.GetTopicSeName("shippinginfo") }))
+                @T(inclTax ? "Footer.TaxShipping.InclTax" : "Footer.TaxShipping.ExclTax", Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("shippinginfo")}))
             </div>
         }
         <div class="accepted-payment-methods">
