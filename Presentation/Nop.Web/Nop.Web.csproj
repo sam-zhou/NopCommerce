@@ -1713,6 +1713,7 @@
     <Content Include="Plugins\SevenSpikes.Nop.Plugins.ProductRibbons\Views\ProductRibbons\ProductRibbonsHtml.cshtml" />
     <Content Include="Plugins\SevenSpikes.Nop.Plugins.ProductRibbons\Views\ProductRibbons\ProductRibbonsWidget.cshtml" />
     <Content Include="Plugins\SevenSpikes.Nop.Plugins.ProductRibbons\Views\web.config" />
+    <None Include="Properties\PublishProfiles\NopAsia.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\fineuploader\iframe.xss.response-4.2.2.js" />
     <Content Include="Scripts\fineuploader\jquery.fineuploader-4.2.2.js" />
@@ -3094,7 +3095,6 @@
   <ItemGroup>
     <Folder Include="Content\Roxy_Fileman\tmp\" />
     <Folder Include="Plugins\bin\" />
-    <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Nop.Core\Nop.Core.csproj">
