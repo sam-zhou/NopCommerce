@@ -33,9 +33,32 @@
                     @foreach (var category in Model.CategoriesModels)
                     {
                         <li>
+                            @switch (category.CategoryModel.Id)
+                            {
+                                case 9:
+                                    <i class="fa fa-female" aria-hidden="true"></i>
+                                    break;
+                                case 5:
+                                    <i class="fa fa-male" aria-hidden="true"></i>
+                                    break;
+                                case 13:
+                                    <i class="fa fa-heart-o" aria-hidden="true"></i>
+                                    break;
+                                case 1:
+                                    <i class="fa fa-child" aria-hidden="true"></i>
+                                    break;
+                                case 15:
+                                    <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+                                    break;
+                                case 39:
+                                    <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+                                    break;
+                            }
+                            
+
                             @if (category.SubCategories.Count > 0)
                             {
-                                <a href="@Url.RouteUrl("Category", new { SeName = category.CategoryModel.SeName })" title="@category.CategoryModel.Name" class="with-subcategories">@category.CategoryModel.Name</a>
+                                <a href="@Url.RouteUrl("Category", new {SeName = category.CategoryModel.SeName})" title="@category.CategoryModel.Name" class="with-subcategories">@category.CategoryModel.Name</a>
                                 <div class="plus-button"></div>
                                 <div class="sublist-wrap">
                                     <ul class="sublist">
@@ -44,29 +67,29 @@
                                             <span></span>
                                         </li>
                                         @{
-                                var categoriesCounter = 0;
-                                foreach (var subCategory in category.SubCategories)
-                                {
-                                    categoriesCounter++;
-                                
+                                            var categoriesCounter = 0;
+                                            foreach (var subCategory in category.SubCategories)
+                                            {
+                                                categoriesCounter++;
+
                                                 <li>
-                                                    <a href="@Url.RouteUrl("Category", new { SeName = subCategory.CategoryModel.SeName })" title="@subCategory.CategoryModel.Name">@subCategory.CategoryModel.Name</a>
+                                                    <a href="@Url.RouteUrl("Category", new {SeName = subCategory.CategoryModel.SeName})" title="@subCategory.CategoryModel.Name">@subCategory.CategoryModel.Name</a>
                                                 </li>
-                                
-                                }
-                                if (categoriesCounter == megaMenuSettings.NumberOfCategories && megaMenuSettings.NumberOfCategories != 0)
-                                {
-                                                <li class="view-all" >
-                                                    <a href="@Url.RouteUrl("Category", new { SeName = category.CategoryModel.SeName })" title="@T("SevenSpikes.MegaMenu.ViewAllCategories")">@T("SevenSpikes.MegaMenu.ViewAllCategories")</a>
+
+                                            }
+                                            if (categoriesCounter == megaMenuSettings.NumberOfCategories && megaMenuSettings.NumberOfCategories != 0)
+                                            {
+                                                <li class="view-all">
+                                                    <a href="@Url.RouteUrl("Category", new {SeName = category.CategoryModel.SeName})" title="@T("SevenSpikes.MegaMenu.ViewAllCategories")">@T("SevenSpikes.MegaMenu.ViewAllCategories")</a>
                                                 </li>
-                                }
+                                            }
                                         }
                                     </ul>
                                 </div>
                             }
                             else
                             {
-                                <a href="@Url.RouteUrl("Category", new { SeName = category.CategoryModel.SeName })" title="@category.CategoryModel.Name">@category.CategoryModel.Name</a>
+                                <a href="@Url.RouteUrl("Category", new {SeName = category.CategoryModel.SeName})" title="@category.CategoryModel.Name">@category.CategoryModel.Name</a>
                             }
                         </li>
                     }

@@ -6,3 +6,4 @@ SupportedVersions: 3.70
 Author: Huang ZhongQiu
 DisplayOrder: 5
 FileName: Nop.Plugin.ExternalAuth.WeiXin.dll
+LimitedToStores: 2

@@ -505,11 +505,11 @@
         color: #a52a2a;
     }
 
-    .header-menu > ul li:hover i {
+    .header-menu > ul > li:hover > i, ul.sublist > li:hover > i, ul.sublist > li:hover > a {
         color: #9aba6b !important;
     }
 
-    .header-menu > ul li.no-hover:hover i {
+    .header-menu > ul > li.no-hover:hover > i {
         color: #888888 !important;
     }
 

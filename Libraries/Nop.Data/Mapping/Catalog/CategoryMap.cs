@@ -13,6 +13,7 @@ namespace Nop.Data.Mapping.Catalog
             this.Property(c => c.MetaTitle).HasMaxLength(400);
             this.Property(c => c.PriceRanges).HasMaxLength(400);
             this.Property(c => c.PageSizeOptions).HasMaxLength(200);
+            this.Property(c => c.IconClass).HasMaxLength(20);
         }
     }
 }

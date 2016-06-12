@@ -30,6 +30,10 @@ namespace Nop.Admin.Models.Catalog
         [AllowHtml]
         public string Name { get; set; }
 
+        [NopResourceDisplayName("Admin.Catalog.Categories.Fields.IconClass")]
+        [AllowHtml]
+        public string IconClass { get; set; }
+
         [NopResourceDisplayName("Admin.Catalog.Categories.Fields.Description")]
         [AllowHtml]
         public string Description { get; set; }

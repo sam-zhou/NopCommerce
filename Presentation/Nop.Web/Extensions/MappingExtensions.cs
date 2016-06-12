@@ -34,6 +34,7 @@ namespace Nop.Web.Extensions
                 MetaDescription = entity.GetLocalized(x => x.MetaDescription),
                 MetaTitle = entity.GetLocalized(x => x.MetaTitle),
                 SeName = entity.GetSeName(),
+                IconClass = entity.IconClass
             };
             return model;
         }

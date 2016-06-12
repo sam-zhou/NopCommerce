@@ -6,3 +6,4 @@ SupportedVersions: 3.70
 Author: nopCommerce team
 DisplayOrder: 5
 FileName: Nop.Plugin.ExternalAuth.Facebook.dll
+LimitedToStores: 1,3

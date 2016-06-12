@@ -20,6 +20,8 @@ namespace Nop.Core.Domain.Catalog
         /// </summary>
         public string Name { get; set; }
 
+        public string IconClass { get; set; }
+
         /// <summary>
         /// Gets or sets the description
         /// </summary>
