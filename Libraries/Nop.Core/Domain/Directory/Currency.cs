@@ -63,6 +63,11 @@ namespace Nop.Core.Domain.Directory
         /// Gets or sets the display locale
         /// </summary>
         public int RoundTo { get; set; }
+
+        /// <summary>
+        /// Gets or sets the display locale
+        /// </summary>
+        public int Offset { get; set; }
     }
 
 }

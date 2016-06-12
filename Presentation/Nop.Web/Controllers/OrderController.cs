@@ -242,8 +242,8 @@ namespace Nop.Web.Controllers
                 //including tax
 
                 //order subtotal
-                var orderSubtotalInclTaxInCustomerCurrency = _currencyService.ConvertCurrency(order.OrderSubtotalInclTax, order.CurrencyRate);
-                model.OrderSubtotal = _priceFormatter.FormatPrice(orderSubtotalInclTaxInCustomerCurrency, true, order.CustomerCurrencyCode, _workContext.WorkingLanguage, true);
+                //var orderSubtotalInclTaxInCustomerCurrency = _currencyService.ConvertCurrency(order.OrderSubtotalInclTax, order.CurrencyRate);
+                model.OrderSubtotal = _priceFormatter.FormatPrice(order.OrderSubtotalInclTax, true, order.CustomerCurrencyCode, _workContext.WorkingLanguage, true);
                 //discount (applied to order subtotal)
                 var orderSubTotalDiscountInclTaxInCustomerCurrency = _currencyService.ConvertCurrency(order.OrderSubTotalDiscountInclTax, order.CurrencyRate);
                 if (orderSubTotalDiscountInclTaxInCustomerCurrency > decimal.Zero)
@@ -254,8 +254,8 @@ namespace Nop.Web.Controllers
                 //excluding tax
 
                 //order subtotal
-                var orderSubtotalExclTaxInCustomerCurrency = _currencyService.ConvertCurrency(order.OrderSubtotalExclTax, order.CurrencyRate);
-                model.OrderSubtotal = _priceFormatter.FormatPrice(orderSubtotalExclTaxInCustomerCurrency, true, order.CustomerCurrencyCode, _workContext.WorkingLanguage, false);
+                //var orderSubtotalExclTaxInCustomerCurrency = _currencyService.ConvertCurrency(order.OrderSubtotalExclTax, order.CurrencyRate);
+                model.OrderSubtotal = _priceFormatter.FormatPrice(order.OrderSubtotalExclTax, true, order.CustomerCurrencyCode, _workContext.WorkingLanguage, false);
                 //discount (applied to order subtotal)
                 var orderSubTotalDiscountExclTaxInCustomerCurrency = _currencyService.ConvertCurrency(order.OrderSubTotalDiscountExclTax, order.CurrencyRate);
                 if (orderSubTotalDiscountExclTaxInCustomerCurrency > decimal.Zero)

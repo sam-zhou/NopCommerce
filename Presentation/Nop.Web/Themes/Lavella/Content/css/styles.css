@@ -1538,22 +1538,32 @@ label, label + * {
 	margin-left: 0px;
 }
 .sub-category-grid .item-box .title a:before,  .sub-category-grid .item-box .title a:after,  .home-page-category-grid .item-box .title a:before,  .home-page-category-grid .item-box .title a:after {
-	display: inline-block;
+    display: inline-block;
     margin: 0 3px;
-	transition: transform 0.3s ease, opacity 0.2s ease;
+    -moz-transition: transform 0.3s ease, opacity 0.2s ease;
+    -o-transition: transform 0.3s ease, opacity 0.2s ease;
+    transition: transform 0.3s ease, opacity 0.2s ease;
 	-webkit-transition: transform 0.3s ease, opacity 0.2s ease;
 	-ms-transition: transform 0.3s ease, opacity 0.2s ease;
 	visibility: visible;
 }
+
 .sub-category-grid .item-box:hover .title a:after,  .sub-category-grid .item-box:hover .title a:before,  .sub-category-grid .item-box:hover .title a:after,  .sub-category-grid .item-box:hover .title a:before,  .home-page-category-grid .item-box:hover .title a:after,  .home-page-category-grid .item-box:hover .title a:before,  .home-page-category-grid .item-box:hover .title a:after,  .home-page-category-grid .item-box:hover .title a:before {
-	opacity: 1;
-	transform: translateX(0);
+    -ms-opacity: 1;
+    opacity: 1;
+    -moz-transform: translateX(0);
+    -o-transform: translateX(0);
+    transform: translateX(0);
 	-webkit-transform: translateX(0);
 	-ms-transform: translateX(0);
 }
 
+.home-page-category-grid .item-grid .item-box:hover {
+    background: inherit;
+}
+
 .sub-category-grid .item-box,  .home-page-category-grid .item-box {
-	background: #eeece7;
+	/*background: #eeece7;*/
 	margin-bottom: 10px;
 	padding: 0;
 }
@@ -1578,9 +1588,7 @@ label, label + * {
     max-width: none;
 	margin: auto;
 }*/
-.home-page-category-grid .picture {
-	display: none;
-}
+
 .product-grid.home-page-category-grid > .title,  .product-grid.home-page-product-grid > .title,  .product-grid.bestsellers > .title,  .news-list-homepage > .title {
 	margin-bottom: 20px;
 }
@@ -3305,8 +3313,7 @@ label, label + * {
 	margin: 0;
 }
 .login-page .returning-wrapper .inputs.reversed span {
-	position: relative;
-	top: 8px;
+	position: static;
 }
 .login-page .returning-wrapper .inputs.reversed label {
 	width: auto;

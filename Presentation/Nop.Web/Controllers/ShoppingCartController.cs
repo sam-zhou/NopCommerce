@@ -314,11 +314,11 @@ namespace Nop.Web.Controllers
                         if (_permissionService.Authorize(StandardPermissionProvider.DisplayPrices))
                         {
                             decimal priceAdjustmentBase = _taxService.GetCheckoutAttributePrice(attributeValue);
-                            decimal priceAdjustment = _currencyService.ConvertFromPrimaryStoreCurrency(priceAdjustmentBase, _workContext.WorkingCurrency);
+                            //decimal priceAdjustment = _currencyService.ConvertFromPrimaryStoreCurrency(priceAdjustmentBase, _workContext.WorkingCurrency);
                             if (priceAdjustmentBase > decimal.Zero)
-                                attributeValueModel.PriceAdjustment = "+" + _priceFormatter.FormatPrice(priceAdjustment);
+                                attributeValueModel.PriceAdjustment = "+" + _priceFormatter.FormatPrice(priceAdjustmentBase);
                             else if (priceAdjustmentBase < decimal.Zero)
-                                attributeValueModel.PriceAdjustment = "-" + _priceFormatter.FormatPrice(-priceAdjustment);
+                                attributeValueModel.PriceAdjustment = "-" + _priceFormatter.FormatPrice(-priceAdjustmentBase);
                         }
                     }
                 }
@@ -503,8 +503,8 @@ namespace Nop.Web.Controllers
                 else
                 {
                     decimal taxRate;
-                    decimal shoppingCartUnitPriceWithDiscountBase = _taxService.GetProductPrice(sci.Product, _priceCalculationService.GetUnitPrice(sci), out taxRate);
-                    decimal shoppingCartUnitPriceWithDiscount = _currencyService.ConvertFromPrimaryStoreCurrency(shoppingCartUnitPriceWithDiscountBase, _workContext.WorkingCurrency);
+                    decimal shoppingCartUnitPriceWithDiscount = _taxService.GetProductPrice(sci.Product, _priceCalculationService.GetUnitPrice(sci), out taxRate);
+                    //decimal shoppingCartUnitPriceWithDiscount = _currencyService.ConvertFromPrimaryStoreCurrency(shoppingCartUnitPriceWithDiscountBase, _workContext.WorkingCurrency);
                     cartItemModel.UnitPrice = _priceFormatter.FormatPrice(shoppingCartUnitPriceWithDiscount);
                 }
                 //subtotal, discount
@@ -518,8 +518,8 @@ namespace Nop.Web.Controllers
                     Discount scDiscount;
                     decimal shoppingCartItemDiscountBase;
                     decimal taxRate;
-                    decimal shoppingCartItemSubTotalWithDiscountBase = _taxService.GetProductPrice(sci.Product, _priceCalculationService.GetSubTotal(sci, true, out shoppingCartItemDiscountBase, out scDiscount), out taxRate);
-                    decimal shoppingCartItemSubTotalWithDiscount = _currencyService.ConvertFromPrimaryStoreCurrency(shoppingCartItemSubTotalWithDiscountBase, _workContext.WorkingCurrency);
+                    decimal shoppingCartItemSubTotalWithDiscount = _taxService.GetProductPrice(sci.Product, _priceCalculationService.GetSubTotal(sci, true, out shoppingCartItemDiscountBase, out scDiscount), out taxRate);
+                    //decimal shoppingCartItemSubTotalWithDiscount = _currencyService.ConvertFromPrimaryStoreCurrency(shoppingCartItemSubTotalWithDiscountBase, _workContext.WorkingCurrency);
                     cartItemModel.SubTotal = _priceFormatter.FormatPrice(shoppingCartItemSubTotalWithDiscount);
 
                     //display an applied discount amount
@@ -742,8 +742,8 @@ namespace Nop.Web.Controllers
                     Discount scDiscount;
                     decimal shoppingCartItemDiscountBase;
                     decimal taxRate;
-                    decimal shoppingCartItemSubTotalWithDiscountBase = _taxService.GetProductPrice(sci.Product, _priceCalculationService.GetSubTotal(sci, true, out shoppingCartItemDiscountBase, out scDiscount), out taxRate);
-                    decimal shoppingCartItemSubTotalWithDiscount = _currencyService.ConvertFromPrimaryStoreCurrency(shoppingCartItemSubTotalWithDiscountBase, _workContext.WorkingCurrency);
+                    decimal shoppingCartItemSubTotalWithDiscount = _taxService.GetProductPrice(sci.Product, _priceCalculationService.GetSubTotal(sci, true, out shoppingCartItemDiscountBase, out scDiscount), out taxRate);
+                    //decimal shoppingCartItemSubTotalWithDiscount = _currencyService.ConvertFromPrimaryStoreCurrency(shoppingCartItemSubTotalWithDiscountBase, _workContext.WorkingCurrency);
                     cartItemModel.SubTotal = _priceFormatter.FormatPrice(shoppingCartItemSubTotalWithDiscount);
 
                     //display an applied discount amount
@@ -819,8 +819,8 @@ namespace Nop.Web.Controllers
                         out orderSubTotalDiscountAmountBase, out orderSubTotalAppliedDiscount,
                         out subTotalWithoutDiscountBase, out subTotalWithDiscountBase);
                     decimal subtotalBase = subTotalWithoutDiscountBase;
-                    decimal subtotal = _currencyService.ConvertFromPrimaryStoreCurrency(subtotalBase, _workContext.WorkingCurrency);
-                    model.SubTotal = _priceFormatter.FormatPrice(subtotal, false, _workContext.WorkingCurrency, _workContext.WorkingLanguage, subTotalIncludingTax);
+                    //decimal subtotal = _currencyService.ConvertFromPrimaryStoreCurrency(subtotalBase, _workContext.WorkingCurrency);
+                    model.SubTotal = _priceFormatter.FormatPrice(subtotalBase, false, _workContext.WorkingCurrency, _workContext.WorkingLanguage, subTotalIncludingTax);
 
                     var requiresShipping = cart.RequiresShipping();
                     //a customer should visit the shopping cart page (hide checkout button) before going to checkout if:
@@ -866,8 +866,8 @@ namespace Nop.Web.Controllers
                         {
                             decimal taxRate;
                             decimal shoppingCartUnitPriceWithDiscountBase = _taxService.GetProductPrice(sci.Product, _priceCalculationService.GetUnitPrice(sci), out taxRate);
-                            decimal shoppingCartUnitPriceWithDiscount = _currencyService.ConvertFromPrimaryStoreCurrency(shoppingCartUnitPriceWithDiscountBase, _workContext.WorkingCurrency);
-                            cartItemModel.UnitPrice = _priceFormatter.FormatPrice(shoppingCartUnitPriceWithDiscount);
+                            //decimal shoppingCartUnitPriceWithDiscount = _currencyService.ConvertFromPrimaryStoreCurrency(shoppingCartUnitPriceWithDiscountBase, _workContext.WorkingCurrency);
+                            cartItemModel.UnitPrice = _priceFormatter.FormatPrice(shoppingCartUnitPriceWithDiscountBase);
                         }
 
                         //picture
@@ -902,8 +902,8 @@ namespace Nop.Web.Controllers
                 _orderTotalCalculationService.GetShoppingCartSubTotal(cart, subTotalIncludingTax,
                     out orderSubTotalDiscountAmountBase, out orderSubTotalAppliedDiscount,
                     out subTotalWithoutDiscountBase, out subTotalWithDiscountBase);
-                decimal subtotalBase = subTotalWithoutDiscountBase;
-                decimal subtotal = _currencyService.ConvertFromPrimaryStoreCurrency(subtotalBase, _workContext.WorkingCurrency);
+                decimal subtotal = subTotalWithoutDiscountBase;
+                //decimal subtotal = _currencyService.ConvertFromPrimaryStoreCurrency(subtotalBase, _workContext.WorkingCurrency);
                 model.SubTotal = _priceFormatter.FormatPrice(subtotal, true, _workContext.WorkingCurrency, _workContext.WorkingLanguage, subTotalIncludingTax);
 
                 if (orderSubTotalDiscountAmountBase > decimal.Zero)
@@ -924,8 +924,8 @@ namespace Nop.Web.Controllers
                     decimal? shoppingCartShippingBase = _orderTotalCalculationService.GetShoppingCartShippingTotal(cart);
                     if (shoppingCartShippingBase.HasValue)
                     {
-                        decimal shoppingCartShipping = _currencyService.ConvertFromPrimaryStoreCurrency(shoppingCartShippingBase.Value, _workContext.WorkingCurrency);
-                        model.Shipping = _priceFormatter.FormatShippingPrice(shoppingCartShipping, true);
+                        //decimal shoppingCartShipping = _currencyService.ConvertFromPrimaryStoreCurrency(shoppingCartShippingBase.Value, _workContext.WorkingCurrency);
+                        model.Shipping = _priceFormatter.FormatShippingPrice(shoppingCartShippingBase.Value, true);
 
                         //selected shipping method
                         var shippingOption = _workContext.CurrentCustomer.GetAttribute<ShippingOption>(SystemCustomerAttributeNames.SelectedShippingOption, _storeContext.CurrentStore.Id);
@@ -994,8 +994,8 @@ namespace Nop.Web.Controllers
                     out appliedGiftCards, out redeemedRewardPoints, out redeemedRewardPointsAmount);
                 if (shoppingCartTotalBase.HasValue)
                 {
-                    decimal shoppingCartTotal = _currencyService.ConvertFromPrimaryStoreCurrency(shoppingCartTotalBase.Value, _workContext.WorkingCurrency);
-                    model.OrderTotal = _priceFormatter.FormatPrice(shoppingCartTotal, true, false);
+                    //decimal shoppingCartTotal = _currencyService.ConvertFromPrimaryStoreCurrency(shoppingCartTotalBase.Value, _workContext.WorkingCurrency);
+                    model.OrderTotal = _priceFormatter.FormatPrice(shoppingCartTotalBase.Value, true, false);
                 }
 
                 //discount

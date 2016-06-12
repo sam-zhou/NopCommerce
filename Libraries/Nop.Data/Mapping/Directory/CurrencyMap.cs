@@ -14,6 +14,7 @@ namespace Nop.Data.Mapping.Directory
             this.Property(c => c.CustomFormatting).HasMaxLength(50);
             this.Property(c => c.Rate).HasPrecision(18, 4);
             this.Property(c => c.RoundTo);
+            this.Property(c => c.Offset);
         }
     }
 }

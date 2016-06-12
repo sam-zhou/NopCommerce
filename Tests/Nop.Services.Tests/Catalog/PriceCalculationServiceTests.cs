@@ -8,6 +8,7 @@ using Nop.Core.Domain.Discounts;
 using Nop.Core.Domain.Orders;
 using Nop.Core.Domain.Stores;
 using Nop.Services.Catalog;
+using Nop.Services.Directory;
 using Nop.Services.Discounts;
 using Nop.Tests;
 using NUnit.Framework;
@@ -29,6 +30,7 @@ namespace Nop.Services.Tests.Catalog
         private ShoppingCartSettings _shoppingCartSettings;
         private CatalogSettings _catalogSettings;
         private ICacheManager _cacheManager;
+        private ICurrencyService _currencyService;
 
         private Store _store;
 
@@ -45,7 +47,7 @@ namespace Nop.Services.Tests.Catalog
             _categoryService = MockRepository.GenerateMock<ICategoryService>();
             _manufacturerService = MockRepository.GenerateMock<IManufacturerService>();
             _productService = MockRepository.GenerateMock<IProductService>();
-
+            _currencyService = MockRepository.GenerateMock<ICurrencyService>();
 
             _productAttributeParser = MockRepository.GenerateMock<IProductAttributeParser>();
 
@@ -55,10 +57,11 @@ namespace Nop.Services.Tests.Catalog
             _cacheManager = new NopNullCache();
 
             _priceCalcService = new PriceCalculationService(_workContext,
-                _storeContext, 
+                _storeContext,
                 _discountService,
                 _categoryService,
                 _manufacturerService,
+                _currencyService,
                 _productAttributeParser,
                 _productService,
                 _cacheManager,

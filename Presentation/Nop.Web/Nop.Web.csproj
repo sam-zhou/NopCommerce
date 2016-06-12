@@ -2585,6 +2585,7 @@
     <Content Include="Themes\Lavella\Content\img\closelabel.gif" />
     <Content Include="Themes\Lavella\Content\img\cross.png" />
     <Content Include="Themes\Lavella\Content\img\ddown.png" />
+    <Content Include="Themes\Lavella\Content\img\default_avatar.png" />
     <Content Include="Themes\Lavella\Content\img\fb_icon.png" />
     <Content Include="Themes\Lavella\Content\img\filters.png" />
     <Content Include="Themes\Lavella\Content\img\filter_icon.png" />

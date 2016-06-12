@@ -63,6 +63,10 @@ namespace Nop.Admin.Models.Directory
         [NopResourceDisplayName("Admin.Configuration.Currencies.Fields.RoundTo")]
         [AllowHtml]
         public int RoundTo { get; set; }
+
+        [NopResourceDisplayName("Admin.Configuration.Currencies.Fields.Offset")]
+        [AllowHtml]
+        public int Offset { get; set; }
     }
 
     public partial class CurrencyLocalizedModel : ILocalizedModelLocal

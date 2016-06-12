@@ -23,9 +23,6 @@
 }
 
 /* HEADER */
-.close-menu{
-    display:none;
-}
 
 /* FOOTER */
 .footer-middle .fm-wrapper > div {
@@ -985,7 +982,9 @@
     width: 100%;
 }
 
-
+.external-login-block {
+    width: 50%;
+}
 
 }
 

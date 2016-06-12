@@ -121,7 +121,7 @@ namespace Nop.Services.Tests.Orders
 
             _productAttributeParser = MockRepository.GenerateMock<IProductAttributeParser>();
             _priceCalcService = new PriceCalculationService(_workContext, _storeContext,
-                _discountService, _categoryService, _manufacturerService,
+                _discountService, _categoryService, _manufacturerService, _currencyService,
                 _productAttributeParser, _productService, 
                 cacheManager, _shoppingCartSettings, _catalogSettings);
 

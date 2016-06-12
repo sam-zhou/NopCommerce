@@ -263,3 +263,7 @@ Presentation/Nop.Web/Plugins/P*
 Presentation/Nop.Web/Plugins/T*
 Presentation/Nop.Web/Plugins/W*
 Presentation/Nop.Web/Content/Images/Thumbs/*
+
+!Presentation/Nop.Web/Plugins/ExternalAuth.Facebook/Description.txt
+!Presentation/Nop.Web/Plugins/ExternalAuth.Google/Description.txt
+!Presentation/Nop.Web/Plugins/ExternalAuth.WeiXin/Description.txt

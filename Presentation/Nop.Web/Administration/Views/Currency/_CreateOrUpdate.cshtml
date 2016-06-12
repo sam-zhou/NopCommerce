@@ -161,6 +161,15 @@
                 @Html.ValidationMessageFor(model => model.RoundTo)
             </td>
         </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.Offset):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.Offset)
+                @Html.ValidationMessageFor(model => model.Offset)
+            </td>
+        </tr>
         @if (Model.Id > 0)
         {
             <tr>

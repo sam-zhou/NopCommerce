@@ -64,6 +64,7 @@ namespace Nop.Services.Tests.Orders
         private CustomerSettings _customerSettings;
         private AddressSettings _addressSettings;
         private IRewardPointService _rewardPointService;
+        private ICurrencyService _currencyService;
 
         [SetUp]
         public new void SetUp()
@@ -75,7 +76,7 @@ namespace Nop.Services.Tests.Orders
             _storeContext.Expect(x => x.CurrentStore).Return(_store);
 
             _productService = MockRepository.GenerateMock<IProductService>();
-
+            _currencyService = MockRepository.GenerateMock<ICurrencyService>();
             var pluginFinder = new PluginFinder();
             var cacheManager = new NopNullCache();
 
@@ -89,7 +90,7 @@ namespace Nop.Services.Tests.Orders
 
             _priceCalcService = new PriceCalculationService(_workContext, _storeContext,
                 _discountService, _categoryService, 
-                _manufacturerService, _productAttributeParser,
+                _manufacturerService, _currencyService, _productAttributeParser,
                 _productService, cacheManager, 
                 _shoppingCartSettings, _catalogSettings);
 

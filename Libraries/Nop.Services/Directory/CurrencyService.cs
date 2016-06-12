@@ -236,9 +236,30 @@ namespace Nop.Services.Directory
                 result = ConvertFromPrimaryExchangeRateCurrency(result, targetCurrencyCode);
             }
 
-            if (targetCurrencyCode.RoundTo > 0)
+            var offsetPercentage = ((decimal) targetCurrencyCode.Offset)/100;
+            result = result*(1 + offsetPercentage);
+
+            //if (targetCurrencyCode.RoundTo > 0)
+            //{
+            //    result = (Math.Floor(result/targetCurrencyCode.RoundTo) + 1)*targetCurrencyCode.RoundTo;
+            //}
+
+            switch (targetCurrencyCode.RoundTo)
             {
-                result = (Math.Floor(result/targetCurrencyCode.RoundTo) + 1)*targetCurrencyCode.RoundTo;
+                case 0:
+                    result = Math.Round(result, 0);
+                    result = Decimal.Subtract(result, (decimal)0.01);
+                    break;
+
+                default:
+                    result = (Math.Floor(result / targetCurrencyCode.RoundTo) + 1) * targetCurrencyCode.RoundTo;
+                    break;
+                    
+            }
+
+            if (result < 0)
+            {
+                result = 0;
             }
             
 

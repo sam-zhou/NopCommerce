@@ -10,6 +10,7 @@ using Nop.Core.Domain.Discounts;
 using Nop.Core.Domain.Orders;
 using Nop.Services.Catalog.Cache;
 using Nop.Services.Customers;
+using Nop.Services.Directory;
 using Nop.Services.Discounts;
 
 namespace Nop.Services.Catalog
@@ -26,6 +27,7 @@ namespace Nop.Services.Catalog
         private readonly IDiscountService _discountService;
         private readonly ICategoryService _categoryService;
         private readonly IManufacturerService _manufacturerService;
+        private readonly ICurrencyService _currencyService;
         private readonly IProductAttributeParser _productAttributeParser;
         private readonly IProductService _productService;
         private readonly ICacheManager _cacheManager;
@@ -41,6 +43,7 @@ namespace Nop.Services.Catalog
             IDiscountService discountService, 
             ICategoryService categoryService,
             IManufacturerService manufacturerService,
+            ICurrencyService currencyService,
             IProductAttributeParser productAttributeParser, 
             IProductService productService,
             ICacheManager cacheManager,
@@ -57,6 +60,7 @@ namespace Nop.Services.Catalog
             this._cacheManager = cacheManager;
             this._shoppingCartSettings = shoppingCartSettings;
             this._catalogSettings = catalogSettings;
+            _currencyService = currencyService;
         }
         
         #endregion
@@ -625,6 +629,8 @@ namespace Nop.Services.Catalog
             //rounding
             if (_shoppingCartSettings.RoundPricesDuringCalculation)
                 finalPrice = RoundingHelper.RoundPrice(finalPrice);
+            discountAmount = _currencyService.ConvertFromPrimaryStoreCurrency(finalPrice, _workContext.WorkingCurrency);
+            finalPrice = _currencyService.ConvertFromPrimaryStoreCurrency(finalPrice, _workContext.WorkingCurrency);
 
             return finalPrice;
         }

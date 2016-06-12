@@ -153,10 +153,10 @@ namespace Nop.Services.Orders
                                 if (renderPrices)
                                 {
                                     decimal priceAdjustmentBase = _taxService.GetCheckoutAttributePrice(attributeValue, customer);
-                                    decimal priceAdjustment = _currencyService.ConvertFromPrimaryStoreCurrency(priceAdjustmentBase, _workContext.WorkingCurrency);
+                                    //decimal priceAdjustment = _currencyService.ConvertFromPrimaryStoreCurrency(priceAdjustmentBase, _workContext.WorkingCurrency);
                                     if (priceAdjustmentBase > 0)
                                     {
-                                        string priceAdjustmentStr = _priceFormatter.FormatPrice(priceAdjustment);
+                                        string priceAdjustmentStr = _priceFormatter.FormatPrice(priceAdjustmentBase);
                                         formattedAttribute += string.Format(" [+{0}]", priceAdjustmentStr);
                                     }
                                 }
