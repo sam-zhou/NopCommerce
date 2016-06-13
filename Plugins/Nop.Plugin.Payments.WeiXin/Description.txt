@@ -1,0 +1,9 @@
+﻿Group: Payment methods
+FriendlyName: WeiXin
+SystemName: Payments.WeiXin
+Version: 1.03
+SupportedVersions: 3.70
+Author: Sam Zhou
+DisplayOrder: 1
+FileName: Nop.Plugin.Payments.WeiXin.dll
+LimitedToStores: 2
