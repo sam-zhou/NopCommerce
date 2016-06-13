@@ -40,3 +40,4 @@ Payments.AliPay
 SevenSpikes.Nop.Plugins.FacebookShop
 ExternalAuth.WeiXin
 ExternalAuth.Google
+ExternalAuth.QQ

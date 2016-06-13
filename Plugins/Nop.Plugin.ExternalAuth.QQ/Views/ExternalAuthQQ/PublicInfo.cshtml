@@ -1,0 +1,11 @@
+﻿@using Nop.Web.Framework.UI
+@{
+    Layout = "";
+
+    Html.AddCssFileParts("~/Plugins/ExternalAuth.QQ/Content/qqstyles.css");
+}
+<div class="external-login-block">
+    <a href="@Url.RouteUrl("Plugin.ExternalAuth.QQ.Login", new {ReturnUrl = HttpContext.Current.Request.QueryString["ReturnUrl"]})" class="btn btn-block btn-social btn-qq">
+        <i class="fa fa-qq"></i>@T("Plugins.ExternalAuth.QQ.Login")
+    </a>
+</div>

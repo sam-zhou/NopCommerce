@@ -1,0 +1,9 @@
+﻿Group: ExternalAuth methods
+FriendlyName: QQ authentication
+SystemName: ExternalAuth.QQ
+Version: 1.00
+SupportedVersions: 3.70
+Author: Sam Zhou
+DisplayOrder: 6
+FileName: Nop.Plugin.ExternalAuth.QQ.dll
+LimitedToStores: 2

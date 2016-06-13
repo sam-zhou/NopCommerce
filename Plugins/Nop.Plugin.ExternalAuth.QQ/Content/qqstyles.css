@@ -1,0 +1,10 @@
+﻿.btn-qq {
+    color: #fff;
+    background-color: #2ba3e1;
+}
+
+.btn-qq:hover, .btn-qq:focus, .btn-qq.active, .btn-qq:active {
+
+    background-color: #008ed6;
+
+}

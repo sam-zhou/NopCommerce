@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using DotNetOpenAuth.AspNet;
@@ -10,28 +9,28 @@ using Nop.Core;
 using Nop.Core.Domain.Customers;
 using Nop.Services.Authentication.External;
 
-namespace Nop.Plugin.ExternalAuth.WeiXin.Core
+namespace Nop.Plugin.ExternalAuth.QQ.Core
 {
-    public class WeiXinProviderAuthorizer : IWeiXinExternalProviderAuthorizer
+    public class QQProviderAuthorizer : IQQExternalProviderAuthorizer
     {
 #region properties
         private readonly IExternalAuthorizer _authorizer;
         private readonly ExternalAuthenticationSettings _externalAuthenticationSettings;
-        private readonly WeiXinExternalAuthSettings _weiXinExternalAuthSettings;
+        private readonly QQExternalAuthSettings _qqExternalAuthSettings;
         private readonly HttpContextBase _httpContext;
         private readonly IWebHelper _webHelper;
-        private WeiXinClient _weiXinApplication;
+        private QQClient _qqApplication;
 #endregion
 
-        public WeiXinProviderAuthorizer(IExternalAuthorizer authorizer,
+        public QQProviderAuthorizer(IExternalAuthorizer authorizer,
             ExternalAuthenticationSettings externalAuthenticationSettings,
-            WeiXinExternalAuthSettings weiXinExternalAuthSettings,
+            QQExternalAuthSettings qqExternalAuthSettings,
             HttpContextBase httpContext,
             IWebHelper webHelper)
         {
             _authorizer = authorizer;
             _externalAuthenticationSettings = externalAuthenticationSettings;
-            _weiXinExternalAuthSettings = weiXinExternalAuthSettings;
+            _qqExternalAuthSettings = qqExternalAuthSettings;
             _httpContext = httpContext;
             _webHelper = webHelper;
         }
@@ -42,18 +41,19 @@ namespace Nop.Plugin.ExternalAuth.WeiXin.Core
 
         private Uri GenerateLocalCallbackUri()
         {
-            string url = string.Format("{0}plugins/externalauthWeiXin/logincallback/", _webHelper.GetStoreLocation());
+            string url = string.Format("{0}plugins/externalauthQQ/logincallback/", _webHelper.GetStoreLocation());
             return new Uri(url);
         }
 
         public Uri GenerateServiceLoginUrl()
         {
-            var builder = new UriBuilder("https://open.weixin.qq.com/connect/qrconnect");
+            var builder = new UriBuilder("https://graph.qq.com/oauth2.0/authorize");
             var args = new Dictionary<string, string>();
-            args.Add("appid", _weiXinExternalAuthSettings.AppId);
+            args.Add("client_id", _qqExternalAuthSettings.AppId);
             args.Add("redirect_uri", GenerateLocalCallbackUri().AbsoluteUri);
             args.Add("response_type", "code");
-            args.Add("scope", "snsapi_login");
+            args.Add("scope", "get_user_info");
+            args.Add("display", "mobile");
             args.Add("state", "STATE#wechat_redirect");
             AppendQueryArgs(builder, args);
             return builder.Uri;
@@ -127,15 +127,15 @@ namespace Nop.Plugin.ExternalAuth.WeiXin.Core
             return new AuthorizeState("", OpenAuthenticationStatus.RequiresRedirect) { Result = new RedirectResult(authUrl) };
         }
 
-        private WeiXinClient WeiXinApplication
+        private QQClient QQApplication
         {
-            get { return _weiXinApplication ?? (_weiXinApplication = new WeiXinClient(_weiXinExternalAuthSettings.AppId, _weiXinExternalAuthSettings.AppSecret)); }
+            get { return _qqApplication ?? (_qqApplication = new QQClient(_qqExternalAuthSettings.AppId, _qqExternalAuthSettings.AppSecret)); }
         }
 
         private AuthorizeState VerifyAuthentication(string returnUrl)
         {
 
-            var authResult = WeiXinApplication.VerifyAuthentication(_httpContext, GenerateLocalCallbackUri());
+            var authResult = QQApplication.VerifyAuthentication(_httpContext, GenerateLocalCallbackUri());
 
             if (authResult.IsSuccessful)
             {

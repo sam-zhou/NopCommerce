@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{E4ACA93B-D3DE-4557-B069-F1DB42925A4B}"
 EndProject
@@ -105,6 +105,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nop.Plugin.ExternalAuth.WeiXin", "Plugins\Nop.Plugin.ExternalAuth.WeiXin\Nop.Plugin.ExternalAuth.WeiXin.csproj", "{0DE96A8E-F057-4DB5-9789-721F23CC61DE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nop.Plugin.ExternalAuth.Google", "Plugins\Nop.Plugin.ExternalAuth.Google\Nop.Plugin.ExternalAuth.Google.csproj", "{2C5CDF82-B291-4A67-8B53-F6D519D0668F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nop.Plugin.ExternalAuth.QQ", "Plugins\Nop.Plugin.ExternalAuth.QQ\Nop.Plugin.ExternalAuth.QQ.csproj", "{789F10A4-E913-47F8-93BC-0608002D6783}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -574,6 +576,18 @@ Global
 		{2C5CDF82-B291-4A67-8B53-F6D519D0668F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{2C5CDF82-B291-4A67-8B53-F6D519D0668F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{2C5CDF82-B291-4A67-8B53-F6D519D0668F}.Release|x86.ActiveCfg = Release|Any CPU
+		{789F10A4-E913-47F8-93BC-0608002D6783}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{789F10A4-E913-47F8-93BC-0608002D6783}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{789F10A4-E913-47F8-93BC-0608002D6783}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{789F10A4-E913-47F8-93BC-0608002D6783}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{789F10A4-E913-47F8-93BC-0608002D6783}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{789F10A4-E913-47F8-93BC-0608002D6783}.Debug|x86.Build.0 = Debug|Any CPU
+		{789F10A4-E913-47F8-93BC-0608002D6783}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{789F10A4-E913-47F8-93BC-0608002D6783}.Release|Any CPU.Build.0 = Release|Any CPU
+		{789F10A4-E913-47F8-93BC-0608002D6783}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{789F10A4-E913-47F8-93BC-0608002D6783}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{789F10A4-E913-47F8-93BC-0608002D6783}.Release|x86.ActiveCfg = Release|Any CPU
+		{789F10A4-E913-47F8-93BC-0608002D6783}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -624,6 +638,7 @@ Global
 		{55937F43-63FA-44CC-BA0F-60468E625FC3} = {78874555-DF10-4E54-A02A-C3CC0EB053A7}
 		{0DE96A8E-F057-4DB5-9789-721F23CC61DE} = {7881B112-7843-4542-B1F7-F99553FB9BB7}
 		{2C5CDF82-B291-4A67-8B53-F6D519D0668F} = {7881B112-7843-4542-B1F7-F99553FB9BB7}
+		{789F10A4-E913-47F8-93BC-0608002D6783} = {7881B112-7843-4542-B1F7-F99553FB9BB7}
 	EndGlobalSection
 	GlobalSection(NDepend) = preSolution
 		Project = ".\NopCommerce.ndproj"
