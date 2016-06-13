@@ -1537,6 +1537,9 @@
     <Content Include="Plugins\SevenSpikes.Nop.Plugins.QuickView\Themes\Lavella\Content\images\quick-view-arrow.png" />
     <Content Include="Plugins\SevenSpikes.Nop.Plugins.QuickView\Themes\Lavella\Content\QuickView.css" />
     <Content Include="Plugins\SevenSpikes.Nop.Plugins.QuickView\Themes\Lavella\Content\QuickView.rtl.css" />
+    <Content Include="Properties\PublishProfiles\Aliyun.pubxml.user" />
+    <Content Include="Properties\PublishProfiles\NopAsia - FTP.pubxml.user" />
+    <Content Include="Properties\PublishProfiles\NopAsia - Web Deploy.pubxml.user" />
     <Content Include="Scripts\fineuploader\edit.gif" />
     <Content Include="Scripts\fineuploader\fineuploader-4.2.2.css" />
     <Content Include="Scripts\fineuploader\fineuploader-4.2.2.min.css" />
@@ -1713,7 +1716,9 @@
     <Content Include="Plugins\SevenSpikes.Nop.Plugins.ProductRibbons\Views\ProductRibbons\ProductRibbonsHtml.cshtml" />
     <Content Include="Plugins\SevenSpikes.Nop.Plugins.ProductRibbons\Views\ProductRibbons\ProductRibbonsWidget.cshtml" />
     <Content Include="Plugins\SevenSpikes.Nop.Plugins.ProductRibbons\Views\web.config" />
-    <None Include="Properties\PublishProfiles\NopAsia.pubxml" />
+    <None Include="Properties\PublishProfiles\Aliyun.pubxml" />
+    <None Include="Properties\PublishProfiles\NopAsia - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\NopAsia - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\fineuploader\iframe.xss.response-4.2.2.js" />
     <Content Include="Scripts\fineuploader\jquery.fineuploader-4.2.2.js" />
