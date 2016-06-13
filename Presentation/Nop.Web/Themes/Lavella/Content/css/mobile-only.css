@@ -34,14 +34,14 @@
         background:rgba(255,255,255,.8);
         z-index:13;
     }
-    .responsive-nav-wrapper.nav-down {
+    /*.responsive-nav-wrapper.nav-down {
         -webkit-transform: translateY(0);
         transform: translateY(0);
     }
     .responsive-nav-wrapper.nav-up {
         -webkit-transform: translateY(-55px);
         transform: translateY(-55px);
-    }
+    }*/
 
     .stick {
         position: fixed;

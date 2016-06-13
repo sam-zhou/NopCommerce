@@ -3472,7 +3472,7 @@ label, label + * {
 	text-shadow: none;
 }
 .checkout-attributes {
-	margin: 20px 0 0;
+	margin: 20px 0 10px;
 	text-align: center;
 }
 .checkout-attributes dt {
@@ -4451,3 +4451,16 @@ pre {
 .wechat-only {
         display: none;
     }
+
+.remove-from-cart span.btn {
+    width: 100%;
+    cursor: pointer;
+    display: block;
+    height: 100%;
+    color:#a52a2a;
+}
+
+.remove-from-cart span.btn:hover {
+    -ms-opacity: 0.7;
+    opacity: 0.7;
+}

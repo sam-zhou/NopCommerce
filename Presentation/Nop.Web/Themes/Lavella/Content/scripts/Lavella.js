@@ -31,7 +31,7 @@
             themeBreakpoint: 980,
             isSearchBoxDetachable: true,
             isHeaderLinksWrapperDetachable: true,
-            doesDesktopHeaderMenuStick: false,
+            doesDesktopHeaderMenuStick: true,
             doesScrollAfterFiltration: true,
             doesSublistHasIndent: true,
             displayGoToTop: true,

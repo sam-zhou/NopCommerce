@@ -52,7 +52,7 @@
                         <th><span class="item-count">#</span></th>
                         @if (Model.IsEditable)
                     {
-                    <th class="remove-from-cart" data-hide="w410, w480">
+                    <th class="remove-from-cart">
                         @T("ShoppingCart.Remove")
                     </th>
                     }
@@ -92,8 +92,11 @@
                     @if (Model.IsEditable)
                         {
                         <td class="remove-from-cart">
-                                    <label class="td-title">@T("ShoppingCart.Remove"):</label>
-                            <input type="checkbox" name="removefromcart" value="@(item.Id)" />
+                            <label class="td-title">@T("ShoppingCart.Remove"):</label>
+                            <input type="checkbox" name="removefromcart" class="hidden" value="@(item.Id)" />
+                            <span class="btn btn-danger get" name="removefromcartBtn" onclick="shoppingcart_removeFromCart(this)">
+                                <i class="fa fa-times"></i>
+                            </span>
                         </td>
                         }
                     @if (Model.ShowSku)
@@ -305,3 +308,11 @@
     }
     @Html.Widget("order_summary_content_after")
 </div>
+<script type="text/javascript">
+
+
+    function shoppingcart_removeFromCart(source) {
+        $(source).parent().find('input[name=removefromcart]').prop('checked', true);
+        $('input[name=updatecart]').click();
+    }
+</script>
