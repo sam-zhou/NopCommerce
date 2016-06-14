@@ -1,22 +1,28 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Xml;
 using Nop.Core;
 using Nop.Core.Domain.Orders;
 using Nop.Core.Domain.Payments;
 using Nop.Core.Plugins;
 using Nop.Plugin.Payments.WeiXin.Controllers;
 using Nop.Services.Configuration;
+using Nop.Services.Helpers;
 using Nop.Services.Localization;
 using Nop.Services.Payments;
 using Nop.Web.Framework;
@@ -39,8 +45,7 @@ namespace Nop.Plugin.Payments.WeiXin
         private readonly IWebHelper _webHelper;
         private readonly IStoreContext _storeContext;
 
-        private const string QrParamWithoutSign = @"appid={0}&mch_id={1}&nonce_str={2}&product_id={3}&time_stamp={4}";
-        private const string QrCodeUrl = @"weixin：//wxpay/bizpayurl";
+        private const string OrderUrl = @"https://api.mch.weixin.qq.com/pay/unifiedorder";
 
         #endregion
 
@@ -177,12 +182,11 @@ namespace Nop.Plugin.Payments.WeiXin
             return strResult;
         }
 
-        public string GetQrCode(ProcessPaymentRequest processPaymentRequest)
+        public string GetQrCode(string url)
         {
             var qrWriter = new BarcodeWriter();
             qrWriter.Format = BarcodeFormat.QR_CODE;
-            qrWriter.Options = new EncodingOptions {Height = 200, Width = 200};
-            var url = GetQrUrl(processPaymentRequest);
+            qrWriter.Options = new EncodingOptions {Height = 200, Width = 200, Margin = 5};
 
             using (var q = qrWriter.Write(url))
             {
@@ -192,20 +196,6 @@ namespace Nop.Plugin.Payments.WeiXin
                     return String.Format("data:image/png;base64,{0}", Convert.ToBase64String(ms.ToArray()));
                 }
             }
-        }
-
-        public string GetQrUrl(ProcessPaymentRequest processPaymentRequest)
-        {
-            var appId = _weiXinPaymentSettings.AppId;
-            var mchId = _weiXinPaymentSettings.MchId;
-            var productId = processPaymentRequest.OrderGuid.ToString("N");
-            var timestamp = (Int32)(DateTime.Now.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
-            var nouceStr = Guid.NewGuid().ToString("N");
-            var paramsWithoutSign = string.Format(QrParamWithoutSign, appId, mchId, nouceStr, productId, timestamp);
-            var sign = GetMD5(paramsWithoutSign, "utf-8");
-            var url = QrCodeUrl + "?" + paramsWithoutSign + "&sign=" + sign;
-
-            return url;
         }
 
 
@@ -221,13 +211,7 @@ namespace Nop.Plugin.Payments.WeiXin
         /// <returns>Process payment result</returns>
         public ProcessPaymentResult ProcessPayment(ProcessPaymentRequest processPaymentRequest)
         {
-            return WeiXinProcess(processPaymentRequest);
-        }
-
-        private ProcessPaymentResult WeiXinProcess(ProcessPaymentRequest processPaymentRequest)
-        {
             var result = new ProcessPaymentResult();
-            result.AvsResult = GetQrCode(processPaymentRequest);
             return result;
         }
 
@@ -237,7 +221,106 @@ namespace Nop.Plugin.Payments.WeiXin
         /// <param name="postProcessPaymentRequest">Payment info required for an order processing</param>
         public void PostProcessPayment(PostProcessPaymentRequest postProcessPaymentRequest)
         {
+            Hashtable packageParameter = new Hashtable();
+            packageParameter.Add("appid", _weiXinPaymentSettings.AppId);//开放账号ID  
+            packageParameter.Add("mch_id", _weiXinPaymentSettings.MchId); //商户号
+            //packageParameter.Add("device_info", "WEB"); //商户号
+            packageParameter.Add("nonce_str", Guid.NewGuid().ToString("N")); //随机字符串
+            var firstProduct = postProcessPaymentRequest.Order.OrderItems.FirstOrDefault();
+            if (firstProduct != null)
+            {
+                packageParameter.Add("product_id", firstProduct.Product.Id.ToString());
+                packageParameter.Add("body", "测试商品"); //商品描述  
+            }
+            else
+            {
+                packageParameter.Add("product_id", postProcessPaymentRequest.Order.Id.ToString());
+                packageParameter.Add("body", postProcessPaymentRequest.Order.Id.ToString()); //商品描述  
+            }
             
+            //packageParameter.Add("detail", string.Join(", ", postProcessPaymentRequest.Order.OrderItems.Select(q => q.Product.Name))); //商品描述      
+            packageParameter.Add("out_trade_no", postProcessPaymentRequest.Order.Id.ToString()); //商家订单号 
+            packageParameter.Add("total_fee", ((int)(postProcessPaymentRequest.Order.OrderTotal * 100)).ToString(CultureInfo.InvariantCulture)); //商品金额,以分为单位    
+            packageParameter.Add("spbill_create_ip", _webHelper.GetCurrentIpAddress()); //订单生成的机器IP，指用户浏览器端IP  
+            packageParameter.Add("notify_url", "https://cn.lynexshop.com/Plugins/PaymentWeiXin/Notify"); //接收财付通通知的URL  
+            packageParameter.Add("trade_type", "NATIVE");//交易类型  
+            //packageParameter.Add("fee_type", "CNY"); //币种，1人民币   66  
+            //packageParameter.Add("time_start", DateTime.Now.ToString("yyyyMMddHHmmss"));
+            //packageParameter.Add("time_expire", DateTime.Now.AddDays(2).ToString("yyyyMMddHHmmss"));
+            
+
+            //packageParameter.Add("limit_pay", "no_credit");
+            //packageParameter.Add("openid", "");
+            
+
+            //获取签名
+            var sign = CreateMd5Sign("key", _weiXinPaymentSettings.OpenId, packageParameter, "utf-8");
+            //拼接上签名
+            packageParameter.Add("sign", sign);
+            //生成加密包的XML格式字符串
+            string data = ParseXML(packageParameter);
+            //调用统一下单接口，获取预支付订单号码
+            string prepayXml = HttpUtil.Send(data, "https://api.mch.weixin.qq.com/pay/unifiedorder");
+
+            //获取预支付ID
+            var prepayId = string.Empty;
+            var xdoc = new XmlDocument();
+            xdoc.LoadXml(prepayXml);
+            XmlNode xn = xdoc.SelectSingleNode("xml");
+            XmlNodeList xnl = xn.ChildNodes;
+            if (xnl.Count > 7)
+            {
+                prepayId = xnl[7].InnerText;
+            }
+
+            
+        }
+
+
+
+        private string ParseXML(Hashtable parameters)
+        {
+            var sb = new StringBuilder();
+            sb.Append("<xml>");
+            var akeys = new ArrayList(parameters.Keys);
+            foreach (string k in akeys)
+            {
+                var v = (string)parameters[k];
+                if (Regex.IsMatch(v, @"^[0-9.]$"))
+                {
+                    sb.Append("<" + k + ">" + v + "</" + k + ">");
+                }
+                else
+                {
+                    sb.Append("<" + k + "><![CDATA[" + v + "]]></" + k + ">");
+                }
+            }
+            sb.Append("</xml>");
+
+            var utf8 = Encoding.UTF8;
+            byte[] utfBytes = utf8.GetBytes(sb.ToString());
+            var result = utf8.GetString(utfBytes, 0, utfBytes.Length);
+
+            return result;
+        }
+
+        private string CreateMd5Sign(string key, string value, Hashtable parameters, string contentEncoding)
+        {
+            var sb = new StringBuilder();
+            var akeys = new ArrayList(parameters.Keys);
+            akeys.Sort();
+            foreach (string k in akeys)
+            {
+                var v = (string)parameters[k];
+                if (null != v && "".CompareTo(v) != 0
+                    && "sign".CompareTo(k) != 0 && "key".CompareTo(k) != 0)
+                {
+                    sb.Append(k + "=" + v + "&");
+                }
+            }
+            sb.Append(key + "=" + value);
+            string sign = GetMD5(sb.ToString(), contentEncoding).ToUpper();
+            return sign;
         }
 
         /// <summary>

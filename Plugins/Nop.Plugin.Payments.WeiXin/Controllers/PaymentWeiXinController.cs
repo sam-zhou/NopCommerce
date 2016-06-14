@@ -98,7 +98,7 @@ namespace Nop.Plugin.Payments.WeiXin.Controllers
 
             var paymentInfo = new ProcessPaymentRequest();
             paymentInfo.OrderGuid = Guid.NewGuid();
-            paymentInfo.CustomValues.Add("QRCode", processor.GetQrCode(paymentInfo));
+            
             return paymentInfo;
         }
 
@@ -190,7 +190,6 @@ namespace Nop.Plugin.Payments.WeiXin.Controllers
             return Content("");
         }
 
-        [ValidateInput(false)]
         public ActionResult Return()
         {
             var processor = _paymentService.LoadPaymentMethodBySystemName("Payments.WeiXin") as WeiXinPaymentProcessor;
@@ -201,18 +200,16 @@ namespace Nop.Plugin.Payments.WeiXin.Controllers
             return RedirectToAction("Index", "Home", new { area = "" });
         }
 
-        [ValidateInput(false)]
         public ActionResult GetOrder(FormCollection form)
         {
             var processor = _paymentService.LoadPaymentMethodBySystemName("Payments.WeiXin") as WeiXinPaymentProcessor;
             if (processor == null ||
                 !processor.IsPaymentMethodActive(_paymentSettings) || !processor.PluginDescriptor.Installed)
                 throw new NopException("WeiXin module cannot be loaded");
-            
 
+            return Content("Hi there!");
 
-
-            return RedirectToAction("Index", "Home", new { area = "" });
+            //return RedirectToAction("Index", "Home", new { area = "" });
         }
     }
 }
