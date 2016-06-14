@@ -22,7 +22,7 @@
             <h1>
                 <a href="@Url.RouteUrl("Product", new { SeName = shoppingCartItemModel.ProductSeName })">@shoppingCartItemModel.ProductName</a>
             </h1>
-            <strong class="price">@shoppingCartItemModel.UnitPrice @T("SevenSpikes.NopAjaxCart.PerUnit")</strong>
+            @*<strong class="price">@shoppingCartItemModel.UnitPrice @T("SevenSpikes.NopAjaxCart.PerUnit")</strong>*@
             <div class="attributeInfo">@Html.Raw(shoppingCartItemModel.AttributeInfo)</div>
             <span class="quantity">@T("SevenSpikes.NopAjaxCart.ShoppingCartNotificationBoxQuantity") : @shoppingCartItemModel.Quantity</span>
         </div>

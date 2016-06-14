@@ -15,10 +15,17 @@ namespace Nop.Plugin.Payments.WeiXin
                  new[] { "Nop.Plugin.Payments.WeiXin.Controllers" }
             );
 
-            //Notify
+            //Return
             routes.MapRoute("Plugin.Payments.WeiXin.Return",
                  "Plugins/PaymentWeiXin/Return",
                  new { controller = "PaymentWeiXin", action = "Return" },
+                 new[] { "Nop.Plugin.Payments.WeiXin.Controllers" }
+            );
+
+            //GetOrder
+            routes.MapRoute("Plugin.Payments.WeiXin.GetOrder",
+                 "Plugins/PaymentWeiXin/GetOrder",
+                 new { controller = "PaymentWeiXin", action = "GetOrder" },
                  new[] { "Nop.Plugin.Payments.WeiXin.Controllers" }
             );
         }

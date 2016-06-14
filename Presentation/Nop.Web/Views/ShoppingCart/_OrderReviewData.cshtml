@@ -92,18 +92,30 @@
                     </span>
                 </li>
             }
-            @if (Model.CustomValues != null)
+                        @if (Model.CustomValues != null)
             {
                 foreach (var item in Model.CustomValues)
                 {
-                    <li class="custom-value">
-                        <span class="label">
-                            @item.Key:
-                        </span>
-                        <span class="value">
-                            @(item.Value != null ? item.Value.ToString() : "")
-                        </span>
-                    </li>
+                    if (item.Key == "QRCode")
+                    {
+                        <li class="custom-value qrcode">
+                            <img src="@(item.Value != null ? item.Value.ToString() : "")" />
+                            
+                            <div class="qrcode-hint">请使用微信扫一扫<br/>扫描二维码支付</div>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="custom-value">
+                            <span class="label">
+                                @item.Key:
+                            </span>
+                            <span class="value">
+                                @(item.Value != null ? item.Value.ToString() : "")
+                            </span>
+                        </li>
+                    }
+
                 }
             }
         </ul>

@@ -1,11 +1,16 @@
-using System;
+Ôªøusing System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
+using System.Web.Mvc;
 using System.Web.Routing;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using Nop.Core;
 using Nop.Core.Domain.Orders;
 using Nop.Core.Domain.Payments;
@@ -15,6 +20,10 @@ using Nop.Services.Configuration;
 using Nop.Services.Localization;
 using Nop.Services.Payments;
 using Nop.Web.Framework;
+using ZXing;
+using ZXing.Common;
+using Brushes = System.Windows.Media.Brushes;
+
 
 namespace Nop.Plugin.Payments.WeiXin
 {
@@ -29,6 +38,9 @@ namespace Nop.Plugin.Payments.WeiXin
         private readonly ISettingService _settingService;
         private readonly IWebHelper _webHelper;
         private readonly IStoreContext _storeContext;
+
+        private const string QrParamWithoutSign = @"appid={0}&mch_id={1}&nonce_str={2}&product_id={3}&time_stamp={4}";
+        private const string QrCodeUrl = @"weixinÔºö//wxpay/bizpayurl";
 
         #endregion
 
@@ -164,6 +176,40 @@ namespace Nop.Plugin.Payments.WeiXin
             }
             return strResult;
         }
+
+        public string GetQrCode(ProcessPaymentRequest processPaymentRequest)
+        {
+            var qrWriter = new BarcodeWriter();
+            qrWriter.Format = BarcodeFormat.QR_CODE;
+            qrWriter.Options = new EncodingOptions {Height = 200, Width = 200};
+            var url = GetQrUrl(processPaymentRequest);
+
+            using (var q = qrWriter.Write(url))
+            {
+                using (var ms = new MemoryStream())
+                {
+                    q.Save(ms, ImageFormat.Png);
+                    return String.Format("data:image/png;base64,{0}", Convert.ToBase64String(ms.ToArray()));
+                }
+            }
+        }
+
+        public string GetQrUrl(ProcessPaymentRequest processPaymentRequest)
+        {
+            var appId = _weiXinPaymentSettings.AppId;
+            var mchId = _weiXinPaymentSettings.MchId;
+            var productId = processPaymentRequest.OrderGuid.ToString("N");
+            var timestamp = (Int32)(DateTime.Now.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+            var nouceStr = Guid.NewGuid().ToString("N");
+            var paramsWithoutSign = string.Format(QrParamWithoutSign, appId, mchId, nouceStr, productId, timestamp);
+            var sign = GetMD5(paramsWithoutSign, "utf-8");
+            var url = QrCodeUrl + "?" + paramsWithoutSign + "&sign=" + sign;
+
+            return url;
+        }
+
+
+
         #endregion
 
         #region Methods
@@ -175,8 +221,13 @@ namespace Nop.Plugin.Payments.WeiXin
         /// <returns>Process payment result</returns>
         public ProcessPaymentResult ProcessPayment(ProcessPaymentRequest processPaymentRequest)
         {
+            return WeiXinProcess(processPaymentRequest);
+        }
+
+        private ProcessPaymentResult WeiXinProcess(ProcessPaymentRequest processPaymentRequest)
+        {
             var result = new ProcessPaymentResult();
-            result.NewPaymentStatus = PaymentStatus.Pending;
+            result.AvsResult = GetQrCode(processPaymentRequest);
             return result;
         }
 
@@ -186,64 +237,7 @@ namespace Nop.Plugin.Payments.WeiXin
         /// <param name="postProcessPaymentRequest">Payment info required for an order processing</param>
         public void PostProcessPayment(PostProcessPaymentRequest postProcessPaymentRequest)
         {
-            //string gateway = "https://www.WeiXin.com/cooperate/gateway.do?";
-            string service = "create_direct_pay_by_user";
-
-            string seller_email = _weiXinPaymentSettings.AppId;
-            string sign_type = "MD5";
-            string key = _weiXinPaymentSettings.MchId;
-            string partner = _weiXinPaymentSettings.OpenId;
-            string input_charset = "utf-8";
-
-            string show_url = "http://www.WeiXin.com/";
-
-            string out_trade_no = postProcessPaymentRequest.Order.Id.ToString();
-            string subject = _storeContext.CurrentStore.Name;
-            string body = "Order from " + _storeContext.CurrentStore.Name;
-            string total_fee = postProcessPaymentRequest.Order.OrderTotal.ToString("0.00", CultureInfo.InvariantCulture);
-
-            string notify_url = _webHelper.GetStoreLocation(false) + "Plugins/PaymentWeiXin/Notify";
-            string return_url = _webHelper.GetStoreLocation(false) + "Plugins/PaymentWeiXin/Return";
-            string[] para ={
-                               "service="+service,
-                               "partner=" + partner,
-                               "seller_email=" + seller_email,
-                               "out_trade_no=" + out_trade_no,
-                               "subject=" + subject,
-                               "body=" + body,
-                               "total_fee=" + total_fee,
-                               "show_url=" + show_url,
-                               "payment_type=1",
-                               "notify_url=" + notify_url,
-                               "return_url=" + return_url,
-                               "_input_charset=" + input_charset
-                           };
-
-            string aliay_url = CreatUrl(
-                para,
-                input_charset,
-                key
-                );
-            var post = new RemotePost();
-            post.FormName = "WeiXinsubmit";
-            post.Url = "https://www.WeiXin.com/cooperate/gateway.do?_input_charset=utf-8";
-            post.Method = "POST";
-
-            post.Add("service", service);
-            post.Add("partner", partner);
-            post.Add("seller_email", seller_email);
-            post.Add("out_trade_no", out_trade_no);
-            post.Add("subject", subject);
-            post.Add("body", body);
-            post.Add("total_fee", total_fee);
-            post.Add("show_url", show_url);
-            post.Add("return_url", return_url);
-            post.Add("notify_url", notify_url);
-            post.Add("payment_type", "1");
-            post.Add("sign", aliay_url);
-            post.Add("sign_type", sign_type);
-
-            post.Post();
+            
         }
 
         /// <summary>
@@ -397,13 +391,14 @@ namespace Nop.Plugin.Payments.WeiXin
             _settingService.SaveSetting(settings);
 
             //locales
-            this.AddOrUpdatePluginLocaleResource("Plugins.Payments.WeiXin.RedirectionTip", "«Î”√Œ¢–≈…®√Ë");
-            this.AddOrUpdatePluginLocaleResource("Plugins.Payments.WeiXin.AppId", "π´÷⁄’À∫≈ID");
-            this.AddOrUpdatePluginLocaleResource("Plugins.Payments.WeiXin.AppId.Hint", "Enter π´÷⁄’À∫≈ID.");
-            this.AddOrUpdatePluginLocaleResource("Plugins.Payments.WeiXin.MchId", "…Ãªß∫≈");
-            this.AddOrUpdatePluginLocaleResource("Plugins.Payments.WeiXin.MchId.Hint", "Enter …Ãªß∫≈.");
-            this.AddOrUpdatePluginLocaleResource("Plugins.Payments.WeiXin.OpenId", "”√ªß±Í ∂");
-            this.AddOrUpdatePluginLocaleResource("Plugins.Payments.WeiXin.OpenId.Hint", "Enter ”√ªß±Í ∂.");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Payments.WeiXin.QRCode", "‰∫åÁª¥Á†Å");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Payments.WeiXin.RedirectionTip", "ËØ∑Áî®ÂæÆ‰ø°Êâ´Êèè");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Payments.WeiXin.AppId", "AppId");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Payments.WeiXin.AppId.Hint", "Enter AppId.");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Payments.WeiXin.MchId", "MchId");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Payments.WeiXin.MchId.Hint", "Enter MchId.");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Payments.WeiXin.OpenId", "OpenId");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Payments.WeiXin.OpenId.Hint", "Enter OpenId.");
             this.AddOrUpdatePluginLocaleResource("Plugins.Payments.WeiXin.AdditionalFee", "Additional fee");
             this.AddOrUpdatePluginLocaleResource("Plugins.Payments.WeiXin.AdditionalFee.Hint", "Enter additional fee to charge your customers.");
             
@@ -414,6 +409,7 @@ namespace Nop.Plugin.Payments.WeiXin
         public override void Uninstall()
         {
             //locales
+            this.DeletePluginLocaleResource("Plugins.Payments.WeiXin.QRCode");
             this.DeletePluginLocaleResource("Plugins.Payments.WeiXin.AppId.RedirectionTip");
             this.DeletePluginLocaleResource("Plugins.Payments.WeiXin.AppId");
             this.DeletePluginLocaleResource("Plugins.Payments.WeiXin.AppId.Hint");
@@ -492,7 +488,7 @@ namespace Nop.Plugin.Payments.WeiXin
         {
             get
             {
-                return PaymentMethodType.Redirection;
+                return PaymentMethodType.Standard;
             }
         }
 

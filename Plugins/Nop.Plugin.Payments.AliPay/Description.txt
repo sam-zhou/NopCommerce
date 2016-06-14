@@ -1,5 +1,5 @@
 ﻿Group: Payment methods
-FriendlyName: AliPay
+FriendlyName: 支付宝
 SystemName: Payments.AliPay
 Version: 1.03
 SupportedVersions: 3.70

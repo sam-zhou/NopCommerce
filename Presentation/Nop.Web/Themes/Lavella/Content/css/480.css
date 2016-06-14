@@ -97,7 +97,7 @@
 /* SHOPPING CART & CHECKOUT */
 
 .order-review-data {
-	display: table;
+	display: block;
 	width: 100%;
 	margin: 0 0 30px;
 }

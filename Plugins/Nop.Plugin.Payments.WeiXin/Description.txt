@@ -1,5 +1,5 @@
 ﻿Group: Payment methods
-FriendlyName: WeiXin
+FriendlyName: 微信支付
 SystemName: Payments.WeiXin
 Version: 1.03
 SupportedVersions: 3.70

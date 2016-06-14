@@ -90,7 +90,15 @@ namespace Nop.Plugin.Payments.WeiXin.Controllers
         [NonAction]
         public override ProcessPaymentRequest GetPaymentInfo(FormCollection form)
         {
+            var processor = _paymentService.LoadPaymentMethodBySystemName("Payments.WeiXin") as WeiXinPaymentProcessor;
+            if (processor == null ||
+                !processor.IsPaymentMethodActive(_paymentSettings) || !processor.PluginDescriptor.Installed)
+                throw new NopException("WeiXin module cannot be loaded");
+
+
             var paymentInfo = new ProcessPaymentRequest();
+            paymentInfo.OrderGuid = Guid.NewGuid();
+            paymentInfo.CustomValues.Add("QRCode", processor.GetQrCode(paymentInfo));
             return paymentInfo;
         }
 
@@ -107,9 +115,9 @@ namespace Nop.Plugin.Payments.WeiXin.Controllers
             string openId = _weiXinPaymentSettings.OpenId;
             if (string.IsNullOrEmpty(openId))
                 throw new Exception("OpenId is not set");
-            string key = _weiXinPaymentSettings.MchId;
-            if (string.IsNullOrEmpty(key))
-                throw new Exception("OpenId is not set");
+            string mchId = _weiXinPaymentSettings.MchId;
+            if (string.IsNullOrEmpty(mchId))
+                throw new Exception("MchId is not set");
             string _input_charset = "utf-8";
 
             weixinNotifyUrl = weixinNotifyUrl + "&partner=" + openId + "&notify_id=" + Request.Form["notify_id"];
@@ -138,7 +146,7 @@ namespace Nop.Plugin.Payments.WeiXin.Controllers
                 }
             }
 
-            prestr.Append(key);
+            prestr.Append(mchId);
 
             string mysign = processor.GetMD5(prestr.ToString(), _input_charset);
 
@@ -189,6 +197,20 @@ namespace Nop.Plugin.Payments.WeiXin.Controllers
             if (processor == null ||
                 !processor.IsPaymentMethodActive(_paymentSettings) || !processor.PluginDescriptor.Installed)
                 throw new NopException("WeiXin module cannot be loaded");
+
+            return RedirectToAction("Index", "Home", new { area = "" });
+        }
+
+        [ValidateInput(false)]
+        public ActionResult GetOrder(FormCollection form)
+        {
+            var processor = _paymentService.LoadPaymentMethodBySystemName("Payments.WeiXin") as WeiXinPaymentProcessor;
+            if (processor == null ||
+                !processor.IsPaymentMethodActive(_paymentSettings) || !processor.PluginDescriptor.Installed)
+                throw new NopException("WeiXin module cannot be loaded");
+            
+
+
 
             return RedirectToAction("Index", "Home", new { area = "" });
         }
