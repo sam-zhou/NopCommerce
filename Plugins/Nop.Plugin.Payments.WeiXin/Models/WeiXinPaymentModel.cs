@@ -10,7 +10,17 @@ namespace Nop.Plugin.Payments.WeiXin.Models
         [AllowHtml]
         public string QRCode { get; set; }
 
+        [NopResourceDisplayName("Plugins.Payments.WeiXin.Total")]
+        [AllowHtml]
+        public string Total { get; set; }
 
+        [NopResourceDisplayName("Plugins.Payments.WeiXin.OrderId")]
+        [AllowHtml]
+        public string OrderId { get; set; }
+
+        [NopResourceDisplayName("Plugins.Payments.WeiXin.OrderType")]
+        [AllowHtml]
+        public string OrderType { get; set; }
 
     }
 }

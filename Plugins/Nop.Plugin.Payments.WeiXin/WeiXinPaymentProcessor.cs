@@ -133,7 +133,7 @@ namespace Nop.Plugin.Payments.WeiXin
             }
         }
 
-        public Dictionary<string, object> Unifiedorder(string productId, string body, string detail, string orderId, string total)
+        public string Unifiedorder(string productId, string body, string detail, string orderId, string total)
         {
             var packageParameter = new Hashtable();
             packageParameter.Add("appid", _weiXinPaymentSettings.AppId);
@@ -162,20 +162,8 @@ namespace Nop.Plugin.Payments.WeiXin
             var data = ParseXML(packageParameter);
             var prepayXml = HttpUtil.Send(data, OrderUrl);
 
-            var xdoc = new XmlDocument();
-            xdoc.LoadXml(prepayXml);
-            XmlNode xn = xdoc.SelectSingleNode("xml");
-            XmlNodeList xnl = xn.ChildNodes;
-            var result = new Dictionary<string, object>();
-            foreach (XmlNode node in xnl)
-            {
-                result.Add(node.Name, node.InnerText);
-                if (node.Name == "code_url")
-                {
-                    result.Add("QRCode", GetQrCode(node.InnerText));
-                }
-            }
-            return result;
+            
+            return prepayXml;
         }
 
         #endregion
@@ -225,15 +213,9 @@ namespace Nop.Plugin.Payments.WeiXin
 
             var post = new RemotePost();
             post.FormName = "weixinpayment";
-            post.Url = Path.Combine("http://test.lynexshop.com/Plugins/PaymentWeiXin/ProcessPayment");
+            post.Url = Path.Combine(_webHelper.GetStoreHost(true), "Plugins/PaymentWeiXin/ProcessPayment");
             post.Method = "POST";
-
-
-            foreach (var item in result)
-            {
-                post.Add(item.Key, item.Value.ToString());
-            }
-
+            post.Add("result", HttpUtility.HtmlEncode(result));
             post.Post();
         }
 
@@ -437,12 +419,16 @@ namespace Nop.Plugin.Payments.WeiXin
             //locales
             this.AddOrUpdatePluginLocaleResource("Plugins.Payments.WeiXin.QRCode", "二维码");
             this.AddOrUpdatePluginLocaleResource("Plugins.Payments.WeiXin.RedirectionTip", "请用微信扫描");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Payments.WeiXin.PleaseUseWechatScan", "请使用微信扫一扫");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Payments.WeiXin.ScanQrcodeToPay", "扫描二维码支付");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Payments.WeiXin.QrcodeOnlyValidTwoHours", "二维码有效期两小时");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Payments.WeiXin.YouAreUsingWechatPay", "您正在使用微信支付");
             this.AddOrUpdatePluginLocaleResource("Plugins.Payments.WeiXin.AppId", "AppId");
-            this.AddOrUpdatePluginLocaleResource("Plugins.Payments.WeiXin.AppId.Hint", "Enter AppId.");
-            this.AddOrUpdatePluginLocaleResource("Plugins.Payments.WeiXin.MchId", "MchId");
-            this.AddOrUpdatePluginLocaleResource("Plugins.Payments.WeiXin.MchId.Hint", "Enter MchId.");
-            this.AddOrUpdatePluginLocaleResource("Plugins.Payments.WeiXin.AppSecret", "AppSecret");
-            this.AddOrUpdatePluginLocaleResource("Plugins.Payments.WeiXin.AppSecret.Hint", "Enter AppSecret.");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Payments.WeiXin.AppId.Hint", "请输入 AppId.");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Payments.WeiXin.MchId", "商户ID");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Payments.WeiXin.MchId.Hint", "请输入 MchId.");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Payments.WeiXin.AppSecret", "App密钥");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Payments.WeiXin.AppSecret.Hint", "请输入 App密钥.");
             this.AddOrUpdatePluginLocaleResource("Plugins.Payments.WeiXin.AdditionalFee", "Additional fee");
             this.AddOrUpdatePluginLocaleResource("Plugins.Payments.WeiXin.AdditionalFee.Hint", "Enter additional fee to charge your customers.");
             
@@ -454,7 +440,11 @@ namespace Nop.Plugin.Payments.WeiXin
         {
             //locales
             this.DeletePluginLocaleResource("Plugins.Payments.WeiXin.QRCode");
-            this.DeletePluginLocaleResource("Plugins.Payments.WeiXin.AppId.RedirectionTip");
+            this.DeletePluginLocaleResource("Plugins.Payments.WeiXin.RedirectionTip");
+            this.DeletePluginLocaleResource("Plugins.Payments.WeiXin.PleaseScan");
+            this.DeletePluginLocaleResource("Plugins.Payments.WeiXin.ScanQrcodeToPay");
+            this.DeletePluginLocaleResource("Plugins.Payments.WeiXin.QrcodeOnlyValidTwoHours");
+            this.DeletePluginLocaleResource("Plugins.Payments.WeiXin.YouAreUsingWechatPay");
             this.DeletePluginLocaleResource("Plugins.Payments.WeiXin.AppId");
             this.DeletePluginLocaleResource("Plugins.Payments.WeiXin.AppId.Hint");
             this.DeletePluginLocaleResource("Plugins.Payments.WeiXin.MchId");

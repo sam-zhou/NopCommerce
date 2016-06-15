@@ -1,0 +1,83 @@
+﻿.qrcode-hint {
+    padding: 5px;
+    width: 200px;
+    margin: 10px auto;
+    background: #62c462;
+    color: #ffffff;
+}
+
+.wepay-logo {
+       background: url('../img/wepaylogo.png');
+    -ms-background-size: 100% 100%;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin-top: 165px;
+    margin-left: 10px;
+    width: 220px;
+    height: 60px;
+}
+
+.wechatpay-head {
+        display: block;
+    width: 100%;
+    height: 100px;
+    background: #dddddd;
+    border: 1px solid #ccc;
+    margin-top: -40px;
+    padding: 19px;
+    position: relative;
+}
+
+.wechatpay-orderid {
+    padding: 5px;
+    line-height: 20px;
+    font-size: 130%;
+    display: block;
+    text-align: left;
+}
+
+span.wechatpay-ordertotal {
+    font-weight: 600;
+}
+
+.wechatpay-ordertotal-container {
+    padding: 18px;
+    font-size: 150%;
+}
+
+.section.order-completed {
+    margin-top: 10px;
+}
+
+@media all and (max-width: 980px) {
+          .wepay-logo {
+                  position: relative;
+
+                    margin: 10px auto 20px;
+                    width: 220px;
+                    height: 60px;
+                    display: block;
+          }          
+}
+
+@media all and (max-width: 768px) {
+          .wechatpay-head {
+              height: 130px;
+          }      
+
+          .wechatpay-ordertotal-container {
+    padding: 5px;
+    font-size: 130%;
+    padding-top: 0;
+    text-align: left;
+    margin-top: 4px;
+}
+
+          .wepay-logo {
+                  width: 110px; 
+                  height: 30px; 
+          }          
+}

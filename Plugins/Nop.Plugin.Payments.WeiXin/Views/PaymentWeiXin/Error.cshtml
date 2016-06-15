@@ -1,0 +1,39 @@
+﻿@{
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+
+
+    var pageHeadBuilder = EngineContext.Current.Resolve<IPageHeadBuilder>();
+    pageHeadBuilder.AddTitleParts(T("PageTitle.Checkout").Text);
+    Html.AddCssFileParts("~/Plugins/Payments.WeiXin/Content/css/paymentweixin.css");
+}
+@model Nop.Plugin.Payments.WeiXin.Models.WeiXinPaymentErrorModel
+@using Nop.Core.Infrastructure
+@using Nop.Web.Framework;
+@using Nop.Web.Framework.UI
+
+
+<div class="page checkout-page order-completed-page">
+    <div class="page-title">
+        <h1>@T("Plugins.Payments.WeiXin.YouAreUsingWechatPay")</h1>
+    </div>
+
+    <div class="page-body checkout-data">
+        <div class="wepay-logo"></div>
+        <div class="section order-completed">
+            <div class="title">
+                <strong>@T("Plugins.Payments.WeiXin.QrcodeOnlyValidTwoHours")</strong>
+            </div>
+            <div class="details">
+                <div class="order-number">
+                    <strong>@Model.Message</strong>
+                </div>
+                <div class="details-link">
+                    
+                </div>
+            </div>
+            <div class="buttons">
+                <input type="button" value="@T("Checkout.ThankYou.Continue")" class="button-1 order-completed-continue-button" onclick="setLocation('@Url.RouteUrl("HomePage")')"/>
+            </div>
+        </div>
+    </div>
+</div>

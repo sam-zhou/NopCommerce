@@ -11,6 +11,9 @@ using Nop.Services.Logging;
 using Nop.Services.Orders;
 using Nop.Services.Payments;
 using Nop.Web.Framework.Controllers;
+using System.IO;
+using System.Web;
+using Nop.Core.Domain.Logging;
 
 namespace Nop.Plugin.Payments.WeiXin.Controllers
 {
@@ -103,115 +106,213 @@ namespace Nop.Plugin.Payments.WeiXin.Controllers
         public ActionResult ProcessPayment(FormCollection form)
         {
             var model = new WeiXinPaymentModel();
-            if (form.HasKeys() && !string.IsNullOrWhiteSpace(form["QRCode"]))
+            var error = new WeiXinPaymentErrorModel();
+            var processor = _paymentService.LoadPaymentMethodBySystemName("Payments.WeiXin") as WeiXinPaymentProcessor;
+            if (processor == null ||
+                !processor.IsPaymentMethodActive(_paymentSettings) || !processor.PluginDescriptor.Installed)
             {
-                model.QRCode = form["QRCode"];
+                error.Message = "微信支付服务终止";
+            }
+            else
+            {
+                try
+                {
+
+
+                    if (form.HasKeys())
+                    {
+                        if (!string.IsNullOrWhiteSpace(form["result"]))
+                        {
+                            var wxModel = new WxPayData();
+                            wxModel.FromXml(HttpUtility.HtmlDecode(form["result"]), _weiXinPaymentSettings.AppSecret);
+
+                            if (wxModel.IsSet("code_url"))
+                            {
+                                model.QRCode = processor.GetQrCode(wxModel.GetValue("code_url").ToString());
+
+
+
+                                if (wxModel.IsSet("out_trade_no"))
+                                {
+                                    int orderId;
+                                    if (int.TryParse(wxModel.GetValue("out_trade_no").ToString(), out orderId))
+                                    {
+                                        var order = _orderService.GetOrderById(orderId);
+                                        if (order != null)
+                                        {
+                                            if (_orderProcessingService.CanMarkOrderAsPaid(order))
+                                            {
+                                                model.OrderId = order.Id.ToString();
+                                                model.Total = order.OrderTotal.ToString("￥0.00");
+                                            }
+                                            else
+                                            {
+                                                if (order.PaymentStatus == PaymentStatus.Paid)
+                                                {
+                                                    error.Message = "您已付款，请勿重复提交";
+                                                }
+                                                else
+                                                {
+                                                    error.Message = "订单状态错误";
+                                                }
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            error.Message = "订单号不存在";
+                                        }
+                                    }
+                                    else
+                                    {
+                                        error.Message = "无法读取订单号";
+                                    }
+                                }
+
+                            }
+                            else
+                            {
+                                error.Message = "无法读取二维码";
+                            }
+                        }
+                        else
+                        {
+                            error.Message = "参数错误";
+                        }
+
+                        
+                    }
+                    else
+                    {
+                        error.Message = "没有参数";
+                    }
+                }
+                catch (NopException ex)
+                {
+                    error.Message = ex.Message;
+                }
+            }
+
+            
+            
+            if (error.HasError)
+            {
+                return View("~/Plugins/Payments.WeiXin/Views/PaymentWeiXin/Error.cshtml", error);
             }
             return View("~/Plugins/Payments.WeiXin/Views/PaymentWeiXin/ProcessPayment.cshtml", model);
         }
 
-        //[NonAction]
-        //public override ProcessPaymentRequest GetPaymentInfo(FormCollection form)
-        //{
-        //    var processor = _paymentService.LoadPaymentMethodBySystemName("Payments.WeiXin") as WeiXinPaymentProcessor;
-        //    if (processor == null ||
-        //        !processor.IsPaymentMethodActive(_paymentSettings) || !processor.PluginDescriptor.Installed)
-        //        throw new NopException("WeiXin module cannot be loaded");
 
-
-        //    var paymentInfo = new ProcessPaymentRequest();
-        //    paymentInfo.OrderGuid = Guid.NewGuid();
-        //    paymentInfo.CustomerId = _workContext.CurrentCustomer.Id;
-        //    paymentInfo.CustomValues = processor.Unifiedorder();
-        //    return paymentInfo;
-        //}
 
         [ValidateInput(false)]
         public ActionResult Notify(FormCollection form)
         {
-            var processor = _paymentService.LoadPaymentMethodBySystemName("Payments.WeiXin") as WeiXinPaymentProcessor;
-            if (processor == null ||
-                !processor.IsPaymentMethodActive(_paymentSettings) || !processor.PluginDescriptor.Installed)
-                throw new NopException("WeiXin module cannot be loaded");
-
-
-            string weixinNotifyUrl = "https://www.WeiXin.com/cooperate/gateway.do?service=notify_verify";
-            string openId = _weiXinPaymentSettings.AppSecret;
-            if (string.IsNullOrEmpty(openId))
-                throw new Exception("OpenId is not set");
-            string mchId = _weiXinPaymentSettings.MchId;
-            if (string.IsNullOrEmpty(mchId))
-                throw new Exception("MchId is not set");
-            string _input_charset = "utf-8";
-
-            weixinNotifyUrl = weixinNotifyUrl + "&partner=" + openId + "&notify_id=" + Request.Form["notify_id"];
-            string responseTxt = processor.Get_Http(weixinNotifyUrl, 120000);
-
-            int i;
-            NameValueCollection coll;
-            coll = Request.Form;
-            String[] requestarr = coll.AllKeys;
-            string[] Sortedstr = requestarr;
-
-            var prestr = new StringBuilder();
-            for (i = 0; i < Sortedstr.Length; i++)
+            //接收从微信后台POST过来的数据
+            var s = Request.InputStream;
+            int count = 0;
+            byte[] buffer = new byte[1024];
+            StringBuilder builder = new StringBuilder();
+            while ((count = s.Read(buffer, 0, 1024)) > 0)
             {
-                if (Request.Form[Sortedstr[i]] != "" && Sortedstr[i] != "sign" && Sortedstr[i] != "sign_type")
+                builder.Append(Encoding.UTF8.GetString(buffer, 0, count));
+            }
+            s.Flush();
+            s.Close();
+            s.Dispose();
+
+            _logger.InsertLog(LogLevel.Information, this.GetType() + "Receive data from WeChat : " + builder);
+            //转换数据格式并验证签名
+            var data = new WxPayData();
+            try
+            {
+                data.FromXml(builder.ToString(), _weiXinPaymentSettings.AppSecret);
+            }
+            catch (NopException ex)
+            {
+                //若签名错误，则立即返回结果给微信支付后台
+                WxPayData res = new WxPayData();
+                res.SetValue("return_code", "FAIL");
+                res.SetValue("return_msg", ex.Message);
+
+                Response.Write(res.ToXml());
+                Response.End();
+            }
+
+
+
+            ProcessNotify(data);
+
+            return Content("");
+        }
+
+        public void ProcessNotify(WxPayData data)
+        {
+            WxPayData notifyData = data;
+
+            //检查支付结果中transaction_id是否存在
+            if (!notifyData.IsSet("transaction_id"))
+            {
+                //若transaction_id不存在，则立即返回结果给微信支付后台
+                WxPayData res = new WxPayData();
+                res.SetValue("return_code", "FAIL");
+                res.SetValue("return_msg", "支付结果中微信订单号不存在");
+                Response.Write(res.ToXml());
+                Response.End();
+            }
+
+            string transactionId = notifyData.GetValue("transaction_id").ToString();
+
+            //查询订单，判断订单真实性
+            if (!QueryOrder(transactionId))
+            {
+                //若订单查询失败，则立即返回结果给微信支付后台
+                WxPayData res = new WxPayData();
+                res.SetValue("return_code", "FAIL");
+                res.SetValue("return_msg", "订单查询失败");
+                Response.Write(res.ToXml());
+                Response.End();
+            }
+            //查询订单成功
+            else
+            {
+                WxPayData res = new WxPayData();
+                
+                int orderId;
+                if (int.TryParse(data.GetValue("out_trade_no").ToString(), out orderId))
                 {
-                    if (i == Sortedstr.Length - 1)
+                    var order = _orderService.GetOrderById(orderId);
+                    if (order != null && _orderProcessingService.CanMarkOrderAsPaid(order))
                     {
-                        prestr.Append(Sortedstr[i] + "=" + Request.Form[Sortedstr[i]]);
+                        _orderProcessingService.MarkOrderAsPaid(order);
+                        res.SetValue("return_code", "SUCCESS");
+                        res.SetValue("return_msg", "OK");
                     }
                     else
                     {
-                        prestr.Append(Sortedstr[i] + "=" + Request.Form[Sortedstr[i]] + "&");
-
+                        res.SetValue("return_code", "FAIL");
+                        res.SetValue("return_msg", "无法将订单设为已付");
                     }
                 }
+
+                Response.Write(res.ToXml());
+                Response.End();
             }
+        }
 
-            prestr.Append(mchId);
-
-            string mysign = processor.GetMD5(prestr.ToString(), _input_charset);
-
-            string sign = Request.Form["sign"];
-
-            if (mysign == sign && responseTxt == "true")
+        private bool QueryOrder(string transactionId)
+        {
+            WxPayData req = new WxPayData();
+            req.SetValue("transaction_id", transactionId);
+            WxPayData res = WeiXinHelper.OrderQuery(req, _weiXinPaymentSettings);
+            if (res.GetValue("return_code").ToString() == "SUCCESS" &&
+                res.GetValue("result_code").ToString() == "SUCCESS")
             {
-                if (Request.Form["trade_status"] == "WAIT_BUYER_PAY")
-                {
-                    string strOrderNo = Request.Form["out_trade_no"];
-                    string strPrice = Request.Form["total_fee"];
-                }
-                else if (Request.Form["trade_status"] == "TRADE_FINISHED" || Request.Form["trade_status"] == "TRADE_SUCCESS")
-                {
-                    string strOrderNo = Request.Form["out_trade_no"];
-                    string strPrice = Request.Form["total_fee"];
-
-                    int orderId = 0;
-                    if (Int32.TryParse(strOrderNo, out orderId))
-                    {
-                        var order = _orderService.GetOrderById(orderId);
-                        if (order != null && _orderProcessingService.CanMarkOrderAsPaid(order))
-                        {
-                            _orderProcessingService.MarkOrderAsPaid(order);
-                        }
-                    }
-                }
-                else
-                {
-                }
-
-                Response.Write("success");
+                return true;
             }
             else
             {
-                Response.Write("fail");
-                string logStr = "MD5:mysign=" + mysign + ",sign=" + sign + ",responseTxt=" + responseTxt;
-                _logger.Error(logStr);
+                return false;
             }
-
-            return Content("");
         }
     }
 }

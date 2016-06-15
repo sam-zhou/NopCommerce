@@ -22,6 +22,13 @@ namespace Nop.Plugin.Payments.WeiXin
                  new { controller = "PaymentWeiXin", action = "ProcessPayment" },
                  new[] { "Nop.Plugin.Payments.WeiXin.Controllers" }
             );
+
+            ////Error
+            //routes.MapRoute("Plugin.Payments.WeiXin.Error",
+            //     "Plugins/PaymentWeiXin/Error",
+            //     new { controller = "PaymentWeiXin", action = "Error" },
+            //     new[] { "Nop.Plugin.Payments.WeiXin.Controllers" }
+            //);
         }
         public int Priority
         {

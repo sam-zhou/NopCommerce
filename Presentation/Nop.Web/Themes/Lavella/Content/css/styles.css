@@ -4486,11 +4486,3 @@ pre {
     background: url('../img/loader.gif') no-repeat fixed 50% 50% rgba(0,0,0,0.2);
     opacity: 0.7;
 }
-
-.qrcode-hint {
-    padding: 5px;
-    width: 200px;
-    margin: 10px auto;
-    background: #62c462;
-    color: #ffffff;
-}
