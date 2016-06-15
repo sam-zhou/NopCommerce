@@ -22,13 +22,14 @@ namespace Nop.Plugin.Payments.WeiXin.Controllers
         private readonly IOrderProcessingService _orderProcessingService;
         private readonly ILogger _logger;
         private readonly IWebHelper _webHelper;
+        private readonly IWorkContext _workContext;
         private readonly WeiXinPaymentSettings _weiXinPaymentSettings;
         private readonly PaymentSettings _paymentSettings;
 
         public PaymentWeiXinController(ISettingService settingService, 
             IPaymentService paymentService, IOrderService orderService, 
             IOrderProcessingService orderProcessingService, 
-            ILogger logger, IWebHelper webHelper,
+            ILogger logger, IWebHelper webHelper, IWorkContext workContext,
             WeiXinPaymentSettings weiXinPaymentSettings,
             PaymentSettings paymentSettings)
         {
@@ -38,6 +39,7 @@ namespace Nop.Plugin.Payments.WeiXin.Controllers
             this._orderProcessingService = orderProcessingService;
             this._logger = logger;
             this._webHelper = webHelper;
+            _workContext = workContext;
             this._weiXinPaymentSettings = weiXinPaymentSettings;
             this._paymentSettings = paymentSettings;
         }
@@ -49,7 +51,7 @@ namespace Nop.Plugin.Payments.WeiXin.Controllers
             var model = new ConfigurationModel();
             model.AppId = _weiXinPaymentSettings.AppId;
             model.MchId = _weiXinPaymentSettings.MchId;
-            model.OpenId = _weiXinPaymentSettings.OpenId;
+            model.AppSecret = _weiXinPaymentSettings.AppSecret;
             model.AdditionalFee = _weiXinPaymentSettings.AdditionalFee;
 
             return View("~/Plugins/Payments.WeiXin/Views/PaymentWeiXin/Configure.cshtml", model);
@@ -66,7 +68,7 @@ namespace Nop.Plugin.Payments.WeiXin.Controllers
             //save settings
             _weiXinPaymentSettings.AppId = model.AppId;
             _weiXinPaymentSettings.MchId = model.MchId;
-            _weiXinPaymentSettings.OpenId = model.OpenId;
+            _weiXinPaymentSettings.AppSecret = model.AppSecret;
             _weiXinPaymentSettings.AdditionalFee = model.AdditionalFee;
             _settingService.SaveSetting(_weiXinPaymentSettings);
             
@@ -80,6 +82,9 @@ namespace Nop.Plugin.Payments.WeiXin.Controllers
             return View("~/Plugins/Payments.WeiXin/Views/PaymentWeiXin/PaymentInfo.cshtml", model);
         }
 
+
+        
+
         [NonAction]
         public override IList<string> ValidatePaymentForm(FormCollection form)
         {
@@ -90,17 +95,36 @@ namespace Nop.Plugin.Payments.WeiXin.Controllers
         [NonAction]
         public override ProcessPaymentRequest GetPaymentInfo(FormCollection form)
         {
-            var processor = _paymentService.LoadPaymentMethodBySystemName("Payments.WeiXin") as WeiXinPaymentProcessor;
-            if (processor == null ||
-                !processor.IsPaymentMethodActive(_paymentSettings) || !processor.PluginDescriptor.Installed)
-                throw new NopException("WeiXin module cannot be loaded");
-
-
             var paymentInfo = new ProcessPaymentRequest();
-            paymentInfo.OrderGuid = Guid.NewGuid();
-            
             return paymentInfo;
         }
+
+        [HttpPost]
+        public ActionResult ProcessPayment(FormCollection form)
+        {
+            var model = new WeiXinPaymentModel();
+            if (form.HasKeys() && !string.IsNullOrWhiteSpace(form["QRCode"]))
+            {
+                model.QRCode = form["QRCode"];
+            }
+            return View("~/Plugins/Payments.WeiXin/Views/PaymentWeiXin/ProcessPayment.cshtml", model);
+        }
+
+        //[NonAction]
+        //public override ProcessPaymentRequest GetPaymentInfo(FormCollection form)
+        //{
+        //    var processor = _paymentService.LoadPaymentMethodBySystemName("Payments.WeiXin") as WeiXinPaymentProcessor;
+        //    if (processor == null ||
+        //        !processor.IsPaymentMethodActive(_paymentSettings) || !processor.PluginDescriptor.Installed)
+        //        throw new NopException("WeiXin module cannot be loaded");
+
+
+        //    var paymentInfo = new ProcessPaymentRequest();
+        //    paymentInfo.OrderGuid = Guid.NewGuid();
+        //    paymentInfo.CustomerId = _workContext.CurrentCustomer.Id;
+        //    paymentInfo.CustomValues = processor.Unifiedorder();
+        //    return paymentInfo;
+        //}
 
         [ValidateInput(false)]
         public ActionResult Notify(FormCollection form)
@@ -112,7 +136,7 @@ namespace Nop.Plugin.Payments.WeiXin.Controllers
 
 
             string weixinNotifyUrl = "https://www.WeiXin.com/cooperate/gateway.do?service=notify_verify";
-            string openId = _weiXinPaymentSettings.OpenId;
+            string openId = _weiXinPaymentSettings.AppSecret;
             if (string.IsNullOrEmpty(openId))
                 throw new Exception("OpenId is not set");
             string mchId = _weiXinPaymentSettings.MchId;
@@ -127,7 +151,7 @@ namespace Nop.Plugin.Payments.WeiXin.Controllers
             NameValueCollection coll;
             coll = Request.Form;
             String[] requestarr = coll.AllKeys;
-            string[] Sortedstr = processor.BubbleSort(requestarr);
+            string[] Sortedstr = requestarr;
 
             var prestr = new StringBuilder();
             for (i = 0; i < Sortedstr.Length; i++)
@@ -188,28 +212,6 @@ namespace Nop.Plugin.Payments.WeiXin.Controllers
             }
 
             return Content("");
-        }
-
-        public ActionResult Return()
-        {
-            var processor = _paymentService.LoadPaymentMethodBySystemName("Payments.WeiXin") as WeiXinPaymentProcessor;
-            if (processor == null ||
-                !processor.IsPaymentMethodActive(_paymentSettings) || !processor.PluginDescriptor.Installed)
-                throw new NopException("WeiXin module cannot be loaded");
-
-            return RedirectToAction("Index", "Home", new { area = "" });
-        }
-
-        public ActionResult GetOrder(FormCollection form)
-        {
-            var processor = _paymentService.LoadPaymentMethodBySystemName("Payments.WeiXin") as WeiXinPaymentProcessor;
-            if (processor == null ||
-                !processor.IsPaymentMethodActive(_paymentSettings) || !processor.PluginDescriptor.Installed)
-                throw new NopException("WeiXin module cannot be loaded");
-
-            return Content("Hi there!");
-
-            //return RedirectToAction("Index", "Home", new { area = "" });
         }
     }
 }

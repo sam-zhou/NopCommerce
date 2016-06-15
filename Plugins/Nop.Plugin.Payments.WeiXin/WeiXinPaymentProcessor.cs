@@ -10,6 +10,7 @@ using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -68,102 +69,36 @@ namespace Nop.Plugin.Payments.WeiXin
         /// <summary>
         /// Gets MD5 hash
         /// </summary>
-        /// <param name="Input">Input</param>
-        /// <param name="Input_charset">Input charset</param>
+        /// <param name="input">Input</param>
+        /// <param name="inputCharset">Input charset</param>
         /// <returns>Result</returns>
-        public string GetMD5(string Input, string Input_charset)
+        public string GetMD5(string input, string inputCharset)
         {
-            MD5 md5 = new MD5CryptoServiceProvider();
-            byte[] t = md5.ComputeHash(Encoding.GetEncoding(Input_charset).GetBytes(Input));
-            StringBuilder sb = new StringBuilder(32);
-            for (int i = 0; i < t.Length; i++)
+            var md5 = new MD5CryptoServiceProvider();
+            var t = md5.ComputeHash(Encoding.GetEncoding(inputCharset).GetBytes(input));
+            var sb = new StringBuilder(32);
+            for (var i = 0; i < t.Length; i++)
             {
                 sb.Append(t[i].ToString("x").PadLeft(2, '0'));
             }
             return sb.ToString();
         }
 
-        /// <summary>
-        /// Bubble sort
-        /// </summary>
-        /// <param name="Input">Input</param>
-        /// <returns>Result</returns>
-        public string[] BubbleSort(string[] Input)
-        {
-            int i, j;
-            string temp;
 
-            bool exchange;
-
-            for (i = 0; i < Input.Length; i++)
-            {
-                exchange = false;
-
-                for (j = Input.Length - 2; j >= i; j--)
-                {
-                    if (System.String.CompareOrdinal(Input[j + 1], Input[j]) < 0)
-                    {
-                        temp = Input[j + 1];
-                        Input[j + 1] = Input[j];
-                        Input[j] = temp;
-
-                        exchange = true;
-                    }
-                }
-
-                if (!exchange)
-                {
-                    break;
-                }
-            }
-            return Input;
-        }
-
-        /// <summary>
-        /// Create URL
-        /// </summary>
-        /// <param name="Para">Para</param>
-        /// <param name="InputCharset">Input charset</param>
-        /// <param name="MchId">MchId</param>
-        /// <returns>Result</returns>
-        public string CreatUrl(string[] Para, string InputCharset, string MchId)
-        {
-            int i;
-            string[] Sortedstr = BubbleSort(Para);
-            StringBuilder prestr = new StringBuilder();
-
-            for (i = 0; i < Sortedstr.Length; i++)
-            {
-                if (i == Sortedstr.Length - 1)
-                {
-                    prestr.Append(Sortedstr[i]);
-
-                }
-                else
-                {
-                    prestr.Append(Sortedstr[i] + "&");
-                }
-
-            }
-
-            prestr.Append(MchId);
-            string sign = GetMD5(prestr.ToString(), InputCharset);
-            return sign;
-        }
 
         /// <summary>
         /// Gets HTTP
         /// </summary>
-        /// <param name="StrUrl">Url</param>
-        /// <param name="Timeout">Timeout</param>
+        /// <param name="strUrl">Url</param>
+        /// <param name="timeout">Timeout</param>
         /// <returns>Result</returns>
-        public string Get_Http(string StrUrl, int Timeout)
+        public string Get_Http(string strUrl, int timeout)
         {
-            string strResult = string.Empty;
+            string strResult;
             try
             {
-                HttpWebRequest myReq = (HttpWebRequest)HttpWebRequest.Create(StrUrl);
-                myReq.Timeout = Timeout;
+                HttpWebRequest myReq = (HttpWebRequest)HttpWebRequest.Create(strUrl);
+                myReq.Timeout = timeout;
                 HttpWebResponse HttpWResp = (HttpWebResponse)myReq.GetResponse();
                 Stream myStream = HttpWResp.GetResponseStream();
                 StreamReader sr = new StreamReader(myStream, Encoding.Default);
@@ -186,7 +121,7 @@ namespace Nop.Plugin.Payments.WeiXin
         {
             var qrWriter = new BarcodeWriter();
             qrWriter.Format = BarcodeFormat.QR_CODE;
-            qrWriter.Options = new EncodingOptions {Height = 200, Width = 200, Margin = 5};
+            qrWriter.Options = new EncodingOptions { Height = 200, Width = 200, Margin = 5 };
 
             using (var q = qrWriter.Write(url))
             {
@@ -198,7 +133,50 @@ namespace Nop.Plugin.Payments.WeiXin
             }
         }
 
+        public Dictionary<string, object> Unifiedorder(string productId, string body, string detail, string orderId, string total)
+        {
+            var packageParameter = new Hashtable();
+            packageParameter.Add("appid", _weiXinPaymentSettings.AppId);
+            packageParameter.Add("mch_id", _weiXinPaymentSettings.MchId);
 
+            packageParameter.Add("nonce_str", Guid.NewGuid().ToString("N"));
+            packageParameter.Add("product_id", productId);
+            packageParameter.Add("body", body);
+            
+            packageParameter.Add("detail", detail);
+            packageParameter.Add("out_trade_no", orderId);
+            packageParameter.Add("total_fee", total);
+            packageParameter.Add("spbill_create_ip", _webHelper.GetCurrentIpAddress());
+            packageParameter.Add("notify_url", Path.Combine(_webHelper.GetStoreHost(true), "Plugins/PaymentWeiXin/Notify"));
+            packageParameter.Add("trade_type", "NATIVE");
+            //packageParameter.Add("device_info", "WEB"); 
+            //packageParameter.Add("fee_type", "CNY"); 
+            //packageParameter.Add("time_start", DateTime.Now.ToString("yyyyMMddHHmmss"));
+            //packageParameter.Add("time_expire", DateTime.Now.AddDays(2).ToString("yyyyMMddHHmmss"));
+            //packageParameter.Add("limit_pay", "no_credit");
+            //packageParameter.Add("openid", "");
+
+
+            var sign = CreateMd5Sign("key", _weiXinPaymentSettings.AppSecret, packageParameter, "utf-8");
+            packageParameter.Add("sign", sign);
+            var data = ParseXML(packageParameter);
+            var prepayXml = HttpUtil.Send(data, OrderUrl);
+
+            var xdoc = new XmlDocument();
+            xdoc.LoadXml(prepayXml);
+            XmlNode xn = xdoc.SelectSingleNode("xml");
+            XmlNodeList xnl = xn.ChildNodes;
+            var result = new Dictionary<string, object>();
+            foreach (XmlNode node in xnl)
+            {
+                result.Add(node.Name, node.InnerText);
+                if (node.Name == "code_url")
+                {
+                    result.Add("QRCode", GetQrCode(node.InnerText));
+                }
+            }
+            return result;
+        }
 
         #endregion
 
@@ -212,68 +190,51 @@ namespace Nop.Plugin.Payments.WeiXin
         public ProcessPaymentResult ProcessPayment(ProcessPaymentRequest processPaymentRequest)
         {
             var result = new ProcessPaymentResult();
+            result.NewPaymentStatus = PaymentStatus.Pending;
             return result;
         }
 
+
+        
+        
         /// <summary>
         /// Post process payment (used by payment gateways that require redirecting to a third-party URL)
         /// </summary>
         /// <param name="postProcessPaymentRequest">Payment info required for an order processing</param>
         public void PostProcessPayment(PostProcessPaymentRequest postProcessPaymentRequest)
         {
-            Hashtable packageParameter = new Hashtable();
-            packageParameter.Add("appid", _weiXinPaymentSettings.AppId);//开放账号ID  
-            packageParameter.Add("mch_id", _weiXinPaymentSettings.MchId); //商户号
-            //packageParameter.Add("device_info", "WEB"); //商户号
-            packageParameter.Add("nonce_str", Guid.NewGuid().ToString("N")); //随机字符串
+            string productId, body;
             var firstProduct = postProcessPaymentRequest.Order.OrderItems.FirstOrDefault();
             if (firstProduct != null)
             {
-                packageParameter.Add("product_id", firstProduct.Product.Id.ToString());
-                packageParameter.Add("body", "测试商品"); //商品描述  
+                productId = firstProduct.Product.Id.ToString(CultureInfo.InvariantCulture);
+                body = firstProduct.Product.GetLocalized(q => q.Name);
             }
             else
             {
-                packageParameter.Add("product_id", postProcessPaymentRequest.Order.Id.ToString());
-                packageParameter.Add("body", postProcessPaymentRequest.Order.Id.ToString()); //商品描述  
+                productId = postProcessPaymentRequest.Order.Id.ToString(CultureInfo.InvariantCulture);
+                body = postProcessPaymentRequest.Order.Id.ToString(CultureInfo.InvariantCulture);
             }
-            
-            //packageParameter.Add("detail", string.Join(", ", postProcessPaymentRequest.Order.OrderItems.Select(q => q.Product.Name))); //商品描述      
-            packageParameter.Add("out_trade_no", postProcessPaymentRequest.Order.Id.ToString()); //商家订单号 
-            packageParameter.Add("total_fee", ((int)(postProcessPaymentRequest.Order.OrderTotal * 100)).ToString(CultureInfo.InvariantCulture)); //商品金额,以分为单位    
-            packageParameter.Add("spbill_create_ip", _webHelper.GetCurrentIpAddress()); //订单生成的机器IP，指用户浏览器端IP  
-            packageParameter.Add("notify_url", "https://cn.lynexshop.com/Plugins/PaymentWeiXin/Notify"); //接收财付通通知的URL  
-            packageParameter.Add("trade_type", "NATIVE");//交易类型  
-            //packageParameter.Add("fee_type", "CNY"); //币种，1人民币   66  
-            //packageParameter.Add("time_start", DateTime.Now.ToString("yyyyMMddHHmmss"));
-            //packageParameter.Add("time_expire", DateTime.Now.AddDays(2).ToString("yyyyMMddHHmmss"));
-            
 
-            //packageParameter.Add("limit_pay", "no_credit");
-            //packageParameter.Add("openid", "");
-            
+            string detail = string.Join(", ",
+                postProcessPaymentRequest.Order.OrderItems.Select(q => q.Product.GetLocalized(p => p.Name)));
+            string orderId = postProcessPaymentRequest.Order.Id.ToString(CultureInfo.InvariantCulture);
+            string total = ((int) (postProcessPaymentRequest.Order.OrderTotal*100)).ToString(CultureInfo.InvariantCulture);
 
-            //获取签名
-            var sign = CreateMd5Sign("key", _weiXinPaymentSettings.OpenId, packageParameter, "utf-8");
-            //拼接上签名
-            packageParameter.Add("sign", sign);
-            //生成加密包的XML格式字符串
-            string data = ParseXML(packageParameter);
-            //调用统一下单接口，获取预支付订单号码
-            string prepayXml = HttpUtil.Send(data, "https://api.mch.weixin.qq.com/pay/unifiedorder");
+            var result = Unifiedorder(productId, body, detail, orderId, total);
 
-            //获取预支付ID
-            var prepayId = string.Empty;
-            var xdoc = new XmlDocument();
-            xdoc.LoadXml(prepayXml);
-            XmlNode xn = xdoc.SelectSingleNode("xml");
-            XmlNodeList xnl = xn.ChildNodes;
-            if (xnl.Count > 7)
+            var post = new RemotePost();
+            post.FormName = "weixinpayment";
+            post.Url = Path.Combine("http://test.lynexshop.com/Plugins/PaymentWeiXin/ProcessPayment");
+            post.Method = "POST";
+
+
+            foreach (var item in result)
             {
-                prepayId = xnl[7].InnerText;
+                post.Add(item.Key, item.Value.ToString());
             }
 
-            
+            post.Post();
         }
 
 
@@ -468,7 +429,7 @@ namespace Nop.Plugin.Payments.WeiXin
             {
                 AppId = "",
                 MchId = "",
-                OpenId= "",
+                AppSecret = "",
                 AdditionalFee = 0,
             };
             _settingService.SaveSetting(settings);
@@ -480,8 +441,8 @@ namespace Nop.Plugin.Payments.WeiXin
             this.AddOrUpdatePluginLocaleResource("Plugins.Payments.WeiXin.AppId.Hint", "Enter AppId.");
             this.AddOrUpdatePluginLocaleResource("Plugins.Payments.WeiXin.MchId", "MchId");
             this.AddOrUpdatePluginLocaleResource("Plugins.Payments.WeiXin.MchId.Hint", "Enter MchId.");
-            this.AddOrUpdatePluginLocaleResource("Plugins.Payments.WeiXin.OpenId", "OpenId");
-            this.AddOrUpdatePluginLocaleResource("Plugins.Payments.WeiXin.OpenId.Hint", "Enter OpenId.");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Payments.WeiXin.AppSecret", "AppSecret");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Payments.WeiXin.AppSecret.Hint", "Enter AppSecret.");
             this.AddOrUpdatePluginLocaleResource("Plugins.Payments.WeiXin.AdditionalFee", "Additional fee");
             this.AddOrUpdatePluginLocaleResource("Plugins.Payments.WeiXin.AdditionalFee.Hint", "Enter additional fee to charge your customers.");
             
@@ -498,8 +459,8 @@ namespace Nop.Plugin.Payments.WeiXin
             this.DeletePluginLocaleResource("Plugins.Payments.WeiXin.AppId.Hint");
             this.DeletePluginLocaleResource("Plugins.Payments.WeiXin.MchId");
             this.DeletePluginLocaleResource("Plugins.Payments.WeiXin.MchId.Hint");
-            this.DeletePluginLocaleResource("Plugins.Payments.WeiXin.OpenId");
-            this.DeletePluginLocaleResource("Plugins.Payments.WeiXin.OpenId.Hint");
+            this.DeletePluginLocaleResource("Plugins.Payments.WeiXin.AppSecret");
+            this.DeletePluginLocaleResource("Plugins.Payments.WeiXin.AppSecret.Hint");
             this.DeletePluginLocaleResource("Plugins.Payments.WeiXin.AdditionalFee");
             this.DeletePluginLocaleResource("Plugins.Payments.WeiXin.AdditionalFee.Hint");
             
@@ -516,7 +477,7 @@ namespace Nop.Plugin.Payments.WeiXin
         {
             get
             {
-                return false;
+                return true;
             }
         }
 
@@ -571,7 +532,7 @@ namespace Nop.Plugin.Payments.WeiXin
         {
             get
             {
-                return PaymentMethodType.Standard;
+                return PaymentMethodType.Redirection;
             }
         }
 
@@ -580,7 +541,7 @@ namespace Nop.Plugin.Payments.WeiXin
         /// </summary>
         public bool SkipPaymentInfo
         {
-            get { return false; }
+            get { return true; }
         }
 
         #endregion

@@ -6,8 +6,6 @@ namespace Nop.Plugin.Payments.WeiXin.Models
 {
     public class PaymentInfoModel : BaseNopModel
     {
-        [NopResourceDisplayName("Plugins.Payments.WeiXin.QRCode")]
-        [AllowHtml]
-        public string QRCode { get; set; }
+        
     }
 }

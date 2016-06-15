@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
+
 using Nop.Web.Framework.Mvc.Routes;
 
 namespace Nop.Plugin.Payments.WeiXin
@@ -15,17 +16,10 @@ namespace Nop.Plugin.Payments.WeiXin
                  new[] { "Nop.Plugin.Payments.WeiXin.Controllers" }
             );
 
-            //Return
-            routes.MapRoute("Plugin.Payments.WeiXin.Return",
-                 "Plugins/PaymentWeiXin/Return",
-                 new { controller = "PaymentWeiXin", action = "Return" },
-                 new[] { "Nop.Plugin.Payments.WeiXin.Controllers" }
-            );
-
-            //GetOrder
-            routes.MapRoute("Plugin.Payments.WeiXin.GetOrder",
-                 "Plugins/PaymentWeiXin/GetOrder",
-                 new { controller = "PaymentWeiXin", action = "GetOrder" },
+            //Payment
+            routes.MapRoute("Plugin.Payments.WeiXin.ProcessPayment",
+                 "Plugins/PaymentWeiXin/ProcessPayment",
+                 new { controller = "PaymentWeiXin", action = "ProcessPayment" },
                  new[] { "Nop.Plugin.Payments.WeiXin.Controllers" }
             );
         }

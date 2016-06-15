@@ -10,8 +10,8 @@ namespace Nop.Plugin.Payments.WeiXin.Models
         [NopResourceDisplayName("Plugins.Payments.WeiXin.MchId")]
         public string MchId { get; set; }
 
-        [NopResourceDisplayName("Plugins.Payments.WeiXin.OpenId")]
-        public string OpenId { get; set; }
+        [NopResourceDisplayName("Plugins.Payments.WeiXin.AppSecret")]
+        public string AppSecret { get; set; }
 
         [NopResourceDisplayName("Plugins.Payments.WeiXin.AdditionalFee")]
         public decimal AdditionalFee { get; set; }

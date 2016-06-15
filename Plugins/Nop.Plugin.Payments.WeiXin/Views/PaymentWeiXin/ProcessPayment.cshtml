@@ -1,0 +1,23 @@
+﻿@{
+    Layout = "";
+}
+@model Nop.Plugin.Payments.WeiXin.Models.WeiXinPaymentModel
+@using Nop.Web.Framework;
+
+<table width="100%" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            <b>@T("Plugins.Payments.WeiXin.RedirectionTip")</b>
+            @if (!string.IsNullOrWhiteSpace(Model.QRCode))
+            {
+                <div class="custom-value qrcode">
+                    <img src="@Model.QRCode" />
+
+                    <div class="qrcode-hint">请使用微信扫一扫<br />扫描二维码支付</div>
+                </div>
+            }
+            
+        </td>
+    </tr>
+</table>
+

@@ -8,12 +8,6 @@
     <tr>
         <td>
             <b>@T("Plugins.Payments.WeiXin.RedirectionTip")</b>
-            @if (Model.CustomProperties.ContainsKey("QRCode"))
-            {
-                <div class="wexin-pay-qrcode">
-                    <img src="@Model.CustomProperties["QRCode"]"/>
-                </div>
-            }
             
         </td>
     </tr>

@@ -3097,6 +3097,7 @@
     <Content Include="Themes\Lavella\Content\fonts\FontAwesome.otf" />
     <Content Include="Themes\Lavella\Views\Customer\Info.cshtml" />
     <Content Include="Themes\Lavella\Views\ShoppingCart\_CheckoutAttributes.cshtml" />
+    <Content Include="Themes\Lavella\Views\Checkout\Completed.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Roxy_Fileman\tmp\" />

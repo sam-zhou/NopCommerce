@@ -6,7 +6,7 @@ namespace Nop.Plugin.Payments.WeiXin
     {
         public string AppId { get; set; }
         public string MchId { get; set; }
-        public string OpenId { get; set; }
+        public string AppSecret { get; set; }
         public decimal AdditionalFee { get; set; }
     }
 }
