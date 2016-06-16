@@ -42,18 +42,18 @@ namespace Nop.Plugin.ExternalAuth.WeiXin.Core
 
         private Uri GenerateLocalCallbackUri()
         {
-            string url = string.Format("{0}plugins/externalauthWeiXin/logincallback/", _webHelper.GetStoreLocation());
+            string url = string.Format("{0}plugins/externalauthWeiXin/logincallback", _webHelper.GetStoreLocation());
             return new Uri(url);
         }
 
         public Uri GenerateServiceLoginUrl()
         {
-            var builder = new UriBuilder("https://open.weixin.qq.com/connect/qrconnect");
+            var builder = new UriBuilder("https://open.weixin.qq.com/connect/oauth2/authorize");
             var args = new Dictionary<string, string>();
             args.Add("appid", _weiXinExternalAuthSettings.AppId);
             args.Add("redirect_uri", GenerateLocalCallbackUri().AbsoluteUri);
             args.Add("response_type", "code");
-            args.Add("scope", "snsapi_login");
+            args.Add("scope", "snsapi_base");
             args.Add("state", "STATE#wechat_redirect");
             AppendQueryArgs(builder, args);
             return builder.Uri;
@@ -83,9 +83,17 @@ namespace Nop.Plugin.ExternalAuth.WeiXin.Core
             var builder = new StringBuilder(args.Count() * 10);
             foreach (var pair in args)
             {
-                builder.Append(EscapeUriDataStringRfc3986(pair.Key));
+                builder.Append(pair.Key);
                 builder.Append('=');
-                builder.Append(EscapeUriDataStringRfc3986(pair.Value));
+                if (pair.Key == "redirect_uri")
+                {
+                    builder.Append(EscapeUriDataStringRfc3986(pair.Value));
+                }
+                else
+                {
+                    builder.Append(pair.Value);
+                }
+                
                 builder.Append('&');
             }
             builder.Length--;
