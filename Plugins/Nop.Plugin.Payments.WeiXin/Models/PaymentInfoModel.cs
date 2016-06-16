@@ -6,6 +6,6 @@ namespace Nop.Plugin.Payments.WeiXin.Models
 {
     public class PaymentInfoModel : BaseNopModel
     {
-        
+        public bool IsJsPay { get; set; }
     }
 }

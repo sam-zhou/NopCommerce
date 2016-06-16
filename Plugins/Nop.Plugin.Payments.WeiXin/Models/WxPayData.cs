@@ -19,7 +19,7 @@ namespace Nop.Plugin.Payments.WeiXin.Models
         }
 
         //采用排序的Dictionary的好处是方便对数据包进行签名，不用再签名之前再做一次排序
-        private SortedDictionary<string, object> m_values = new SortedDictionary<string, object>();
+        private readonly SortedDictionary<string, object> _mValues = new SortedDictionary<string, object>();
 
         /**
         * 设置某个字段的值
@@ -28,7 +28,7 @@ namespace Nop.Plugin.Payments.WeiXin.Models
         */
         public void SetValue(string key, object value)
         {
-            m_values[key] = value;
+            _mValues[key] = value;
         }
 
         /**
@@ -39,7 +39,7 @@ namespace Nop.Plugin.Payments.WeiXin.Models
         public object GetValue(string key)
         {
             object o;
-            m_values.TryGetValue(key, out o);
+            _mValues.TryGetValue(key, out o);
             return o;
         }
 
@@ -51,7 +51,7 @@ namespace Nop.Plugin.Payments.WeiXin.Models
         public bool IsSet(string key)
         {
             object o;
-            m_values.TryGetValue(key, out o);
+            _mValues.TryGetValue(key, out o);
             if (null != o)
                 return true;
             return false;
@@ -65,13 +65,13 @@ namespace Nop.Plugin.Payments.WeiXin.Models
         public string ToXml()
         {
             //数据为空时不能转化为xml格式
-            if (0 == m_values.Count)
+            if (0 == _mValues.Count)
             {
                 throw new NopException("WxPayData数据为空!");
             }
 
             string xml = "<xml>";
-            foreach (KeyValuePair<string, object> pair in m_values)
+            foreach (KeyValuePair<string, object> pair in _mValues)
             {
                 //字段值不能为null，会影响后续流程
                 if (pair.Value == null)
@@ -109,22 +109,22 @@ namespace Nop.Plugin.Payments.WeiXin.Models
                 throw new NopException("将空的xml串转换为WxPayData不合法!");
             }
 
-            XmlDocument xmlDoc = new XmlDocument();
+            var xmlDoc = new XmlDocument();
             xmlDoc.LoadXml(xml);
-            XmlNode xmlNode = xmlDoc.FirstChild;//获取到根节点<xml>
-            XmlNodeList nodes = xmlNode.ChildNodes;
+            var xmlNode = xmlDoc.FirstChild;//获取到根节点<xml>
+            var nodes = xmlNode.ChildNodes;
             foreach (XmlNode xn in nodes)
             {
-                XmlElement xe = (XmlElement)xn;
-                m_values[xe.Name] = xe.InnerText;//获取xml的键值对到WxPayData内部的数据中
+                var xe = (XmlElement)xn;
+                _mValues[xe.Name] = xe.InnerText;//获取xml的键值对到WxPayData内部的数据中
             }
 
             try
             {
                 //2015-06-29 错误是没有签名
-                if ((string) m_values["return_code"] != "SUCCESS")
+                if ((string) _mValues["return_code"] != "SUCCESS")
                 {
-                    return m_values;
+                    return _mValues;
                 }
                 CheckSign(appSecret);//验证签名,不通过会抛异常
             }
@@ -133,7 +133,7 @@ namespace Nop.Plugin.Payments.WeiXin.Models
                 throw new NopException(ex.Message);
             }
 
-            return m_values;
+            return _mValues;
         }
 
         /**
@@ -143,7 +143,7 @@ namespace Nop.Plugin.Payments.WeiXin.Models
         public string ToUrl()
         {
             string buff = "";
-            foreach (KeyValuePair<string, object> pair in m_values)
+            foreach (KeyValuePair<string, object> pair in _mValues)
             {
                 if (pair.Value == null)
                 {
@@ -166,7 +166,7 @@ namespace Nop.Plugin.Payments.WeiXin.Models
         */
         public string ToJson()
         {
-            string jsonStr = JsonMapper.ToJson(m_values);
+            string jsonStr = JsonMapper.ToJson(_mValues);
             return jsonStr;
         }
 
@@ -176,7 +176,7 @@ namespace Nop.Plugin.Payments.WeiXin.Models
         public string ToPrintStr()
         {
             string str = "";
-            foreach (KeyValuePair<string, object> pair in m_values)
+            foreach (KeyValuePair<string, object> pair in _mValues)
             {
                 if (pair.Value == null)
                 {
@@ -247,7 +247,7 @@ namespace Nop.Plugin.Payments.WeiXin.Models
         */
         public SortedDictionary<string, object> GetValues()
         {
-            return m_values;
+            return _mValues;
         }
     }
 }

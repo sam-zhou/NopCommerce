@@ -12,7 +12,7 @@
 
             var stores = Model.AvailableStores.Select(s => new SelectListItem
             {
-                Text = s.Name,
+                Text = s.Country,
                 Value = s.Url + rawUrl,
                 Selected = s.Id.Equals(Model.CurrentStoreId)
             }).ToList();

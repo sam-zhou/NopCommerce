@@ -22,5 +22,9 @@ namespace Nop.Plugin.Payments.WeiXin.Models
         [AllowHtml]
         public string OrderType { get; set; }
 
+        [NopResourceDisplayName("Plugins.Payments.WeiXin.JsApiParam")]
+        [AllowHtml]
+        public string JsApiParam { get; set; }
+
     }
 }

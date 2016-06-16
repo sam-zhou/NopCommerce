@@ -8,8 +8,31 @@
     <tr>
         <td>
             <b>@T("Plugins.Payments.WeiXin.RedirectionTip")</b>
-            
+            <input type="hidden" name="IsJsPay" id ="IsJsPay" value="@Model.IsJsPay"/>
         </td>
     </tr>
 </table>
+<script type="text/javascript">
+    var setJsPay = function () {
+        $("#IsJsPay").val("true");
+    }
+
+    $(document).ready(function () {
+        
+
+        if (typeof WeixinJSBridge == "undefined") {
+            if (document.addEventListener) {
+                document.addEventListener('WeixinJSBridgeReady', setJsPay, false);
+            }
+            else if (document.attachEvent) {
+                document.attachEvent('WeixinJSBridgeReady', setJsPay);
+                document.attachEvent('onWeixinJSBridgeReady', setJsPay);
+            }
+        }
+        else {
+            setJsPay();
+        }
+    });
+
+</script>
 

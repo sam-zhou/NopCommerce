@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Globalization;
 using System.Text;
 using System.Web.Mvc;
 using Nop.Core;
+using Nop.Core.Domain.Orders;
 using Nop.Core.Domain.Payments;
+using Nop.Plugin.Payments.WeiXin.Helpers;
 using Nop.Plugin.Payments.WeiXin.Models;
 using Nop.Services.Configuration;
 using Nop.Services.Logging;
@@ -82,6 +85,7 @@ namespace Nop.Plugin.Payments.WeiXin.Controllers
         public ActionResult PaymentInfo()
         {
             var model = new PaymentInfoModel();
+            model.IsJsPay = false;
             return View("~/Plugins/Payments.WeiXin/Views/PaymentWeiXin/PaymentInfo.cshtml", model);
         }
 
@@ -99,6 +103,7 @@ namespace Nop.Plugin.Payments.WeiXin.Controllers
         public override ProcessPaymentRequest GetPaymentInfo(FormCollection form)
         {
             var paymentInfo = new ProcessPaymentRequest();
+            paymentInfo.CustomValues.Add("IsJsPay", form["IsJsPay"]);
             return paymentInfo;
         }
 
@@ -126,37 +131,52 @@ namespace Nop.Plugin.Payments.WeiXin.Controllers
                             var wxModel = new WxPayData();
                             wxModel.FromXml(HttpUtility.HtmlDecode(form["result"]), _weiXinPaymentSettings.AppSecret);
 
+
                             if (wxModel.IsSet("code_url"))
                             {
                                 model.QRCode = processor.GetQrCode(wxModel.GetValue("code_url").ToString());
 
 
-
-                                if (wxModel.IsSet("out_trade_no"))
+                                if (!string.IsNullOrWhiteSpace(form["orderid"]))
                                 {
                                     int orderId;
-                                    if (int.TryParse(wxModel.GetValue("out_trade_no").ToString(), out orderId))
+                                    if (int.TryParse(form["orderid"], out orderId))
                                     {
                                         var order = _orderService.GetOrderById(orderId);
                                         if (order != null)
                                         {
-                                            if (_orderProcessingService.CanMarkOrderAsPaid(order))
+                                            if (order.Customer.Id == _workContext.CurrentCustomer.Id)
                                             {
-                                                model.OrderId = order.Id.ToString();
-                                                model.Total = order.OrderTotal.ToString("￥0.00");
-                                            }
-                                            else
-                                            {
-                                                if (order.PaymentStatus == PaymentStatus.Paid)
+                                                if (_orderProcessingService.CanMarkOrderAsPaid(order))
                                                 {
-                                                    error.Message = "您已付款，请勿重复提交";
+                                                    if (!string.IsNullOrWhiteSpace(form["total"]) &&
+                                                        form["total"] == order.OrderTotal.ToString("0.00"))
+                                                    {
+                                                        model.OrderId = order.Id.ToString(CultureInfo.InvariantCulture);
+                                                        model.Total = order.OrderTotal.ToString("￥0.00");
+                                                    }
+                                                    else
+                                                    {
+                                                        error.Message = "价格不匹配";
+                                                    }
                                                 }
                                                 else
                                                 {
-                                                    error.Message = "订单状态错误";
+                                                    if (order.PaymentStatus == PaymentStatus.Paid)
+                                                    {
+                                                        error.Message = "您已付款，请勿重复提交";
+                                                    }
+                                                    else
+                                                    {
+                                                        error.Message = "订单状态错误";
+                                                    }
                                                 }
                                             }
-
+                                            else
+                                            {
+                                                error.Message = "用户不匹配";
+                                                
+                                            }
                                         }
                                         else
                                         {
@@ -167,6 +187,10 @@ namespace Nop.Plugin.Payments.WeiXin.Controllers
                                     {
                                         error.Message = "无法读取订单号";
                                     }
+                                }
+                                else
+                                {
+                                    error.Message = "订单号丢失";
                                 }
 
                             }
@@ -203,6 +227,74 @@ namespace Nop.Plugin.Payments.WeiXin.Controllers
         }
 
 
+        [HttpPost]
+        public ActionResult JsApiPayment(FormCollection form)
+        {
+            var model = new WeiXinPaymentModel();
+            var error = new WeiXinPaymentErrorModel();
+            var processor = _paymentService.LoadPaymentMethodBySystemName("Payments.WeiXin") as WeiXinPaymentProcessor;
+            if (processor == null ||
+                !processor.IsPaymentMethodActive(_paymentSettings) || !processor.PluginDescriptor.Installed)
+            {
+                error.Message = "微信支付服务终止";
+            }
+            else
+            {
+                try
+                {
+                    string totalFee = form["total"];
+                    string order = form["orderid"];
+                    string prepayId = form["prepay_id"];
+
+                    if (string.IsNullOrWhiteSpace(prepayId) || string.IsNullOrWhiteSpace(totalFee) || string.IsNullOrWhiteSpace(prepayId))
+                    {
+                        error.Message = "页面传参出错,请返回重试";
+                    }
+                    else
+                    {
+                        int orderId;
+
+                        if (int.TryParse(order, out orderId))
+                        {
+                            
+
+                            //JSAPI支付预处理
+                            try
+                            {
+                                var notifyUrl = Path.Combine(_webHelper.GetStoreHost(_webHelper.IsCurrentConnectionSecured()),
+                                        "Plugins/PaymentWeiXin/Notify");
+
+                                var jsApiPay = new JsApiPay(_weiXinPaymentSettings, notifyUrl);
+                                jsApiPay.TotalFee = (decimal.Parse(totalFee) * 100).ToString(CultureInfo.InvariantCulture);
+
+                                var unifiedOrderResult = jsApiPay.GetUnifiedOrderResult(orderId, _webHelper.GetCurrentIpAddress(), notifyUrl);
+                                model.JsApiParam = jsApiPay.GetJsApiParameters();//获取H5调起JS API参数                    
+                                model.OrderId = unifiedOrderResult.ToPrintStr();
+                            }
+                            catch (Exception ex)
+                            {
+                                error.Message = "下单失败，请返回重试";
+                            }
+                        }
+                        else
+                        {
+                            error.Message = "订单号错误";
+                        }
+
+                    }
+                }
+                catch (NopException ex)
+                {
+                    error.Message = ex.Message;
+                }
+            }
+
+            if (error.HasError)
+            {
+                return View("~/Plugins/Payments.WeiXin/Views/PaymentWeiXin/Error.cshtml", error);
+            }
+            return View("~/Plugins/Payments.WeiXin/Views/PaymentWeiXin/ProcessPayment.cshtml", model);
+        }
 
         [ValidateInput(false)]
         public ActionResult Notify(FormCollection form)

@@ -22,6 +22,7 @@ using Nop.Core.Domain.Orders;
 using Nop.Core.Domain.Payments;
 using Nop.Core.Plugins;
 using Nop.Plugin.Payments.WeiXin.Controllers;
+using Nop.Plugin.Payments.WeiXin.Helpers;
 using Nop.Services.Configuration;
 using Nop.Services.Helpers;
 using Nop.Services.Localization;
@@ -45,21 +46,25 @@ namespace Nop.Plugin.Payments.WeiXin
         private readonly ISettingService _settingService;
         private readonly IWebHelper _webHelper;
         private readonly IStoreContext _storeContext;
+        private readonly IWorkContext _workContext;
 
         private const string OrderUrl = @"https://api.mch.weixin.qq.com/pay/unifiedorder";
-
+        private string _notifyUrl;
         #endregion
 
         #region Ctor
 
         public WeiXinPaymentProcessor(WeiXinPaymentSettings weiXinPaymentSettings,
             ISettingService settingService, IWebHelper webHelper,
-            IStoreContext storeContext)
+            IStoreContext storeContext, IWorkContext workContext)
         {
             this._weiXinPaymentSettings = weiXinPaymentSettings;
             this._settingService = settingService;
             this._webHelper = webHelper;
             this._storeContext = storeContext;
+            _workContext = workContext;
+
+            _notifyUrl = Path.Combine(_webHelper.GetStoreHost(true), "Plugins/PaymentWeiXin/Notify");
         }
 
         #endregion
@@ -147,7 +152,7 @@ namespace Nop.Plugin.Payments.WeiXin
             packageParameter.Add("out_trade_no", orderId);
             packageParameter.Add("total_fee", total);
             packageParameter.Add("spbill_create_ip", _webHelper.GetCurrentIpAddress());
-            packageParameter.Add("notify_url", Path.Combine(_webHelper.GetStoreHost(true), "Plugins/PaymentWeiXin/Notify"));
+            packageParameter.Add("notify_url", _notifyUrl);
             packageParameter.Add("trade_type", "NATIVE");
             //packageParameter.Add("device_info", "WEB"); 
             //packageParameter.Add("fee_type", "CNY"); 
@@ -191,6 +196,33 @@ namespace Nop.Plugin.Payments.WeiXin
         /// <param name="postProcessPaymentRequest">Payment info required for an order processing</param>
         public void PostProcessPayment(PostProcessPaymentRequest postProcessPaymentRequest)
         {
+            var customerValues = postProcessPaymentRequest.Order.DeserializeCustomValues();
+            var isJsPay = false;
+
+            if (customerValues.ContainsKey("IsJsPay"))
+            {
+                isJsPay = customerValues["IsJsPay"].ToString().ToLower() == "true";
+            }
+
+            string openId = null;
+            if (isJsPay)
+            {
+                var weiXinAuthentication =
+                    _workContext.CurrentCustomer.ExternalAuthenticationRecords.FirstOrDefault(
+                        q => q.ProviderSystemName == "WeiXin");
+                if (weiXinAuthentication != null)
+                {
+                    openId = weiXinAuthentication.ExternalIdentifier;
+                }
+                else
+                {
+                    isJsPay = false;
+                }
+
+                
+            }
+            
+
             string productId, body;
             var firstProduct = postProcessPaymentRequest.Order.OrderItems.FirstOrDefault();
             if (firstProduct != null)
@@ -209,14 +241,30 @@ namespace Nop.Plugin.Payments.WeiXin
             string orderId = postProcessPaymentRequest.Order.Id.ToString(CultureInfo.InvariantCulture);
             string total = ((int) (postProcessPaymentRequest.Order.OrderTotal*100)).ToString(CultureInfo.InvariantCulture);
 
-            var result = Unifiedorder(productId, body, detail, orderId, total);
-
             var post = new RemotePost();
             post.FormName = "weixinpayment";
-            post.Url = Path.Combine(_webHelper.GetStoreHost(true), "Plugins/PaymentWeiXin/ProcessPayment");
             post.Method = "POST";
-            post.Add("result", HttpUtility.HtmlEncode(result));
-            post.Post();
+            post.Add("orderid", postProcessPaymentRequest.Order.Id.ToString(CultureInfo.InvariantCulture));
+            post.Add("total", postProcessPaymentRequest.Order.OrderTotal.ToString("0.00"));
+            if (isJsPay && !string.IsNullOrWhiteSpace(openId))
+            {
+                var jsApiPay = new JsApiPay(_weiXinPaymentSettings, Path.Combine(_webHelper.GetStoreHost(_webHelper.IsCurrentConnectionSecured()), "onepagecheckout"));
+                jsApiPay.Openid = openId;
+                jsApiPay.TotalFee = total;
+
+                var unifiedOrderResult = jsApiPay.GetUnifiedOrderResult(postProcessPaymentRequest.Order.Id, _webHelper.GetCurrentIpAddress(), _notifyUrl);
+                post.Add("prepay_id", unifiedOrderResult.GetValue("prepay_id").ToString());
+                post.Url = Path.Combine(_webHelper.GetStoreHost(_webHelper.IsCurrentConnectionSecured()), "Plugins/PaymentWeiXin/JsApiPayment");
+                post.Post();
+            }
+            else
+            {
+                var result = Unifiedorder(productId, body, detail, orderId, total);
+                post.Url = Path.Combine(_webHelper.GetStoreHost(_webHelper.IsCurrentConnectionSecured()), "Plugins/PaymentWeiXin/ProcessPayment");
+                post.Add("result", HttpUtility.HtmlEncode(result));
+                post.Post();
+            }
+            
         }
 
 
@@ -531,7 +579,7 @@ namespace Nop.Plugin.Payments.WeiXin
         /// </summary>
         public bool SkipPaymentInfo
         {
-            get { return true; }
+            get { return false; }
         }
 
         #endregion

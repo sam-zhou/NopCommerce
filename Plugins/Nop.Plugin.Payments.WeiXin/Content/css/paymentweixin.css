@@ -20,6 +20,10 @@
     height: 60px;
 }
 
+.wepay-logo.no-margin {
+    margin-top: 60px;
+}
+
 .wechatpay-head {
         display: block;
     width: 100%;
