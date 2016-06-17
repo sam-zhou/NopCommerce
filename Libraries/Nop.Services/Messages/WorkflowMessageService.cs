@@ -33,6 +33,19 @@ namespace Nop.Services.Messages
         private readonly IStoreContext _storeContext;
         private readonly EmailAccountSettings _emailAccountSettings;
         private readonly IEventPublisher _eventPublisher;
+        #endregion
+
+
+        #region properties
+
+        private MessageTemplate HeaderTemplate
+        {
+            get { return _messageTemplateService.GetMessageTemplateByName("Common.Header", 0); }
+        }
+        private MessageTemplate FooterTemplate
+        {
+            get { return _messageTemplateService.GetMessageTemplateByName("Common.Footer", 0); }
+        }
 
         #endregion
 
@@ -74,7 +87,24 @@ namespace Nop.Services.Messages
             //retrieve localized message template data
             var bcc = messageTemplate.GetLocalized(mt => mt.BccEmailAddresses, languageId);
             var subject = messageTemplate.GetLocalized(mt => mt.Subject, languageId);
-            var body = messageTemplate.GetLocalized(mt => mt.Body, languageId);
+
+            string body = string.Empty;
+            var isCommonTemplate = messageTemplate.Name == "Common.Header" || messageTemplate.Name == "Common.Footer";
+
+
+            if (HeaderTemplate != null && !isCommonTemplate)
+            {
+                body = body + HeaderTemplate.GetLocalized(mt => mt.Body, languageId);
+            }
+
+            body = body + messageTemplate.GetLocalized(mt => mt.Body, languageId);
+
+            if (FooterTemplate != null && !isCommonTemplate)
+            {
+                body = body + FooterTemplate.GetLocalized(mt => mt.Body, languageId);
+            }
+
+            
 
             //Replace subject and body tokens 
             var subjectReplaced = _tokenizer.Replace(subject, tokens, false);

@@ -312,8 +312,7 @@ namespace Nop.Services.Orders
             //customer language
             if (!processPaymentRequest.IsRecurringPayment)
             {
-                details.CustomerLanguage = _languageService.GetLanguageById(details.Customer.GetAttribute<int>(
-                    SystemCustomerAttributeNames.LanguageId, processPaymentRequest.StoreId));
+                details.CustomerLanguage = _workContext.WorkingLanguage;
             }
             else
             {

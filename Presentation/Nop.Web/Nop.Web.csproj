@@ -1082,6 +1082,7 @@
     <Content Include="Content\tinymce\skins\lightgray\skin.min.css" />
     <Content Include="Content\tinymce\themes\modern\theme.min.js" />
     <Content Include="Content\tinymce\tinymce.min.js" />
+    <Content Include="EmailTemplates\Common.Footer.html" />
     <Content Include="favicon.ico" />
     <Content Include="admin_favicon.ico" />
     <Content Include="google3d70b9b650583cb0.html" />
@@ -1537,6 +1538,7 @@
     <Content Include="Plugins\SevenSpikes.Nop.Plugins.QuickView\Themes\Lavella\Content\images\quick-view-arrow.png" />
     <Content Include="Plugins\SevenSpikes.Nop.Plugins.QuickView\Themes\Lavella\Content\QuickView.css" />
     <Content Include="Plugins\SevenSpikes.Nop.Plugins.QuickView\Themes\Lavella\Content\QuickView.rtl.css" />
+    <Content Include="EmailTemplates\Common.Header.html" />
     <None Include="Properties\PublishProfiles\1MxdKPqev34Exvu7bKpGyg6kRPNXr3dkGPiZwQvRmvALSNtoMqMEeYfGJHzl" />
     <Content Include="Properties\PublishProfiles\Aliyun.pubxml.user" />
     <Content Include="Properties\PublishProfiles\NopAsia - FTP.pubxml.user" />
