@@ -20,6 +20,12 @@ namespace Nop.Plugin.ExternalAuth.WeiXin
                 "Plugins/ExternalAuthWeiXin/LoginCallback",
                 new { controller = "ExternalAuthWeiXin", action = "LoginCallback" },
                 new[] { "Nop.Plugin.ExternalAuth.WeiXin.Controllers" });
+
+            // Register
+            routes.MapRoute("Plugin.ExternalAuth.WeiXin.Register",
+                "Plugins/ExternalAuthWeiXin/Register",
+                new { controller = "ExternalAuthWeiXin", action = "Register" },
+                new[] { "Nop.Plugin.ExternalAuth.WeiXin.Controllers" });
         }
 
         public int Priority

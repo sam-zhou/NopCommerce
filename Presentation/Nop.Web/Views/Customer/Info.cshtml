@@ -110,7 +110,7 @@
                     }
                     <div class="inputs">
                         @Html.LabelFor(model => model.Email, new { }, ":")
-                        @Html.EditorFor(model => model.Email)
+                        @Html.EditorFor(model => model.Email, new { disabled = "disabled" })
                         @Html.RequiredHint()
                         @Html.ValidationMessageFor(model => model.Email)
                     </div>

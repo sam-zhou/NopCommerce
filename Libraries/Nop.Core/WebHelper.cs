@@ -352,8 +352,18 @@ namespace Nop.Core
         /// <returns>Store location</returns>
         public virtual string GetStoreLocation()
         {
-            bool useSsl = IsCurrentConnectionSecured();
-            return GetStoreLocation(useSsl);
+            var result = "http";
+
+            if (IsCurrentConnectionSecured())
+            {
+                result += "s";
+            }
+
+            result += "://";
+
+            result += GetStoreHost(false).Replace("http://", "");
+
+            return result;
         }
 
         /// <summary>

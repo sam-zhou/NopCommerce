@@ -204,7 +204,13 @@ namespace Nop.Services.Authentication.External
                         _openAuthenticationService.AssociateExternalAccountWithUser(currentCustomer, parameters);
                         ExternalAuthorizerHelper.RemoveParameters();
 
-                        //code below is copied from CustomerController.Register method
+                        //Send Weixin Authen Email Validation
+                        if (parameters.ProviderSystemName == "ExternalAuth.WeiXin")
+                        {
+                            _workflowMessageService.SendCustomerEmailValidationMessage(currentCustomer,
+                                _storeContext.CurrentStore.DefaultLanguageId);
+                        }
+
 
                         //authenticate
                         if (isApproved)

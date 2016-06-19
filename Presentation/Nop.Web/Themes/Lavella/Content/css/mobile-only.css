@@ -560,3 +560,9 @@
         display: none;
     }
 }
+
+@media all and (max-width: 380px) {
+    .personal-button.responsive-nav-btn {
+    display: none;
+}
+}

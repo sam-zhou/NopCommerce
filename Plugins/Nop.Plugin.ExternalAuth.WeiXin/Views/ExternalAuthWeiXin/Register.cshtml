@@ -30,7 +30,7 @@ EngineContext.Current.Resolve<IPageHeadBuilder>
                     <strong>@T("Account.YourPersonalDetails")</strong>
                 </div>
                 <div class="form-fields">
-                    @if (Model.GenderEnabled)
+                    @*@if (Model.GenderEnabled)
                     {
                     <div class="inputs">
                         <label>@T("Account.Fields.Gender"):</label>
@@ -45,7 +45,7 @@ EngineContext.Current.Resolve<IPageHeadBuilder>
                             </span>
                         </div>
                     </div>
-                    }
+                    }*@
                     <div class="inputs">
                         @Html.LabelFor(model => model.Email, new { }, ":")
                         @Html.EditorFor(model => model.Email)
@@ -71,15 +71,15 @@ EngineContext.Current.Resolve<IPageHeadBuilder>
                         @Html.RequiredHint()
                         @Html.ValidationMessageFor(model => model.ConfirmPassword)
                     </div>
-                    @if (Model.DisplayCaptcha)
+                    @*@if (Model.DisplayCaptcha)
                     {
                     <div class="captcha-box">
                         @Html.Raw(Html.GenerateCaptcha())
                     </div>
-                    }
+                    }*@
                 </div>
             </div>
-            @if (Model.AcceptPrivacyPolicyEnabled)
+            @*@if (Model.AcceptPrivacyPolicyEnabled)
             {
             <script type="text/javascript">
                 $(document).ready(function () {
@@ -101,7 +101,7 @@ EngineContext.Current.Resolve<IPageHeadBuilder>
                 <label for="accept-privacy-policy">@T("Account.Fields.AcceptPrivacyPolicy")</label>
                 <span class="read" onclick="javascript:OpenWindow('@Url.RouteUrl(" TopicPopup", new { SystemName="privacyinfo" })', 450, 500, true)">@T("Account.Fields.AcceptPrivacyPolicy.Read")</span>
             </div>
-            }
+            }*@
             <div class="buttons">
                 <input type="submit" id="register-button" class="button-1 register-next-step-button" value="@T(" Account.Register.Button")" name="register-button" />
             </div>

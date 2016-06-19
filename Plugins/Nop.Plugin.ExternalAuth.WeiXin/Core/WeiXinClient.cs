@@ -15,7 +15,7 @@ using Nop.Core;
 
 namespace Nop.Plugin.ExternalAuth.WeiXin.Core
 {
-    public class WeiXinClient : IAuthenticationClient
+    public class WeiXinClient
     {
         #region Constants and Fields
 
@@ -67,29 +67,24 @@ namespace Nop.Plugin.ExternalAuth.WeiXin.Core
 
         #region Public Methods and Operators
 
-        /// <summary>
-        /// Check if authentication succeeded after user is redirected back from the service provider.
-        /// </summary>
-        /// <param name="context">
-        /// The context.
-        /// </param>
-        /// <returns>
-        /// An instance of <see cref="AuthenticationResult"/> containing authentication result. 
-        /// </returns>
-        public AuthenticationResult VerifyAuthentication(HttpContextBase context)
-        {
-            throw new InvalidOperationException("error");
-        }
-
-        public AuthenticationResult VerifyAuthentication(HttpContextBase context, Uri returnPageUrl)
+        public AuthenticationResult VerifyCode(HttpContextBase context, Uri returnPageUrl)
         {
             string code = context.Request.QueryString["code"];
             if (string.IsNullOrEmpty(code))
             {
                 return AuthenticationResult.Failed;
             }
+            var extraData = new Dictionary<string, string>();
+            extraData.Add("code", code);
+            var result =  new AuthenticationResult(true, "weixin", null, null, extraData);
 
-            var tokenObject = QueryAccessToken(returnPageUrl, code);
+
+            return result;
+        }
+
+        public AuthenticationResult VerifyAuthentication(Uri returnUrl, string code)
+        {
+            var tokenObject = QueryAccessToken(returnUrl, code);
             if (tokenObject["access_token"] == null || tokenObject["openid"] == null || tokenObject["refresh_token"] == null)
             {
                 return AuthenticationResult.Failed;
@@ -241,7 +236,7 @@ namespace Nop.Plugin.ExternalAuth.WeiXin.Core
             }
             finally
             {
-                //关闭连接和流
+
                 if (response != null)
                 {
                     response.Close();

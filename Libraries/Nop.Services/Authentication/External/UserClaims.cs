@@ -19,6 +19,15 @@ namespace Nop.Services.Authentication.External
         public Version Version { get; set; }
         public CompanyClaims Company { get; set; }
         public MediaClaims Media { get; set; }
+        public PasswordClaims Password { get; set; }
+    }
+
+
+    public partial class PasswordClaims
+    {
+        public string Password { get; set; }
+
+        public string ConfirmPassword { get; set; }
     }
 
     /// <summary>

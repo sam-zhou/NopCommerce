@@ -16,5 +16,6 @@ namespace Nop.Services.Authentication.External
         AutoRegisteredEmailValidation,
         AutoRegisteredAdminApproval,
         AutoRegisteredStandard,
+        AutoRegisteredEmailEnter,
     }
 }

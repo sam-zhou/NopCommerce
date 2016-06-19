@@ -137,7 +137,7 @@ namespace Nop.Plugin.Misc.WaterMark.Core
 		public virtual void PlaceWaterMark(ref Graphics g, int width, int height, WaterMarkPositions position)
 		{
 			if (g.DpiX > this._waterMarkImage.Width)
-				g.SmoothingMode = SmoothingMode.AntiAlias;
+				g.SmoothingMode = SmoothingMode.HighQuality;
 			byte transparency = (byte)this._settings.Transparency;
 			int width1 = this._waterMarkImage.Width;
 			int height1 = this._waterMarkImage.Height;

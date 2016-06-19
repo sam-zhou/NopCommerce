@@ -9,6 +9,9 @@ using System.Web.Mvc;
 using DotNetOpenAuth.AspNet;
 using Nop.Core;
 using Nop.Core.Domain.Customers;
+using Nop.Core.Infrastructure;
+using Nop.Plugin.ExternalAuth.WeiXin.Models;
+using Nop.Services.Authentication;
 using Nop.Services.Authentication.External;
 using Nop.Services.Infrastructure;
 
@@ -22,6 +25,7 @@ namespace Nop.Plugin.ExternalAuth.WeiXin.Core
         private readonly WeiXinExternalAuthSettings _weiXinExternalAuthSettings;
         private readonly HttpContextBase _httpContext;
         private readonly IWebHelper _webHelper;
+        private readonly IOpenAuthenticationService _openAuthenticationService;
         private WeiXinClient _weiXinApplication;
 #endregion
 
@@ -29,18 +33,29 @@ namespace Nop.Plugin.ExternalAuth.WeiXin.Core
             ExternalAuthenticationSettings externalAuthenticationSettings,
             WeiXinExternalAuthSettings weiXinExternalAuthSettings,
             HttpContextBase httpContext,
-            IWebHelper webHelper)
+            IWebHelper webHelper,
+            IOpenAuthenticationService openAuthenticationService)
         {
             _authorizer = authorizer;
             _externalAuthenticationSettings = externalAuthenticationSettings;
             _weiXinExternalAuthSettings = weiXinExternalAuthSettings;
             _httpContext = httpContext;
             _webHelper = webHelper;
+            _openAuthenticationService = openAuthenticationService;
         }
 
 
         #region Utility
 
+
+
+        private HttpSessionStateBase Session
+        {
+            get
+            {
+                return EngineContext.Current.Resolve<HttpSessionStateBase>();
+            }
+        }
 
         private Uri GenerateLocalCallbackUri()
         {
@@ -95,32 +110,55 @@ namespace Nop.Plugin.ExternalAuth.WeiXin.Core
             get { return _weiXinApplication ?? (_weiXinApplication = new WeiXinClient(_weiXinExternalAuthSettings.AppId, _weiXinExternalAuthSettings.AppSecret)); }
         }
 
-        private AuthorizeState VerifyAuthentication(string returnUrl)
+        private AuthorizeState VerifyCode(string returnUrl)
         {
-
-            var authResult = WeiXinApplication.VerifyAuthentication(_httpContext, GenerateLocalCallbackUri());
+            var authResult = WeiXinApplication.VerifyCode(_httpContext, GenerateLocalCallbackUri());
 
             if (authResult.IsSuccessful)
             {
-                if (!authResult.ExtraData.ContainsKey("id"))
-                    throw new Exception("Authentication result does not contain id data");
-
-                if (!authResult.ExtraData.ContainsKey("accesstoken"))
-                    throw new Exception("Authentication result does not contain accesstoken data");
-
-                var parameters = new OAuthAuthenticationParameters(Provider.SystemName)
+                if (!authResult.ExtraData.ContainsKey("code"))
                 {
-                    ExternalIdentifier = authResult.ProviderUserId,
-                    OAuthToken = authResult.ExtraData["accesstoken"],
-                    OAuthAccessToken = authResult.ExtraData["refreshtoken"],
-                };
+                    throw new Exception("Authentication code does not contain id data");
+                }
+                var code = authResult.ExtraData["code"];
 
-                if (_externalAuthenticationSettings.AutoRegisterEnabled)
-                    ParseClaims(authResult, parameters);
+                authResult = WeiXinApplication.VerifyAuthentication(GenerateLocalCallbackUri(), code);
 
-                var result = _authorizer.Authorize(parameters);
+                if (authResult.IsSuccessful)
+                {
+                    if (!authResult.ExtraData.ContainsKey("id"))
+                        throw new Exception("Authentication result does not contain id data");
 
-                return new AuthorizeState(returnUrl, result);
+                    if (!authResult.ExtraData.ContainsKey("accesstoken"))
+                        throw new Exception("Authentication result does not contain accesstoken data");
+
+                    var parameters = new OAuthAuthenticationParameters(Provider.SystemName)
+                    {
+                        ExternalIdentifier = authResult.ProviderUserId,
+                        OAuthToken = authResult.ExtraData["accesstoken"],
+                        OAuthAccessToken = authResult.ExtraData["refreshtoken"],
+                        ExternalDisplayIdentifier = returnUrl
+                    };
+
+                    if (_externalAuthenticationSettings.AutoRegisterEnabled)
+                        ParseClaims(authResult, parameters, new RegisterModel());
+
+                    var user = _openAuthenticationService.GetUser(parameters);
+
+                    //Login User
+                    if (user != null)
+                    {
+                        var result = _authorizer.Authorize(parameters);
+                        return new AuthorizeState(returnUrl, result);
+                    }// Register User
+                    else
+                    {
+                        SaveOAuthParametersToSession(parameters);
+                        return new AuthorizeState("/Plugins/ExternalAuthWeiXin/Register", OpenAuthenticationStatus.AutoRegisteredEmailEnter);
+                    }
+                }
+
+                
             }
 
             var state = new AuthorizeState(returnUrl, OpenAuthenticationStatus.Error);
@@ -129,12 +167,81 @@ namespace Nop.Plugin.ExternalAuth.WeiXin.Core
             return state;
         }
 
-        private void ParseClaims(AuthenticationResult authenticationResult, OAuthAuthenticationParameters parameters)
+        public AuthorizeState RegisterEmail(string returnUrl, RegisterModel model)
+        {
+            var parameters = GetOAuthParametersFromSession();
+            
+            if (parameters == null || parameters.UserClaims == null || parameters.ProviderSystemName != "ExternalAuth.WeiXin")
+            {
+                throw new Exception("Authentication request does not contain required data");
+            }
+
+            var claim = parameters.UserClaims.FirstOrDefault();
+            if (claim != null)
+            {
+                claim.Contact.Email = model.Email;
+            }
+
+            var result = _authorizer.Authorize(parameters);
+            return new AuthorizeState(returnUrl, result);
+
+        }
+
+        
+
+        private void SaveOAuthParametersToSession(OAuthAuthenticationParameters parameters)
+        {
+
+            Session["nop.externalauth.weixin.parameters"] = parameters;
+        }
+
+        private OAuthAuthenticationParameters GetOAuthParametersFromSession()
+        {
+            var parameters = Session["nop.externalauth.weixin.parameters"];
+            if (parameters != null)
+            {
+                Session.Remove("nop.externalauth.weixin.parameters");
+            }
+
+            return parameters as OAuthAuthenticationParameters;
+        }
+
+        //public AuthorizeState RegisterEmail(string email, string password, string confirmpassword)
+        //{
+        //    var parameters = GetOAuthAuthenticationParametersFromSession();
+        //    if (parameters != null)
+        //    {
+        //        var claim = parameters.UserClaims.FirstOrDefault();
+
+        //        if (claim != null)
+        //        {
+        //            claim.Contact = new ContactClaims();
+        //            claim.Contact.Email = email;
+                    
+
+        //            var result = _authorizer.Authorize(parameters);
+
+        //            return new AuthorizeState(parameters.ExternalDisplayIdentifier, result);
+        //        }
+
+
+        //    }
+
+        //    var state = new AuthorizeState("Login", OpenAuthenticationStatus.Error);
+        //    state.AddError("Unknown error");
+        //    return state;
+
+        //}
+
+        private void ParseClaims(AuthenticationResult authenticationResult, OAuthAuthenticationParameters parameters, RegisterModel model)
         {
             var claims = new UserClaims();
             claims.Contact = new ContactClaims();
-            if (authenticationResult.ExtraData.ContainsKey("username"))
-                claims.Contact.Email = authenticationResult.ExtraData["username"];
+            claims.Contact.Email = model.Email;
+            claims.Password = new PasswordClaims();
+            claims.Password.Password = model.Password;
+            claims.Password.ConfirmPassword = model.ConfirmPassword;
+
             claims.Name = new NameClaims();
             if (authenticationResult.ExtraData.ContainsKey("name"))
             {
@@ -170,7 +277,7 @@ namespace Nop.Plugin.ExternalAuth.WeiXin.Core
                 throw new ArgumentException("Weixin plugin cannot automatically determine verifyResponse property");
 
             if (verifyResponse.Value)
-                return VerifyAuthentication(returnUrl);
+                return VerifyCode(returnUrl);
 
             return RequestAuthentication();
         }

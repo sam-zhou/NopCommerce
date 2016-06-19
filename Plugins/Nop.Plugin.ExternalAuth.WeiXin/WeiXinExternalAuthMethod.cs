@@ -61,7 +61,6 @@ namespace Nop.Plugin.ExternalAuth.WeiXin
             this.DeletePluginLocaleResource("Plugins.ExternalAuth.WeiXin.Login");
             this.DeletePluginLocaleResource("Plugins.ExternalAuth.WeiXin.AppId");
             this.DeletePluginLocaleResource("Plugins.ExternalAuth.WeiXin.AppSecret");
-            this.DeletePluginLocaleResource("Plugins.FriendlyName.ExternalAuth.WeiXin");
 
             base.Uninstall();
         }

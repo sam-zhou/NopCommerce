@@ -146,7 +146,6 @@ namespace Nop.Plugin.ExternalAuth.WeiXin.Controllers
                     }
                 case OpenAuthenticationStatus.AutoRegisteredEmailValidation:
                     {
-                        //result
                         return RedirectToRoute("RegisterResult", new { resultId = (int)UserRegistrationType.EmailValidation });
                     }
                 case OpenAuthenticationStatus.AutoRegisteredAdminApproval:
@@ -154,8 +153,14 @@ namespace Nop.Plugin.ExternalAuth.WeiXin.Controllers
                         return RedirectToRoute("RegisterResult", new { resultId = (int)UserRegistrationType.AdminApproval });
                     }
                 case OpenAuthenticationStatus.AutoRegisteredStandard:
-                    {
+                {
                         return RedirectToRoute("RegisterResult", new { resultId = (int)UserRegistrationType.Standard });
+                }
+                    case OpenAuthenticationStatus.AutoRegisteredEmailEnter:
+                {
+                        var model = new RegisterModel();
+                    model.ReturnUrl = returnUrl;
+                        return View("~/Plugins/ExternalAuth.WeiXin/Views/ExternalAuthWeiXin/Register.cshtml", model);
                     }
                 default:
                     break;
@@ -170,15 +175,71 @@ namespace Nop.Plugin.ExternalAuth.WeiXin.Controllers
             return LoginInternal(returnUrl, false);
         }
 
+
+        [HttpGet]
         public ActionResult LoginCallback(string returnUrl)
         {
             return LoginInternal(returnUrl, true);
+            
         }
 
-        public ActionResult Register()
+        [HttpPost]
+        public ActionResult LoginCallBack(RegisterModel model)
         {
-            var model = new RegisterModel();
-            return  View("~/Plugins/ExternalAuth.WeiXin/Views/ExternalAuthWeiXin/Register.cshtml", model);
+            if (ModelState.IsValid)
+            {
+                var processor = _openAuthenticationService.LoadExternalAuthenticationMethodBySystemName("ExternalAuth.WeiXin");
+                if (processor == null ||
+                    !processor.IsMethodActive(_externalAuthenticationSettings) ||
+                    !processor.PluginDescriptor.Installed ||
+                    !_pluginFinder.AuthenticateStore(processor.PluginDescriptor, _storeContext.CurrentStore.Id))
+                    throw new NopException("WeiXin module cannot be loaded");
+
+                var viewModel = new LoginModel();
+                TryUpdateModel(viewModel);
+
+                var result = _weiXinExternalProviderAuthorizer.RegisterEmail(model.ReturnUrl, model);
+
+                switch (result.AuthenticationStatus)
+                {
+                    case OpenAuthenticationStatus.Error:
+                        {
+                            if (!result.Success)
+                                foreach (var error in result.Errors)
+                                    ExternalAuthorizerHelper.AddErrorsToDisplay(error);
+
+                            return new RedirectResult(Url.LogOn(model.ReturnUrl));
+                        }
+                    case OpenAuthenticationStatus.AssociateOnLogon:
+                        {
+                            return new RedirectResult(Url.LogOn(model.ReturnUrl));
+                        }
+                    case OpenAuthenticationStatus.AutoRegisteredEmailValidation:
+                        {
+                            return RedirectToRoute("RegisterResult", new { resultId = (int)UserRegistrationType.EmailValidation });
+                        }
+                    case OpenAuthenticationStatus.AutoRegisteredAdminApproval:
+                        {
+                            return RedirectToRoute("RegisterResult", new { resultId = (int)UserRegistrationType.AdminApproval });
+                        }
+                    case OpenAuthenticationStatus.AutoRegisteredStandard:
+                        {
+                            return RedirectToRoute("RegisterResult", new { resultId = (int)UserRegistrationType.Standard });
+                        }
+                    case OpenAuthenticationStatus.AutoRegisteredEmailEnter:
+                        {
+                            var newmodel = new RegisterModel();
+                            newmodel.ReturnUrl = model.ReturnUrl;
+                            return View("~/Plugins/ExternalAuth.WeiXin/Views/ExternalAuthWeiXin/Register.cshtml", newmodel);
+                        }
+                    default:
+                        break;
+                }
+
+                if (result.Result != null) return result.Result;
+                return HttpContext.Request.IsAuthenticated ? new RedirectResult(!string.IsNullOrEmpty(model.ReturnUrl) ? model.ReturnUrl : "~/") : new RedirectResult(Url.LogOn(model.ReturnUrl));
+            }
+            return View("~/Plugins/ExternalAuth.WeiXin/Views/ExternalAuthWeiXin/Register.cshtml", model);
         }
     }
 }
