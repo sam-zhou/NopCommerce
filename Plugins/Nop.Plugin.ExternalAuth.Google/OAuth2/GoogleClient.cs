@@ -86,6 +86,7 @@ namespace Nop.Plugin.ExternalAuth.Google.OAuth2
                         userData.Add("id", (string)jObject["id"]);
                         userData.Add("username", (string)jObject["email"]);
                         userData.Add("name", (string)jObject["given_name"] + " " + (string)jObject["family_name"]);
+                        userData.Add("picture", (string)jObject["picture"]);
                     }
                 }
             }

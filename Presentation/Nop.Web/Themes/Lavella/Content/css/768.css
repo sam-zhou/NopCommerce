@@ -986,5 +986,11 @@
     width: 50%;
 }
 
+.order-details-area ul.billing-info, .order-details-area ul.shipping-info, .shipment-details-area ul.shipping-details, .shipment-details-area ul.shipping-address {
+    float: left;
+    width: 50%;
+    padding: 10px;
+}
+
 }
 

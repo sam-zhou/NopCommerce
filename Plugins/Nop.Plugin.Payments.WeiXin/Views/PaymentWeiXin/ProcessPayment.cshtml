@@ -26,7 +26,7 @@
             <div class="wechatpay-ordertotal-container">
                 应付金额: <span class="wechatpay-ordertotal">@Model.Total</span>
             </div>
-            </div>
+        </div>
     </div>
     <div class="page-body checkout-data">
         <div class="wepay-logo"></div>
@@ -48,7 +48,36 @@
                     }
                 </div>
             </div>
-            
+
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        setInterval("checkPaymentStatus()", 10000);    
+    });
+
+    function checkPaymentStatus() {
+        console.log("sending");
+        var orderId = @Model.OrderId;
+        if (orderId !== 0) {
+            $.ajax({
+                url: "/Plugins/PaymentWeiXin/QueryOrder",//调用ashx获得订单状态
+                type: "POST",
+                data: {
+                    orderId: orderId
+                },
+                success: function (data) {
+                    console.dir(data);
+                    if (data === 'True') { //订单状态为1表示支付成功
+                        window.location.href = "/Checkout/Completed"; //页面跳转
+                    }
+                },
+                error: function () {
+                    
+                }
+            });
+        }
+
+    }
+</script>

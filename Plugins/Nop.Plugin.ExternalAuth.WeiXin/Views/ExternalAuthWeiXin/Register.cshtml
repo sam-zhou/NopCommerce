@@ -1,0 +1,110 @@
+﻿@model Nop.Plugin.ExternalAuth.WeiXin.Models.RegisterModel
+@using System.Web.Mvc.Html
+@using Nop.Core.Infrastructure
+@using Nop.Web.Framework
+@using Nop.Web.Framework.Security.Captcha
+@using Nop.Web.Framework.UI
+@{
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+EngineContext.Current.Resolve<IPageHeadBuilder>
+    ().AddTitleParts(T("PageTitle.Checkout").Text);
+    Html.AddTitleParts(T("PageTitle.Register").Text);
+}
+    @using (Html.BeginForm())
+    {
+    @Html.AntiForgeryToken()
+    <div class="page registration-page">
+        <div class="page-title">
+            <h1>@T("Account.Register")</h1>
+        </div>
+        <div class="page-body">
+            @{
+            var validationSummary = Html.ValidationSummary(true);
+            }
+            @if (!MvcHtmlString.IsNullOrEmpty(validationSummary))
+            {
+            <div class="message-error">@validationSummary</div>
+            }
+            <div class="fieldset">
+                <div class="title">
+                    <strong>@T("Account.YourPersonalDetails")</strong>
+                </div>
+                <div class="form-fields">
+                    @if (Model.GenderEnabled)
+                    {
+                    <div class="inputs">
+                        <label>@T("Account.Fields.Gender"):</label>
+                        <div class="gender">
+                            <span class="male">
+                                @Html.RadioButton("Gender", "M", (Model.Gender == "M"), new { id = "gender-male" })
+                                <label class="forcheckbox" for="gender-male">@T("Account.Fields.Gender.Male")</label>
+                            </span>
+                            <span class="female">
+                                @Html.RadioButton("Gender", "F", (Model.Gender == "F"), new { id = "gender-female" })
+                                <label class="forcheckbox" for="gender-female">@T("Account.Fields.Gender.Female")</label>
+                            </span>
+                        </div>
+                    </div>
+                    }
+                    <div class="inputs">
+                        @Html.LabelFor(model => model.Email, new { }, ":")
+                        @Html.EditorFor(model => model.Email)
+                        @Html.RequiredHint()
+                        @Html.ValidationMessageFor(model => model.Email)
+                    </div>
+                </div>
+            </div>
+            <div class="fieldset">
+                <div class="title">
+                    <strong>@T("Account.YourPassword")</strong>
+                </div>
+                <div class="form-fields">
+                    <div class="inputs">
+                        @Html.LabelFor(model => model.Password, new { }, ":")
+                        @Html.EditorFor(model => model.Password)
+                        @Html.RequiredHint()
+                        @Html.ValidationMessageFor(model => model.Password)
+                    </div>
+                    <div class="inputs">
+                        @Html.LabelFor(model => model.ConfirmPassword, new { }, ":")
+                        @Html.EditorFor(model => model.ConfirmPassword)
+                        @Html.RequiredHint()
+                        @Html.ValidationMessageFor(model => model.ConfirmPassword)
+                    </div>
+                    @if (Model.DisplayCaptcha)
+                    {
+                    <div class="captcha-box">
+                        @Html.Raw(Html.GenerateCaptcha())
+                    </div>
+                    }
+                </div>
+            </div>
+            @if (Model.AcceptPrivacyPolicyEnabled)
+            {
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $('#register-button').click(function () {
+                        if ($('#accept-privacy-policy').is(':checked')) {
+                            //do some stuff
+                            return true;
+                        }
+                        else {
+                            //just show validation errors, dont post
+                            alert('@Html.Raw(HttpUtility.JavaScriptStringEncode(T("Account.Fields.AcceptPrivacyPolicy.Required").Text))');
+                            return false;
+                        }
+                    });
+                });
+            </script>
+            <div class="accept-privacy-policy">
+                <input id="accept-privacy-policy" type="checkbox" name="accept-privacy-policy" />
+                <label for="accept-privacy-policy">@T("Account.Fields.AcceptPrivacyPolicy")</label>
+                <span class="read" onclick="javascript:OpenWindow('@Url.RouteUrl(" TopicPopup", new { SystemName="privacyinfo" })', 450, 500, true)">@T("Account.Fields.AcceptPrivacyPolicy.Read")</span>
+            </div>
+            }
+            <div class="buttons">
+                <input type="submit" id="register-button" class="button-1 register-next-step-button" value="@T(" Account.Register.Button")" name="register-button" />
+            </div>
+        </div>
+    </div>
+    }

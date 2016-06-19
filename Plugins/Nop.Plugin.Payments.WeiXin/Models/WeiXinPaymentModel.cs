@@ -6,6 +6,12 @@ namespace Nop.Plugin.Payments.WeiXin.Models
 {
     public class WeiXinPaymentModel : BaseNopModel
     {
+        public WeiXinPaymentModel(string queryOrderUrl)
+        {
+            QueryOrderUrl = queryOrderUrl;
+        }
+
+
         [NopResourceDisplayName("Plugins.Payments.WeiXin.QRCode")]
         [AllowHtml]
         public string QRCode { get; set; }
@@ -25,6 +31,11 @@ namespace Nop.Plugin.Payments.WeiXin.Models
         [NopResourceDisplayName("Plugins.Payments.WeiXin.JsApiParam")]
         [AllowHtml]
         public string JsApiParam { get; set; }
+
+
+        [NopResourceDisplayName("Plugins.Payments.WeiXin.QueryOrderUrl")]
+        [AllowHtml]
+        public string QueryOrderUrl { get; set; }
 
     }
 }

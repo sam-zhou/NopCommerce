@@ -1,18 +1,25 @@
 ﻿(function () {
+    var resizeId;
 
-    // set height to the wrapper of the home page sliders and banners so that they are aligned all the same in height
-    function resizeSliders() {
-        console.log("resizing");
+    var doneResizing = function () {
         var mainSliderHeight = $('.slider-left').height();
         if (mainSliderHeight == null || mainSliderHeight <= 0) {
             mainSliderHeight = $(window).width() * 0.2296875;
-        } 
+        }
         if (sevenSpikes.getViewPort().width > 768) {
             $('.home-page-top-banner-wrapper').height(mainSliderHeight);
         } else {
             $('.home-page-top-banner-wrapper').css('height', '');
         }
     }
+
+    // set height to the wrapper of the home page sliders and banners so that they are aligned all the same in height
+    var resizeSliders = function () {
+        clearTimeout(resizeId);
+        resizeId = setTimeout(doneResizing, 500);
+    }
+
+    
 
     // resize the sliders when they are actually loaded
     $('.slider-left .slider-wrapper .nivo-main-image').livequery(function () {

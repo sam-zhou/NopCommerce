@@ -91,7 +91,14 @@
             </div>
             <div class="shopping-cart-link responsive-nav-btn">
                 <a href="@Url.RouteUrl("ShoppingCart")">@T("ShoppingCart")</a>
-                <span class="cart-qty"></span>
+                <span id="hack-update" class="cart-qty">(0)</span>
+                <script>
+                    $(document).ready(function() {
+                        if (shoppingCartItems !== undefined && shoppingCartItems > 0) {
+                            $("#hack-update").text("(" + shoppingCartItems + ")");
+                        }
+                    });
+                </script>
             </div>
             <div class="filters-button responsive-nav-btn">
                 <span>@T("SevenSpikes.Themes.Common.Filters")</span>

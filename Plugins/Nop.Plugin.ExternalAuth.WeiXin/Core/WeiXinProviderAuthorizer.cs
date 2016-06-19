@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using DotNetOpenAuth.AspNet;
 using Nop.Core;
 using Nop.Core.Domain.Customers;
 using Nop.Services.Authentication.External;
+using Nop.Services.Infrastructure;
 
 namespace Nop.Plugin.ExternalAuth.WeiXin.Core
 {
@@ -42,63 +44,16 @@ namespace Nop.Plugin.ExternalAuth.WeiXin.Core
 
         private Uri GenerateLocalCallbackUri()
         {
-            string url = string.Format("{0}plugins/externalauthWeiXin/logincallback", _webHelper.GetStoreLocation());
+            var t = _webHelper.GetStoreHost(true);
+            var t2 = _webHelper.GetStoreHost(false);
+            var t3 = _webHelper.GetStoreLocation();
+            string url = Path.Combine(_webHelper.GetBaseUrl(),"plugins/externalauthWeiXin/logincallback");
             return new Uri(url);
         }
 
-        public Uri GenerateServiceLoginUrl()
-        {
-            var builder = new UriBuilder("https://open.weixin.qq.com/connect/oauth2/authorize");
-            var args = new Dictionary<string, string>();
-            args.Add("appid", _weiXinExternalAuthSettings.AppId);
-            args.Add("redirect_uri", GenerateLocalCallbackUri().AbsoluteUri);
-            args.Add("response_type", "code");
-            args.Add("scope", "snsapi_base");
-            args.Add("state", "STATE#wechat_redirect");
-            AppendQueryArgs(builder, args);
-            return builder.Uri;
-        }
+        
 
-        internal static void AppendQueryArgs(UriBuilder builder, Dictionary<string, string> args)
-        {
-            if ((args != null) && (args.Any()))
-            {
-                var builder2 = new StringBuilder(50 + (args.Count() * 10));
-                if (!string.IsNullOrEmpty(builder.Query))
-                {
-                    builder2.Append(builder.Query.Substring(1));
-                    builder2.Append('&');
-                }
-                builder2.Append(CreateQueryString(args));
-                builder.Query = builder2.ToString();
-            }
-        }
 
-        internal static string CreateQueryString(Dictionary<string, string> args)
-        {
-            if (!args.Any())
-            {
-                return string.Empty;
-            }
-            var builder = new StringBuilder(args.Count() * 10);
-            foreach (var pair in args)
-            {
-                builder.Append(pair.Key);
-                builder.Append('=');
-                if (pair.Key == "redirect_uri")
-                {
-                    builder.Append(EscapeUriDataStringRfc3986(pair.Value));
-                }
-                else
-                {
-                    builder.Append(pair.Value);
-                }
-                
-                builder.Append('&');
-            }
-            builder.Length--;
-            return builder.ToString();
-        }
 
         private static readonly string[] UriRfc3986CharsToEscape = { "!", "*", "'", "(", ")" };
 
@@ -131,7 +86,7 @@ namespace Nop.Plugin.ExternalAuth.WeiXin.Core
 
         private AuthorizeState RequestAuthentication()
         {
-            var authUrl = GenerateServiceLoginUrl().AbsoluteUri;
+            var authUrl = WeiXinClient.GenerateCodeRequestUrl(_weiXinExternalAuthSettings.AppId, GenerateLocalCallbackUri().AbsoluteUri).AbsoluteUri;
             return new AuthorizeState("", OpenAuthenticationStatus.RequiresRedirect) { Result = new RedirectResult(authUrl) };
         }
 
@@ -157,7 +112,7 @@ namespace Nop.Plugin.ExternalAuth.WeiXin.Core
                 {
                     ExternalIdentifier = authResult.ProviderUserId,
                     OAuthToken = authResult.ExtraData["accesstoken"],
-                    OAuthAccessToken = authResult.ProviderUserId,
+                    OAuthAccessToken = authResult.ExtraData["refreshtoken"],
                 };
 
                 if (_externalAuthenticationSettings.AutoRegisterEnabled)
@@ -179,20 +134,14 @@ namespace Nop.Plugin.ExternalAuth.WeiXin.Core
             var claims = new UserClaims();
             claims.Contact = new ContactClaims();
             if (authenticationResult.ExtraData.ContainsKey("username"))
-            {
                 claims.Contact.Email = authenticationResult.ExtraData["username"];
-            }
-            else
-            {
-                claims.Contact.Email = (authenticationResult.ExtraData["accesstoken"]);
-            }
             claims.Name = new NameClaims();
             if (authenticationResult.ExtraData.ContainsKey("name"))
             {
                 var name = authenticationResult.ExtraData["name"];
                 if (!String.IsNullOrEmpty(name))
                 {
-                    var nameSplit = name.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                    var nameSplit = name.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                     if (nameSplit.Length >= 2)
                     {
                         claims.Name.First = nameSplit[0];
@@ -205,13 +154,20 @@ namespace Nop.Plugin.ExternalAuth.WeiXin.Core
                 }
             }
 
+            if (authenticationResult.ExtraData.ContainsKey("picture"))
+            {
+                claims.Media = new MediaClaims();
+                claims.Media.Images = new ImageClaims();
+                claims.Media.Images.Default = authenticationResult.ExtraData["picture"];
+            }
+
             parameters.AddClaim(claims);
         }
 
         public AuthorizeState Authorize(string returnUrl, bool? verifyResponse = null)
         {
             if (!verifyResponse.HasValue)
-                throw new ArgumentException("Facebook plugin cannot automatically determine verifyResponse property");
+                throw new ArgumentException("Weixin plugin cannot automatically determine verifyResponse property");
 
             if (verifyResponse.Value)
                 return VerifyAuthentication(returnUrl);

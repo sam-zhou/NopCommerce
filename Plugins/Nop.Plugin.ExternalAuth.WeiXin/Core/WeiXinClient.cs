@@ -5,92 +5,185 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Linq;
 using System.Net;
+using System.Net.Security;
 using System.Text;
+using System.Web;
+using DotNetOpenAuth.AspNet;
+using Nop.Core;
 
 namespace Nop.Plugin.ExternalAuth.WeiXin.Core
 {
-    public class WeiXinClient : OAuth2Client
+    public class WeiXinClient : IAuthenticationClient
     {
-        private const string AuthorizationEndpoint = "https://open.weixin.qq.com/connect/qrconnect";
+        #region Constants and Fields
+
+        /// <summary>
+        /// The provider name.
+        /// </summary>
+        
+        private const string AuthorizationEndpoint = "https://open.weixin.qq.com/connect/oauth2/authorize";
 
         private const string TokenEndpoint = "https://api.weixin.qq.com/sns/oauth2/access_token";
 
         private const string UserInfoEndpoint = "https://api.weixin.qq.com/sns/userinfo";
 
+        private const string Scope = "snsapi_userinfo";// "snsapi_base" : "snsapi_userinfo"
+
         private readonly string _appId;
 
         private readonly string _appSecret;
 
-        private readonly string[] _scopes;
+        private readonly string _providerName;
+
+        #endregion
+
+        #region Constructors and Destructors
 
         public WeiXinClient(string appId, string appSecret)
-            : this(
-                  appId, 
-                  appSecret, "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email")
-        {  }
-
-
-        public WeiXinClient(string appId, string appSecret, params string[] scope)
-            : base("weixin") {
-          
+        {
+            _providerName = "weixin";
             _appId = appId;
             _appSecret = appSecret;
-            _scopes = scope;
         }
 
-        private string HttpPost(string uri, string parameters)
-        {
-            var req = WebRequest.Create(uri);
-            req.ContentType = "application/x-www-form-urlencoded";
-            req.Method = "POST";
-            var bytes = Encoding.ASCII.GetBytes(parameters);
-            req.ContentLength = bytes.Length;
-            using (var stream = req.GetRequestStream())
-            {
-                stream.Write(bytes, 0, bytes.Length);
-            }
-            var res = (HttpWebResponse)req.GetResponse();
-            using (var stream = res.GetResponseStream())
-            {
-                if (stream != null)
-                {
-                    using (var reader = new StreamReader(stream))
-                    {
-                        return reader.ReadToEnd().Trim();
-                    }
-                }
-                else
-                {
-                    return null;
-                }
-            }           
-        }           
+        #endregion
 
-        protected override Uri GetServiceLoginUrl(Uri returnUrl)
+        #region Public Properties
+
+        /// <summary>
+        /// Gets the name of the provider which provides authentication service.
+        /// </summary>
+        public string ProviderName
+        {
+            get
+            {
+                return this._providerName;
+            }
+        }
+
+        #endregion
+
+        #region Public Methods and Operators
+
+        /// <summary>
+        /// Check if authentication succeeded after user is redirected back from the service provider.
+        /// </summary>
+        /// <param name="context">
+        /// The context.
+        /// </param>
+        /// <returns>
+        /// An instance of <see cref="AuthenticationResult"/> containing authentication result. 
+        /// </returns>
+        public AuthenticationResult VerifyAuthentication(HttpContextBase context)
+        {
+            throw new InvalidOperationException("error");
+        }
+
+        public AuthenticationResult VerifyAuthentication(HttpContextBase context, Uri returnPageUrl)
+        {
+            string code = context.Request.QueryString["code"];
+            if (string.IsNullOrEmpty(code))
+            {
+                return AuthenticationResult.Failed;
+            }
+
+            var tokenObject = QueryAccessToken(returnPageUrl, code);
+            if (tokenObject["access_token"] == null || tokenObject["openid"] == null || tokenObject["refresh_token"] == null)
+            {
+                return AuthenticationResult.Failed;
+            }
+
+            var accessToken = (string)tokenObject["access_token"];
+            var openid = (string)tokenObject["openid"];
+            var refreshToken = (string)tokenObject["refresh_token"];
+
+            IDictionary<string, string> userData = GetUserData(accessToken, openid);
+            if (userData == null)
+            {
+                return AuthenticationResult.Failed;
+            }
+
+            string name;
+
+            // Some oAuth providers do not return value for the 'username' attribute. 
+            // In that case, try the 'name' attribute. If it's still unavailable, fall back to 'id'
+            if (!userData.TryGetValue("username", out name) && !userData.TryGetValue("name", out name))
+            {
+                name = openid;
+            }
+
+            // add the access token to the user data dictionary just in case page developers want to use it
+            userData["accesstoken"] = accessToken;
+            userData["refreshtoken"] = refreshToken;
+            var result = new AuthenticationResult(true, ProviderName, openid, name, userData);
+            return result;
+        }
+
+        #endregion
+
+        public static Uri GenerateCodeRequestUrl(string appId, string callbackUrl)
         {
             var builder = new UriBuilder(AuthorizationEndpoint);
             var args = new Dictionary<string, string>();
+            args.Add("appid", appId);
+            args.Add("redirect_uri", callbackUrl);
             args.Add("response_type", "code");
-            args.Add("client_id", _appId);
-            args.Add("redirect_uri", WeiXinProviderAuthorizer.NormalizeHexEncoding(returnUrl.AbsoluteUri));
-            args.Add("scope", string.Join(" ", this._scopes));
-            WeiXinProviderAuthorizer.AppendQueryArgs(builder, args);
+            args.Add("scope", Scope);
+            args.Add("state", "STATE#wechat_redirect");
+            AppendQueryArgs(builder, args);
             return builder.Uri;
         }
 
-        protected override IDictionary<string, string> GetUserData(string accessToken)
+        internal static void AppendQueryArgs(UriBuilder builder, Dictionary<string, string> args)
+        {
+            if ((args != null) && (args.Any()))
+            {
+                var builder2 = new StringBuilder(50 + (args.Count() * 10));
+                if (!string.IsNullOrEmpty(builder.Query))
+                {
+                    builder2.Append(builder.Query.Substring(1));
+                    builder2.Append('&');
+                }
+                builder2.Append(CreateQueryString(args));
+                builder.Query = builder2.ToString();
+            }
+        }
+
+        internal static string CreateQueryString(Dictionary<string, string> args)
+        {
+            if (!args.Any())
+            {
+                return string.Empty;
+            }
+            var builder = new StringBuilder(args.Count() * 10);
+            foreach (var pair in args)
+            {
+                builder.Append(pair.Key);
+                builder.Append('=');
+                builder.Append(pair.Value);
+
+                builder.Append('&');
+            }
+            builder.Length--;
+            return builder.ToString();
+        }
+
+        protected IDictionary<string, string> GetUserData(string accessToken, string openId)
         {
             var userData = new Dictionary<string, string>();
             using (var client = new WebClient())
             {
-                using (var stream = client.OpenRead(UserInfoEndpoint + "?access_token=" + WeiXinProviderAuthorizer.EscapeUriDataStringRfc3986(accessToken)))
+                using (var stream = client.OpenRead(UserInfoEndpoint + "?access_token=" + WeiXinProviderAuthorizer.EscapeUriDataStringRfc3986(accessToken) + "&openid=" + openId + "&lang=zh_CN"))
                 {
                     using (var reader = new StreamReader(stream))
                     {
                         JObject jObject = JObject.Parse(reader.ReadToEnd());
                         userData.Add("id", (string)jObject["openid"]);
-                        //userData.Add("username", (string)jObject["email"]);
+                        userData.Add("unionid", (string)jObject["unionid"]);
+                        userData.Add("picture", (string)jObject["headimgurl"]);
+                        userData.Add("username", "wx" + (string)jObject["unionid"]);
                         userData.Add("name", (string)jObject["nickname"]);
                     }
                 }
@@ -99,41 +192,66 @@ namespace Nop.Plugin.ExternalAuth.WeiXin.Core
             return userData;
         }
 
-        //protected override IDictionary<string, string> GetUserData(string accessToken)
-        //{
-        //    var userData = new Dictionary<string, string>();
-        //    using (var client = new WebClient())
-        //    {
-        //        using (var stream = client.OpenRead(UserInfoEndpoint + "?access_token=" + WeiXinProviderAuthorizer.EscapeUriDataStringRfc3986(accessToken)))
-        //        {
-        //            using (var reader = new StreamReader(stream))
-        //            {
-        //                JObject jObject = JObject.Parse(reader.ReadToEnd());
-        //                userData.Add("id", (string)jObject["id"]);
-        //                userData.Add("username", (string)jObject["email"]);
-        //                userData.Add("name", (string)jObject["given_name"] + " " + (string)jObject["family_name"]);
-        //            }
-        //        }
-        //    }
+        public void RequestAuthentication(HttpContextBase context, Uri returnUrl)
+        {
+            context.Response.Redirect(returnUrl.AbsoluteUri, endResponse: true);
+        }
 
-        //    return userData;
-        //}
-
-        protected override string QueryAccessToken(Uri returnUrl, string authorizationCode)
+        protected JObject QueryAccessToken(Uri returnUrl, string authorizationCode)
         {
             var args = new Dictionary<string, string>();
-            args.Add("response_type", "code");
+            args.Add("appid", _appId);
+            args.Add("secret", _appSecret);
             args.Add("code", authorizationCode);
-            args.Add("client_id", _appId);
-            args.Add("client_secret", _appSecret);
-            args.Add("redirect_uri", WeiXinProviderAuthorizer.NormalizeHexEncoding(returnUrl.AbsoluteUri));
             args.Add("grant_type", "authorization_code");
-            string query = "?" + WeiXinProviderAuthorizer.CreateQueryString(args);
-            string data = HttpPost(TokenEndpoint, query);
-            if (string.IsNullOrEmpty(data))
+            string query = "?" + CreateQueryString(args);
+            var data = Get(TokenEndpoint + query);
+            if (string.IsNullOrEmpty(data) || !data.Contains("access_token"))
                 return null;
-            JObject jObject = JObject.Parse(data);
-            return (string)jObject["access_token"];                  
+            return JObject.Parse(data);
+        }
+
+        public string Get(string url)
+        {
+            GC.Collect();
+            string result = "";
+            HttpWebRequest request = null;
+            HttpWebResponse response = null;
+            try
+            {
+                ServicePointManager.DefaultConnectionLimit = 200;
+                request = (HttpWebRequest)WebRequest.Create(url);
+                request.Method = "GET";
+                response = (HttpWebResponse)request.GetResponse();
+                StreamReader sr = new StreamReader(response.GetResponseStream(), Encoding.UTF8);
+                result = sr.ReadToEnd().Trim();
+                sr.Close();
+            }
+            catch (System.Threading.ThreadAbortException e)
+            {
+                System.Threading.Thread.ResetAbort();
+            }
+            catch (WebException e)
+            {
+                throw new NopException(e.ToString());
+            }
+            catch (Exception e)
+            {
+                throw new NopException(e.ToString());
+            }
+            finally
+            {
+                //关闭连接和流
+                if (response != null)
+                {
+                    response.Close();
+                }
+                if (request != null)
+                {
+                    request.Abort();
+                }
+            }
+            return result;
         }
     }
 }

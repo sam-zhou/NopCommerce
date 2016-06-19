@@ -1,0 +1,8 @@
+﻿Group: Misc
+FriendlyName: Nop watermark plugin
+SystemName: Nop.Plugin.Misc.WaterMark
+Version: 1.1
+SupportedVersions: 3.70
+Author: Sam Zhou
+DisplayOrder: 1
+FileName: Nop.Plugin.Misc.WaterMark.dll

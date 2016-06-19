@@ -31,6 +31,12 @@ namespace Nop.Services.Authentication.External
                     if (string.IsNullOrEmpty(LastName))
                         if (claim.Name != null)
                             LastName = claim.Name.Last;
+
+                    if (string.IsNullOrWhiteSpace(AvatarUrl))
+                    {
+                        if (claim.Media != null && claim.Media.Images != null)
+                            AvatarUrl = claim.Media.Images.Default;
+                    }
                 }
         }
 
@@ -38,5 +44,7 @@ namespace Nop.Services.Authentication.External
         public string EmailAddress { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+
+        public string AvatarUrl { get; set; }
     }
 }

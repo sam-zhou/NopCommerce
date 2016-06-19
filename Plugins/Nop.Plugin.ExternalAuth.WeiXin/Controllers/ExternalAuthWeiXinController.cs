@@ -174,5 +174,11 @@ namespace Nop.Plugin.ExternalAuth.WeiXin.Controllers
         {
             return LoginInternal(returnUrl, true);
         }
+
+        public ActionResult Register()
+        {
+            var model = new RegisterModel();
+            return  View("~/Plugins/ExternalAuth.WeiXin/Views/ExternalAuthWeiXin/Register.cshtml", model);
+        }
     }
 }

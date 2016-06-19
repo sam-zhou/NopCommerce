@@ -127,6 +127,7 @@
     <Compile Include="Core\OAuthAuthenticationParameters.cs" />
     <Compile Include="Core\WeiXinProviderAuthorizer.cs" />
     <Compile Include="Models\ConfigurationModel.cs" />
+    <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="RouteProvider.cs" />
     <Compile Include="DependencyRegistrar.cs" />
@@ -179,6 +180,7 @@
     <Content Include="Views\ExternalAuthWeiXin\PublicInfo.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Views\ExternalAuthWeiXin\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Asp.Net\" />

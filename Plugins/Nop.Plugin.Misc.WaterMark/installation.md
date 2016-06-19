@@ -1,0 +1,4 @@
+nopCommercePlugins
+==================
+
+plugins for nopCommerce

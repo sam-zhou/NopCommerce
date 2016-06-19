@@ -159,7 +159,7 @@
 
         .header-menu .close-menu {
             border-bottom: 1px solid #d9d9d9;
-            height: 50px;
+            height: 51px;
             width: 100%;
         }
 
@@ -554,5 +554,9 @@
         font-size: 120%;
         cursor: pointer;
 
+    }
+
+    .quick-view-button {
+        display: none;
     }
 }

@@ -4502,3 +4502,19 @@ pre {
     line-height: 14px;
     letter-spacing: 10px;
 }
+
+.order-details-area ul.billing-info, .order-details-area ul.shipping-info, .shipment-details-area ul.shipping-details, .shipment-details-area ul.shipping-address {
+    width: 100%;
+    padding: 10px;
+}
+
+.order-details-area ul.billing-info li, .order-details-area ul.shipping-info li, .shipment-details-area ul.shipping-details li, .shipment-details-area ul.shipping-address li {
+    background: #ffffff;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 0 !important;
+}
+.order-overview {
+    width: 200px;
+
+}

@@ -1,0 +1,119 @@
+﻿@{
+    Layout = "";
+}
+@model VJeek.Plugin.Misc.WaterMark.Models.WaterMarkSettingsModel
+@using Nop.Web.Framework
+@Html.Action("StoreScopeConfiguration", "Setting", new { area = "Admin" })
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(false)
+    <table class="adminContent">
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.Enable_Override, model => model.Enable, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(m => m.Enable):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(m => m.Enable)
+                @Html.ValidationMessageFor(m => m.Enable)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.Positions_Override, model => model.Positions, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(m => m.Positions):
+            </td>
+            <td class="adminData">
+                <ul style="list-style: none;">
+                    @foreach (var pos in Model.PositionsValues)
+                    {
+                        <li>
+                            <input type="checkbox" name="@string.Format("PositionsSelectedValues_{0}", pos.Value)" @(pos.Selected ? @"checked=""checked""" : string.Empty)/>
+                            <label>@pos.Text</label>
+                        </li>
+                    }
+                </ul>
+                @Html.ValidationMessageFor(m => m.Positions)
+            </td>
+        </tr>
+        <tr id="pnlWaterMarkText">
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.OnlyLargerThen_Override, model => model.OnlyLargerThen, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(m => m.OnlyLargerThen):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(m => m.OnlyLargerThen)
+                @Html.ValidationMessageFor(m => m.OnlyLargerThen)
+            </td>
+        </tr>
+        <tr id="pnlWaterMarkTextColor">
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.PictureId_Override, model => model.PictureId, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(m => m.PictureId):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(m => m.PictureId)
+                @Html.ValidationMessageFor(model => model.PictureId)
+            </td>
+        </tr>
+        <tr id="pnlWaterMarkPictureScale">
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.Scale_Override, model => model.Scale, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.Scale):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.Scale)
+                @Html.ValidationMessageFor(model => model.Scale)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.Transparency_Override, model => model.Transparency, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(m => m.Transparency):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(m => m.Transparency)
+                @Html.ValidationMessageFor(m => m.Transparency)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.ApplyOnCategoryPictures_Override, model => model.ApplyOnCategoryPictures, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(m => m.ApplyOnCategoryPictures):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(m => m.ApplyOnCategoryPictures)
+                @Html.ValidationMessageFor(m => m.ApplyOnCategoryPictures)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.ApplyOnProductPictures_Override, model => model.ApplyOnProductPictures, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(m => m.ApplyOnProductPictures):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(m => m.ApplyOnProductPictures)
+                @Html.ValidationMessageFor(m => m.ApplyOnProductPictures)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.ApplyOnProductVariantPictures_Override, model => model.ApplyOnProductVariantAttributeValuePictures, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(m => m.ApplyOnProductVariantAttributeValuePictures):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(m => m.ApplyOnProductVariantAttributeValuePictures)
+                @Html.ValidationMessageFor(m => m.ApplyOnProductVariantAttributeValuePictures)
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" width="100%">
+                <button type="submit" name="save" value="save" class="t-button">
+                    @T("Admin.Common.Save")</button>
+            </td>
+        </tr>
+    </table>
+}
+
+

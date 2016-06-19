@@ -23,6 +23,7 @@ using Nop.Core.Domain.Payments;
 using Nop.Core.Plugins;
 using Nop.Plugin.Payments.WeiXin.Controllers;
 using Nop.Plugin.Payments.WeiXin.Helpers;
+using Nop.Plugin.Payments.WeiXin.Models;
 using Nop.Services.Configuration;
 using Nop.Services.Helpers;
 using Nop.Services.Localization;
@@ -88,8 +89,6 @@ namespace Nop.Plugin.Payments.WeiXin
             }
             return sb.ToString();
         }
-
-
 
         /// <summary>
         /// Gets HTTP
@@ -344,6 +343,7 @@ namespace Nop.Plugin.Payments.WeiXin
         /// <returns>Capture payment result</returns>
         public CapturePaymentResult Capture(CapturePaymentRequest capturePaymentRequest)
         {
+
             var result = new CapturePaymentResult();
             result.AddError("Capture method not supported");
             return result;

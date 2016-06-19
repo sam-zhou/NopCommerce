@@ -1,14 +1,17 @@
 //Contributor:  Nicholas Mayne
 
 using System;
+using System.Net;
 using Nop.Core;
 using Nop.Core.Domain.Customers;
 using Nop.Core.Domain.Localization;
+using Nop.Core.Domain.Media;
 using Nop.Services.Common;
 using Nop.Services.Customers;
 using Nop.Services.Events;
 using Nop.Services.Localization;
 using Nop.Services.Logging;
+using Nop.Services.Media;
 using Nop.Services.Messages;
 using Nop.Services.Orders;
 
@@ -35,6 +38,8 @@ namespace Nop.Services.Authentication.External
         private readonly IWorkflowMessageService _workflowMessageService;
         private readonly IEventPublisher _eventPublisher;
         private readonly LocalizationSettings _localizationSettings;
+        private readonly IPictureService _pictureService;
+
         #endregion
 
         #region Ctor
@@ -52,7 +57,8 @@ namespace Nop.Services.Authentication.External
             IShoppingCartService shoppingCartService,
             IWorkflowMessageService workflowMessageService,
             IEventPublisher eventPublisher,
-            LocalizationSettings localizationSettings)
+            LocalizationSettings localizationSettings,
+            IPictureService pictureService)
         {
             this._authenticationService = authenticationService;
             this._openAuthenticationService = openAuthenticationService;
@@ -68,6 +74,7 @@ namespace Nop.Services.Authentication.External
             this._workflowMessageService = workflowMessageService;
             this._eventPublisher = eventPublisher;
             this._localizationSettings = localizationSettings;
+            _pictureService = pictureService;
         }
         
         #endregion
@@ -156,9 +163,44 @@ namespace Nop.Services.Authentication.External
                             _genericAttributeService.SaveAttribute(currentCustomer, SystemCustomerAttributeNames.FirstName, details.FirstName);
                         if (!String.IsNullOrEmpty(details.LastName))
                             _genericAttributeService.SaveAttribute(currentCustomer, SystemCustomerAttributeNames.LastName, details.LastName);
-                    
+
+                        if (!string.IsNullOrEmpty(details.AvatarUrl))
+                        {
+                            try
+                            {
+                                int customerAvatarId = 0;
+                                Picture customerAvatar;
+                                using (var webClient = new WebClient())
+                                {
+                                    byte[] imageBytes = webClient.DownloadData(details.AvatarUrl);
+                                    string type = webClient.ResponseHeaders["content-type"];
+                                    customerAvatar = _pictureService.GetPictureById(currentCustomer.GetAttribute<int>(SystemCustomerAttributeNames.AvatarPictureId));
+                                    if (imageBytes != null)
+                                    {
+                                        if (customerAvatar != null)
+                                            customerAvatar = _pictureService.UpdatePicture(customerAvatar.Id, imageBytes, type, null);
+                                        else
+                                            customerAvatar = _pictureService.InsertPicture(imageBytes, type, null);
+                                    }
+                                }
+
+                                
+                                if (customerAvatar != null)
+                                    customerAvatarId = customerAvatar.Id;
+
+                                _genericAttributeService.SaveAttribute(currentCustomer, SystemCustomerAttributeNames.AvatarPictureId, customerAvatarId);
+                            }
+                            catch (Exception ex)
+                            {
+                                
+                            }
+                                
+                        }
 
                         userFound = currentCustomer;
+
+                        
+
                         _openAuthenticationService.AssociateExternalAccountWithUser(currentCustomer, parameters);
                         ExternalAuthorizerHelper.RemoveParameters();
 

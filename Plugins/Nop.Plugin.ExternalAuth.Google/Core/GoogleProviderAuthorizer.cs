@@ -107,6 +107,14 @@ namespace Nop.Plugin.ExternalAuth.Google.Core
                 }
             }
 
+
+            if (authenticationResult.ExtraData.ContainsKey("picture"))
+            {
+                claims.Media = new MediaClaims();
+                claims.Media.Images = new ImageClaims();
+                claims.Media.Images.Default = authenticationResult.ExtraData["picture"];
+            }
+
             parameters.AddClaim(claims);
         }
 
@@ -148,6 +156,8 @@ namespace Nop.Plugin.ExternalAuth.Google.Core
                 builder.Query = builder2.ToString();
             }
         }
+
+
 
         internal static string CreateQueryString(IEnumerable<KeyValuePair<string, string>> args)
         {

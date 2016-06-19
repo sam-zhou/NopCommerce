@@ -9,6 +9,5 @@ namespace Nop.Plugin.ExternalAuth.WeiXin.Core
 {
     public interface IWeiXinExternalProviderAuthorizer : IExternalProviderAuthorizer
     {
-        Uri GenerateServiceLoginUrl();
     }
 }

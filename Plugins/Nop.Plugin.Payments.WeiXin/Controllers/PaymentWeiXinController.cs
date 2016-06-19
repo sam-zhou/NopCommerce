@@ -108,9 +108,32 @@ namespace Nop.Plugin.Payments.WeiXin.Controllers
         }
 
         [HttpPost]
+        public ActionResult QueryOrder(FormCollection form)
+        {
+            if (string.IsNullOrWhiteSpace(form["orderid"]))
+            {
+                return Content("error");
+            }
+
+            int orderId;
+            if (!int.TryParse(form["orderid"], out orderId))
+            {
+                return Content("error");
+            } 
+
+            var order = _orderService.GetOrderById(orderId);
+            if (order == null || order.Deleted || _workContext.CurrentCustomer.Id != order.CustomerId)
+                return new HttpUnauthorizedResult();
+
+            var result = order.PaymentStatus == PaymentStatus.Paid;
+
+            return Content(result.ToString());
+        }
+
+        [HttpPost]
         public ActionResult ProcessPayment(FormCollection form)
         {
-            var model = new WeiXinPaymentModel();
+            var model = new WeiXinPaymentModel(Path.Combine(_webHelper.GetStoreHost(_webHelper.IsCurrentConnectionSecured()), "Plugins/PaymentWeiXin/QueryOrder"));
             var error = new WeiXinPaymentErrorModel();
             var processor = _paymentService.LoadPaymentMethodBySystemName("Payments.WeiXin") as WeiXinPaymentProcessor;
             if (processor == null ||
@@ -230,7 +253,7 @@ namespace Nop.Plugin.Payments.WeiXin.Controllers
         [HttpPost]
         public ActionResult JsApiPayment(FormCollection form)
         {
-            var model = new WeiXinPaymentModel();
+            var model = new WeiXinPaymentModel(Path.Combine(_webHelper.GetStoreHost(_webHelper.IsCurrentConnectionSecured()), "Plugins/PaymentWeiXin/QueryOrder"));
             var error = new WeiXinPaymentErrorModel();
             var processor = _paymentService.LoadPaymentMethodBySystemName("Payments.WeiXin") as WeiXinPaymentProcessor;
             if (processor == null ||
@@ -355,7 +378,7 @@ namespace Nop.Plugin.Payments.WeiXin.Controllers
             string transactionId = notifyData.GetValue("transaction_id").ToString();
 
             //查询订单，判断订单真实性
-            if (!QueryOrder(transactionId))
+            if (!QueryOrderWithTransactionId(transactionId))
             {
                 //若订单查询失败，则立即返回结果给微信支付后台
                 WxPayData res = new WxPayData();
@@ -391,20 +414,37 @@ namespace Nop.Plugin.Payments.WeiXin.Controllers
             }
         }
 
-        private bool QueryOrder(string transactionId)
+        private bool QueryOrderWithTransactionId(string transactionId)
         {
             WxPayData req = new WxPayData();
             req.SetValue("transaction_id", transactionId);
-            WxPayData res = WeiXinHelper.OrderQuery(req, _weiXinPaymentSettings);
-            if (res.GetValue("return_code").ToString() == "SUCCESS" &&
-                res.GetValue("result_code").ToString() == "SUCCESS")
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return QueryOrder(req);
         }
+
+        private bool QueryOrderWithOrderId(string orderId)
+        {
+            WxPayData req = new WxPayData();
+            req.SetValue("out_trade_no", orderId);
+            return QueryOrder(req);
+        }
+
+        private bool QueryOrder(WxPayData req)
+        {
+            WxPayData res = WeiXinHelper.OrderQuery(req, _weiXinPaymentSettings);
+
+            if (res.GetValue("return_code") != null && res.GetValue("result_code") != null &&
+                res.GetValue("trade_state") != null)
+            {
+                if (res.GetValue("return_code").ToString() == "SUCCESS" &&
+                res.GetValue("result_code").ToString() == "SUCCESS" &&
+                res.GetValue("trade_state").ToString() == "SUCCESS")
+                {
+                    return true;
+                }
+            }
+
+                return false;
+        }
+
     }
 }

@@ -23,6 +23,13 @@ namespace Nop.Plugin.Payments.WeiXin
                  new[] { "Nop.Plugin.Payments.WeiXin.Controllers" }
             );
 
+            //QueryOrder
+            routes.MapRoute("Plugin.Payments.WeiXin.QueryOrder",
+                 "Plugins/PaymentWeiXin/QueryOrder",
+                 new { controller = "PaymentWeiXin", action = "QueryOrder" },
+                 new[] { "Nop.Plugin.Payments.WeiXin.Controllers" }
+            );
+
             ////Error
             //routes.MapRoute("Plugin.Payments.WeiXin.Error",
             //     "Plugins/PaymentWeiXin/Error",
