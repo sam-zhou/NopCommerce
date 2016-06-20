@@ -4487,20 +4487,22 @@ pre {
     opacity: 0.7;
 }
 
-.shopping-cart-link.responsive-nav-btn span.cart-qty {
+.shopping-cart-link.responsive-nav-btn span#l-cart-qty {
     position: absolute;
     width: 14px;
     height: 14px;
-    margin-top: -38px;
+    margin-top: -15px;
     margin-left: 25px;
     z-index: 2;
     font-size: 10px;
-    text-indent: -9px;
+    text-indent: 0px;
+    -ms-border-radius: 7px;
     border-radius: 7px;
     background: #a52a2a;
+    -ms-opacity: 1;
     opacity: 1;
     line-height: 14px;
-    letter-spacing: 10px;
+    display: block;
 }
 
 .order-details-area ul.billing-info, .order-details-area ul.shipping-info, .shipment-details-area ul.shipping-details, .shipment-details-area ul.shipping-address {

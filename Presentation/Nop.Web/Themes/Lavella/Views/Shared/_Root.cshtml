@@ -42,7 +42,7 @@
                         <div class="header-selectors-wrapper">
                             @Html.Action("TaxTypeSelector", "Common")
                             @Html.Action("CurrencySelector", "Common")
-                            @Html.Action("StoreSelector", "Common")
+                            @*@Html.Action("StoreSelector", "Common")*@
                             @Html.Action("LanguageSelector", "Common")
 
                             @Html.Widget("header_selectors")
@@ -90,22 +90,22 @@
                 <span>@T("Search")</span>
             </div>
             <div class="shopping-cart-link responsive-nav-btn">
-                <a href="@Url.RouteUrl("ShoppingCart")">@T("ShoppingCart")</a>
-                <span id="hack-update" class="cart-qty">(0)</span>
-                <script>
-                    $(document).ready(function() {
-                        if (shoppingCartItems !== undefined && shoppingCartItems > 0) {
-                            $("#hack-update").text("(" + shoppingCartItems + ")");
-                        }
-                    });
-                </script>
-            </div>
+                <a href="@Url.RouteUrl("ShoppingCart")">@T("ShoppingCart")<span id="l-cart-qty">0</span></a>
+                
+                    <script>
+                        $(document).ready(function () {
+                            if (shoppingCartItems !== undefined && shoppingCartItems > 0) {
+                                $("#l-cart-qty").text(shoppingCartItems);
+                            }
+                        });
+                    </script>
+</div>
             <div class="filters-button responsive-nav-btn">
                 <span>@T("SevenSpikes.Themes.Common.Filters")</span>
             </div>
-            <div class="personal-button responsive-nav-btn" id="header-links-opener">
+            @*<div class="personal-button responsive-nav-btn" id="header-links-opener">
                 <span>@T("SevenSpikes.Themes.Common.Personal")</span>
-            </div>
+            </div>*@
         </div>
     </div>
     <div class="justAFixingDivBefore"></div>

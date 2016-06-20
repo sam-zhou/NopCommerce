@@ -78,6 +78,10 @@ var AjaxCart = {
     success_process: function (response) {
         if (response.updatetopcartsectionhtml) {
             $(AjaxCart.topcartselector).html(response.updatetopcartsectionhtml);
+            console.log(response.updatetopcartsectionhtml);
+            var text = response.updatetopcartsectionhtml.slice(1, -1);
+            $("#l-cart-qty").text(text);
+
         }
         if (response.updatetopwishlistsectionhtml) {
             $(AjaxCart.topwishlistselector).html(response.updatetopwishlistsectionhtml);
