@@ -11,6 +11,7 @@ using Nop.Services.Stores;
 using Nop.Web.Framework;
 using Nop.Web.Framework.Controllers;
 using Nop.Plugin.ExternalAuth.WeiXin.Models;
+using Nop.Services.Customers;
 
 namespace Nop.Plugin.ExternalAuth.WeiXin.Controllers
 {
@@ -21,6 +22,7 @@ namespace Nop.Plugin.ExternalAuth.WeiXin.Controllers
         private readonly IStoreContext _storeContext;
         private readonly IStoreService _storeService;
         private readonly IWorkContext _workContext;
+        private readonly ICustomerService _customerService;
         private readonly ILocalizationService _localizationService;
         private readonly IOpenAuthenticationService _openAuthenticationService;
         private readonly ExternalAuthenticationSettings _externalAuthenticationSettings;
@@ -29,7 +31,7 @@ namespace Nop.Plugin.ExternalAuth.WeiXin.Controllers
 
         public ExternalAuthWeiXinController(ISettingService settingService,
             IPermissionService permissionService, IStoreContext storeContext,
-            IStoreService storeServie, IWorkContext workContext,
+            IStoreService storeServie, IWorkContext workContext, ICustomerService customerService,
             ILocalizationService localizationService, IOpenAuthenticationService openAuthenticationService,
             ExternalAuthenticationSettings externalAuthenticationSettings, IPluginFinder pluginFinder,IWeiXinExternalProviderAuthorizer weiXinExternalProviderAuthorizer)
         {
@@ -38,6 +40,7 @@ namespace Nop.Plugin.ExternalAuth.WeiXin.Controllers
             this._storeContext = storeContext;
             this._storeService = storeServie;
             this._workContext = workContext;
+            _customerService = customerService;
             this._localizationService = localizationService;
             _openAuthenticationService = openAuthenticationService;
             _externalAuthenticationSettings = externalAuthenticationSettings;
@@ -195,8 +198,14 @@ namespace Nop.Plugin.ExternalAuth.WeiXin.Controllers
                     !_pluginFinder.AuthenticateStore(processor.PluginDescriptor, _storeContext.CurrentStore.Id))
                     throw new NopException("WeiXin module cannot be loaded");
 
-                var viewModel = new LoginModel();
-                TryUpdateModel(viewModel);
+
+                var found = _customerService.GetCustomerByEmail(model.Email);
+                if (found != null)
+                {
+                    ModelState.AddModelError("Email","电子邮箱已被注册");
+                    return View("~/Plugins/ExternalAuth.WeiXin/Views/ExternalAuthWeiXin/Register.cshtml", model);
+                }
+
 
                 var result = _weiXinExternalProviderAuthorizer.RegisterEmail(model.ReturnUrl, model);
 

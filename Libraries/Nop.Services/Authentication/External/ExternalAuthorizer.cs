@@ -120,8 +120,16 @@ namespace Nop.Services.Authentication.External
             {
                 if (AccountIsAssignedToLoggedOnAccount(userFound, userLoggedIn))
                 {
-                    // The person is trying to log in as himself.. bit weird
-                    return new AuthorizationResult(OpenAuthenticationStatus.Authenticated);
+                    if (userFound.Active)
+                    {
+                        // The person is trying to log in as himself.. bit weird
+                        return new AuthorizationResult(OpenAuthenticationStatus.Authenticated);
+                    }
+                    else
+                    {
+                        // The person is trying to log in as himself.. bit weird
+                        return new AuthorizationResult(OpenAuthenticationStatus.AutoRegisteredEmailValidation);
+                    }
                 }
 
                 var result = new AuthorizationResult(OpenAuthenticationStatus.Error);
@@ -139,22 +147,31 @@ namespace Nop.Services.Authentication.External
                     var currentCustomer = _workContext.CurrentCustomer;
                     var details = new RegistrationDetails(parameters);
                     var randomPassword = CommonHelper.GenerateRandomDigitCode(20);
-
+                    var passwordFormat = PasswordFormat.Clear;
 
                     bool isApproved =
-                        //standard registration
+                        (//standard registration
                         (_customerSettings.UserRegistrationType == UserRegistrationType.Standard) ||
                         //skip email validation?
                         (_customerSettings.UserRegistrationType == UserRegistrationType.EmailValidation &&
-                         !_externalAuthenticationSettings.RequireEmailValidation);
+                         !_externalAuthenticationSettings.RequireEmailValidation));
+                    
+                    if (parameters.ProviderSystemName == "ExternalAuth.WeiXin")
+                    {
+                        isApproved = false;
+                        randomPassword = details.Password;
+                        passwordFormat = PasswordFormat.Hashed;
+                    }
 
-                    var registrationRequest = new CustomerRegistrationRequest(currentCustomer, 
+                    CustomerRegistrationRequest registrationRequest = new CustomerRegistrationRequest(currentCustomer,
                         details.EmailAddress,
-                        _customerSettings.UsernamesEnabled ? details.UserName : details.EmailAddress, 
+                        _customerSettings.UsernamesEnabled ? details.UserName : details.EmailAddress,
                         randomPassword,
-                        PasswordFormat.Clear,
+                        passwordFormat,
                         _storeContext.CurrentStore.Id,
                         isApproved);
+
+
                     var registrationResult = _customerRegistrationService.RegisterCustomer(registrationRequest);
                     if (registrationResult.Success)
                     {
@@ -204,32 +221,24 @@ namespace Nop.Services.Authentication.External
                         _openAuthenticationService.AssociateExternalAccountWithUser(currentCustomer, parameters);
                         ExternalAuthorizerHelper.RemoveParameters();
 
-                        //Send Weixin Authen Email Validation
-                        if (parameters.ProviderSystemName == "ExternalAuth.WeiXin")
-                        {
-                            _workflowMessageService.SendCustomerEmailValidationMessage(currentCustomer,
-                                _storeContext.CurrentStore.DefaultLanguageId);
-                        }
 
+                        if (parameters.ProviderSystemName != "ExternalAuth.WeiXin")
+                        {
+                            //notifications
+                            if (_customerSettings.NotifyNewCustomerRegistration)
+                                _workflowMessageService.SendCustomerRegisteredNotificationMessage(currentCustomer, _localizationSettings.DefaultAdminLanguageId);
+                            return new AuthorizationResult(OpenAuthenticationStatus.AutoRegisteredEmailValidation);
+                        }
 
                         //authenticate
                         if (isApproved)
                             _authenticationService.SignIn(userFound ?? userLoggedIn, false);
-
-                        //notifications
-                        if (_customerSettings.NotifyNewCustomerRegistration)
-                            _workflowMessageService.SendCustomerRegisteredNotificationMessage(currentCustomer, _localizationSettings.DefaultAdminLanguageId);
 
                         //raise event       
                         _eventPublisher.Publish(new CustomerRegisteredEvent(currentCustomer));
 
                         if (isApproved)
                         {
-                            //standard registration
-                            //or
-                            //skip email validation
-
-                            //send customer welcome message
                             _workflowMessageService.SendCustomerWelcomeMessage(currentCustomer, _workContext.WorkingLanguage.Id);
 
                             //result

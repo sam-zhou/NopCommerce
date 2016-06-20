@@ -180,7 +180,13 @@ namespace Nop.Plugin.ExternalAuth.WeiXin.Core
             if (claim != null)
             {
                 claim.Contact.Email = model.Email;
+
+                claim.Password = new PasswordClaims();
+                claim.Password.Password = model.Password;
+                claim.Password.ConfirmPassword = model.ConfirmPassword;
             }
+
+            
 
             var result = _authorizer.Authorize(parameters);
             return new AuthorizeState(returnUrl, result);

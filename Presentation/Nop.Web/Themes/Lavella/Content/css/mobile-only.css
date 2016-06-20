@@ -519,9 +519,53 @@
         border-top: 1px solid #d9d9d9;
     }
 
-    .wechat-only {
+    .qr-container {
         display: block;
     }
+
+    .qr-container .qr-code {
+        margin: 0 auto;
+        width: 200px;
+    }
+
+    .qr-container .qr-image .qr-hint {
+        position: absolute;
+    margin-top: 26px;
+    width: 30px;
+    line-height: 14px;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-left: -30px;
+    background: #62C461;
+    color: #ffffff;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    }
+
+
+    .qr-container .qr-image .qr-hint:after, .qr-container .qr-image .qr-hint:before {
+	left: 100%;
+	top: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.qr-container .qr-image .qr-hint:after {
+
+	border-left-color: #62C461;
+	border-width: 10px;
+	margin-top: -10px;
+}
+.qr-container .qr-image .qr-hint:before {
+
+	border-left-color: #62C461;
+	border-width: 16px;
+	margin-top: -16px;
+}
 
     .block:before {
         content: "\f103";

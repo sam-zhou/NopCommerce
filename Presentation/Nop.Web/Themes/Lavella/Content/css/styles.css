@@ -33,7 +33,7 @@ a:active {
  border: 0;
  padding: 0;
 }
-input[type="submit"],  input[type="reset"],  input[type="button"],  input[type="text"],  input[type="password"],  textarea {
+input[type="submit"],  input[type="reset"],  input[type="button"],  input[type="text"],  input[type="password"], input[type="email"],  textarea {
 	border-radius: 0;
 }
 input[type="button"],  input[type="submit"],  input[type="reset"] {
@@ -85,7 +85,7 @@ table {
 	width: 100%;
 	border-collapse: collapse;
 }
-input[type="text"],  input[type="password"],  textarea, select {
+input[type="text"],  input[type="password"], input[type="email"],  textarea, select {
 	height: 36px; /*safari padding fix*/
 	border: 1px solid #ccc;
 	padding: 8px;
@@ -99,7 +99,7 @@ select {
 	height: 32px; /*safari padding fix*/
 	padding: 6px;
 }
-input[type="text"]:focus,  input[type="password"]:focus,  textarea:focus, select:focus {
+input[type="text"]:focus,  input[type="password"]:focus, input[type="email"]:focus,  textarea:focus, select:focus {
 	border-color: #999;
 }
 input[type="checkbox"],  input[type="radio"],  input[type="checkbox"] + *,  input[type="radio"] + * {
@@ -243,7 +243,7 @@ label, label + * {
 	text-align: center;
 	font-size: 12px;
 }
-.inputs input[type="text"],  .inputs input[type="password"],  .inputs select, .inputs textarea {
+.inputs input[type="text"],  .inputs input[type="password"], .inputs input[type="email"],  .inputs select, .inputs textarea {
 	width: 350px;
 	max-width: 100%;
 	vertical-align: middle;
@@ -4519,4 +4519,12 @@ pre {
 .order-overview {
     width: 200px;
 
+}
+
+.wechat-only {
+    display: none;
+}
+
+.master-wrapper-content {
+        min-height: 380px;
 }

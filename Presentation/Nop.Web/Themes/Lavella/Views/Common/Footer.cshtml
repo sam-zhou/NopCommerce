@@ -139,17 +139,21 @@
             </div>
         </div>
     </div>@if (!String.IsNullOrEmpty(Model.WechatLink))
-          {
-              <div class="wechat-only">
-                  <div class="qrcode">
-                      <div class="qr-title">欢迎关注我们的微信公众号</div>
-                      <div class="qr-image">
-                          <img src="/Content/Images/social/qrcode_for_gh_a2e5f1069d1b_430.jpg" height="180" width="180"/>
-                      </div>
+    {
+        <div class="qr-container">
+            <div class="qr-code">
+                <div class="qr-title">欢迎关注我们的微信公众号</div>
+                <div class="qr-image">
+                    <div class="qr-hint  wechat-only">
+                        <span>长按提取二维码</span>
+                    </div>
+                    <img src="/Content/Images/social/qrcode_for_gh_a2e5f1069d1b_430.jpg" height="180" width="180">
+                </div>
 
-                  </div>
-              </div>
-          }
+            </div>
+
+        </div>
+    }
 
     <div class="footer-lower">
         @if (!removeCopyright)
