@@ -104,7 +104,7 @@ a.nivo-nextNav {
     width:38%;
 }
 .banners-right > div+div{
-    margin-top:1px;
+    margin-top:3px;
 }
 .home-page-bottom-banner-wrapper{
     max-width:1000px;
@@ -131,7 +131,9 @@ a.nivo-nextNav {
 }
 
 @media all and (max-width: 769px) {
-
+    .banners-right > div+div {
+    margin-top: 0;
+}
     .nivo-directionNav {
         display: none;
     }
@@ -152,6 +154,7 @@ a.nivo-nextNav {
 }
 
 .banners-right>div{
+    margin-top: 0;
     float:left;
     width:49.5%;
 }
@@ -166,7 +169,9 @@ a.nivo-nextNav {
     float:none;
     width:auto;
 }
-
+.banners-right > div+div {
+    margin-top: 1px;
+}
 
 .banners-right>div:first-child {
     margin-right: 0;

@@ -42,7 +42,8 @@ namespace NopImport.Console.ChemistWarehouse
             //AddSearchModel("http://www.chemistwarehouse.com.au/Shop-Online/1267/Bellamy-39-s-Organic-Formula?page={0}", 1, "16", "37");
 
             //AddSearchModel("https://www.chemistwarehouse.com.au/Shop-Online/1387/Bellamy-39-s-Organic?page={0}", 2, "16", "2");
-            AddSearchModel("https://www.chemistwarehouse.com.au/Shop-Online/967/Baby-Medical-and-Vitamins?page={0}", 1, "18", "38");
+            //AddSearchModel("https://www.chemistwarehouse.com.au/Shop-Online/967/Baby-Medical-and-Vitamins?page={0}", 1, "18", "38");
+            AddSearchModel("https://www.chemistwarehouse.com.au/Shop-Online/972/BabyBath-HairAndSkincare?page={0}",7,"18","34");
         }
 
 

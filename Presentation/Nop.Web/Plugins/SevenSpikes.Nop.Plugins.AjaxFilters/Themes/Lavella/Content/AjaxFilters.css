@@ -11,6 +11,10 @@
 	position: relative;
 	height: 51px;
     border-bottom: 1px solid #d9d9d9;
+    padding-top: 15px;
+    font-size: 14px;
+    color: #888;
+    padding-left: 50px;
 }
 
 .nopAjaxFilters7Spikes .close-filters:nth-child(even) {
@@ -78,7 +82,7 @@
 
 .nopAjaxFilters7Spikes .block {
 	padding-bottom: 0;
-	border-bottom: 1px dotted #cecece;
+	border-bottom: 1px solid #d9d9d9;
 }
 .nopAjaxFilters7Spikes .block:after {
 	clear: both;
@@ -88,7 +92,7 @@
 
 .nopAjaxFilters7Spikes .block .title {
 	overflow: hidden;
-	background: #eeece7;
+	background: #ffffff;
 }
 
 
@@ -98,7 +102,7 @@
 
 .nopAjaxFilters7Spikes .block {
 	padding-bottom: 0;
-	border-bottom: 1px dotted #cecece;
+	border-bottom: 1px solid #d9d9d9;
 }
 
 
@@ -151,7 +155,7 @@
 	text-transform: none;
 	cursor: pointer;
 	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
-	font-size: 16px;
+	font-size: 14px;
 	font-weight: lighter;
 }
 
@@ -713,8 +717,16 @@
     clear: both;
 }
 
-
+    
 @media only screen and (min-width: 769px) {
+    .nopAjaxFilters7Spikes .block .title {
+    background: #c3b9b1;
+        
+}
+    .nopAjaxFilters7Spikes .block .title a.toggleControl {
+        color: #FFF;
+    }
+
     .nopAjaxFilters7Spikes{
         background:transparent;
     }

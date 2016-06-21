@@ -4528,3 +4528,20 @@ pre {
 .master-wrapper-content {
         min-height: 380px;
 }
+
+.qr-container {
+    display: none;
+}
+
+.homepage-sub-banner {
+    width: 100%;
+    margin-top: -39px;
+}
+
+.homepage-sub-banner .homepage-sub-banner-right {
+    margin-top: -4px;
+}
+
+.homepage-sub-banner img {
+    width: 100%;
+}

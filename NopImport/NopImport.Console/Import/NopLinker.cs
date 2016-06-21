@@ -256,27 +256,33 @@ namespace NopImport.Console.Import
             {
                 if (googleLanguage.Id != 1)
                 {
-                    var keywords = nopProduct.MetaKeywords.Replace(" ", "/");
-                    var language = GoogleLanguage.GetLanguageById(googleLanguage.Id);
-
                     string translatedText = null;
-
-                    if (language != null && googleLanguage.Id != 1)
+                    if (googleLanguage.Id == 2)
                     {
-                        translatedText = NopDictionary.GetTranslate(keywords, googleLanguage.Id);
+                        translatedText =
+                            @"保健品 维生素 抗衰老 医药 在线 护理 健康 美容 产品 减肥 处方药 药物 扑热息痛 皮肤 流感 阿司匹林 奶粉 婴儿食品 母婴用品 儿童 男人 女人 老人 小孩 自然 有机";
+                    }
+                    else
+                    {
+                        var keywords = nopProduct.MetaKeywords.Replace(" ", "/ ");
+                        var language = GoogleLanguage.GetLanguageById(googleLanguage.Id);
 
-                        if (string.IsNullOrWhiteSpace(translatedText))
+
+
+                        if (language != null && googleLanguage.Id != 1)
                         {
-                            translatedText = Translator.Translate(keywords, "English", GoogleLanguage.GetLanguageById(googleLanguage.Id).Name);
+                            translatedText = NopDictionary.GetTranslate(keywords, googleLanguage.Id);
 
-                            translatedText = translatedText.Replace("/", " ");
+                            if (string.IsNullOrWhiteSpace(translatedText))
+                            {
+                                translatedText = Translator.Translate(keywords, "English", GoogleLanguage.GetLanguageById(googleLanguage.Id).Name);
+
+                                translatedText = translatedText.Replace("/", " ");
+                            }
                         }
                     }
 
-
-
-
-
+       
                     var lan = new LocalizedProperty
                     {
                         EntityId = nopProduct.Id,
@@ -437,7 +443,7 @@ namespace NopImport.Console.Import
             using (var db = new DatabaseService("DefaultConnectionString", "NopImport"))
             {
 
-                var products = db.Session.QueryOver<Product>().Where(q => q.IsUpdated && string.IsNullOrWhiteSpace(q.NopId)).List();
+                var products = db.Session.QueryOver<Product>().Where(q => q.IsUpdated && !q.IsSynced ).List();
                 var count = 0;
                 foreach (var product in products)
                 {
