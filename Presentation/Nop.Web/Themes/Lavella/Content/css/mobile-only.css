@@ -1,8 +1,16 @@
 @media all and (min-width: 240px) and (max-width: 980px) {
     .item-box {
-        width: 49%; 
-        margin-left: 2%;
+        width: 49.5%; 
+        margin-left: 1%;
     }
+
+    .home-page .topic-block,.home-page .home-page-category-grid{
+    margin: 0 0 10px;
+}
+
+    .product-grid.home-page-category-grid > .title,  .product-grid.home-page-product-grid > .title,  .product-grid.bestsellers > .title,  .news-list-homepage > .title {
+	margin-bottom: 10px;
+}
 
         .item-box:nth-child(2n+1) {
             clear: both;
