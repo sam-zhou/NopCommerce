@@ -4543,8 +4543,8 @@ pre {
         min-height: 380px;
 }
 
-.qr-container {
-    display: none;
+.qr-container, .qrcode {
+    display: none !important;
 }
 
 .homepage-sub-banner {
