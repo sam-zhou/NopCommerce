@@ -1,11 +1,23 @@
 ﻿var Lynex = {
     isJsPay: false,
-    getJsPay: function() {
-        return this.isJsPay;
+    isDebug: true,
+    log : function(msg) {
+        if (Lynex.isDebug && console) {
+            console.log(msg);
+        }
     },
-    setJsPay: function() {
-        this.isJsPay = true;
+    getJsPay: function () {
+        return Lynex.isJsPay;
+    },
+    setJsPay: function () {
+        Lynex.isJsPay = true;
+        $(document).trigger({
+            type: "wxReady",
+            message: Lynex.isJsPay,
+            time: new Date()
+        });
         $(".wechat-only").show();
+        Lynex.log("setJsPay to " + Lynex.isJsPay);
     }
 };
 

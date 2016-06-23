@@ -279,8 +279,6 @@ namespace Nop.Plugin.Payments.WeiXin.Controllers
 
                         if (int.TryParse(order, out orderId))
                         {
-                            
-
                             //JSAPI支付预处理
                             try
                             {
@@ -322,11 +320,10 @@ namespace Nop.Plugin.Payments.WeiXin.Controllers
         [ValidateInput(false)]
         public ActionResult Notify(FormCollection form)
         {
-            //接收从微信后台POST过来的数据
             var s = Request.InputStream;
-            int count = 0;
-            byte[] buffer = new byte[1024];
-            StringBuilder builder = new StringBuilder();
+            var count = 0;
+            var buffer = new byte[1024];
+            var builder = new StringBuilder();
             while ((count = s.Read(buffer, 0, 1024)) > 0)
             {
                 builder.Append(Encoding.UTF8.GetString(buffer, 0, count));
@@ -335,8 +332,7 @@ namespace Nop.Plugin.Payments.WeiXin.Controllers
             s.Close();
             s.Dispose();
 
-            _logger.InsertLog(LogLevel.Information, this.GetType() + "Receive data from WeChat : " + builder);
-            //转换数据格式并验证签名
+            _logger.InsertLog(LogLevel.Information, GetType() + "Receive data from WeChat : " + builder);
             var data = new WxPayData();
             try
             {
@@ -344,8 +340,7 @@ namespace Nop.Plugin.Payments.WeiXin.Controllers
             }
             catch (NopException ex)
             {
-                //若签名错误，则立即返回结果给微信支付后台
-                WxPayData res = new WxPayData();
+                var res = new WxPayData();
                 res.SetValue("return_code", "FAIL");
                 res.SetValue("return_msg", ex.Message);
 
@@ -360,15 +355,13 @@ namespace Nop.Plugin.Payments.WeiXin.Controllers
             return Content("");
         }
 
-        public void ProcessNotify(WxPayData data)
+        private void ProcessNotify(WxPayData data)
         {
-            WxPayData notifyData = data;
+            var notifyData = data;
 
-            //检查支付结果中transaction_id是否存在
             if (!notifyData.IsSet("transaction_id"))
             {
-                //若transaction_id不存在，则立即返回结果给微信支付后台
-                WxPayData res = new WxPayData();
+                var res = new WxPayData();
                 res.SetValue("return_code", "FAIL");
                 res.SetValue("return_msg", "支付结果中微信订单号不存在");
                 Response.Write(res.ToXml());
@@ -377,21 +370,17 @@ namespace Nop.Plugin.Payments.WeiXin.Controllers
 
             string transactionId = notifyData.GetValue("transaction_id").ToString();
 
-            //查询订单，判断订单真实性
             if (!QueryOrderWithTransactionId(transactionId))
             {
-                //若订单查询失败，则立即返回结果给微信支付后台
-                WxPayData res = new WxPayData();
+                var res = new WxPayData();
                 res.SetValue("return_code", "FAIL");
                 res.SetValue("return_msg", "订单查询失败");
                 Response.Write(res.ToXml());
                 Response.End();
             }
-            //查询订单成功
             else
             {
-                WxPayData res = new WxPayData();
-                
+                var res = new WxPayData();
                 int orderId;
                 if (int.TryParse(data.GetValue("out_trade_no").ToString(), out orderId))
                 {
@@ -416,21 +405,21 @@ namespace Nop.Plugin.Payments.WeiXin.Controllers
 
         private bool QueryOrderWithTransactionId(string transactionId)
         {
-            WxPayData req = new WxPayData();
+            var req = new WxPayData();
             req.SetValue("transaction_id", transactionId);
             return QueryOrder(req);
         }
 
         private bool QueryOrderWithOrderId(string orderId)
         {
-            WxPayData req = new WxPayData();
+            var req = new WxPayData();
             req.SetValue("out_trade_no", orderId);
             return QueryOrder(req);
         }
 
         private bool QueryOrder(WxPayData req)
         {
-            WxPayData res = WeiXinHelper.OrderQuery(req, _weiXinPaymentSettings);
+            var res = WeiXinHelper.OrderQuery(req, _weiXinPaymentSettings);
 
             if (res.GetValue("return_code") != null && res.GetValue("result_code") != null &&
                 res.GetValue("trade_state") != null)

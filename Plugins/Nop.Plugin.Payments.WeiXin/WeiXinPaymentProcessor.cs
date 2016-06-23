@@ -48,6 +48,7 @@ namespace Nop.Plugin.Payments.WeiXin
         private readonly IWebHelper _webHelper;
         private readonly IStoreContext _storeContext;
         private readonly IWorkContext _workContext;
+        private readonly HttpContextBase _httpContext;
 
         private const string OrderUrl = @"https://api.mch.weixin.qq.com/pay/unifiedorder";
         private string _notifyUrl;
@@ -57,13 +58,14 @@ namespace Nop.Plugin.Payments.WeiXin
 
         public WeiXinPaymentProcessor(WeiXinPaymentSettings weiXinPaymentSettings,
             ISettingService settingService, IWebHelper webHelper,
-            IStoreContext storeContext, IWorkContext workContext)
+            IStoreContext storeContext, IWorkContext workContext, HttpContextBase httpContext)
         {
             this._weiXinPaymentSettings = weiXinPaymentSettings;
             this._settingService = settingService;
             this._webHelper = webHelper;
             this._storeContext = storeContext;
             _workContext = workContext;
+            _httpContext = httpContext;
 
             _notifyUrl = Path.Combine(_webHelper.GetStoreHost(true), "Plugins/PaymentWeiXin/Notify");
         }
@@ -71,7 +73,50 @@ namespace Nop.Plugin.Payments.WeiXin
         #endregion
 
         #region Utilities
+        private string ParseXML(Hashtable parameters)
+        {
+            var sb = new StringBuilder();
+            sb.Append("<xml>");
+            var akeys = new ArrayList(parameters.Keys);
+            foreach (string k in akeys)
+            {
+                var v = (string)parameters[k];
+                if (Regex.IsMatch(v, @"^[0-9.]$"))
+                {
+                    sb.Append("<" + k + ">" + v + "</" + k + ">");
+                }
+                else
+                {
+                    sb.Append("<" + k + "><![CDATA[" + v + "]]></" + k + ">");
+                }
+            }
+            sb.Append("</xml>");
 
+            var utf8 = Encoding.UTF8;
+            byte[] utfBytes = utf8.GetBytes(sb.ToString());
+            var result = utf8.GetString(utfBytes, 0, utfBytes.Length);
+
+            return result;
+        }
+
+        private string CreateMd5Sign(string key, string value, Hashtable parameters, string contentEncoding)
+        {
+            var sb = new StringBuilder();
+            var akeys = new ArrayList(parameters.Keys);
+            akeys.Sort();
+            foreach (string k in akeys)
+            {
+                var v = (string)parameters[k];
+                if (null != v && "".CompareTo(v) != 0
+                    && "sign".CompareTo(k) != 0 && "key".CompareTo(k) != 0)
+                {
+                    sb.Append(k + "=" + v + "&");
+                }
+            }
+            sb.Append(key + "=" + value);
+            string sign = GetMD5(sb.ToString(), contentEncoding).ToUpper();
+            return sign;
+        }
         /// <summary>
         /// Gets MD5 hash
         /// </summary>
@@ -153,12 +198,6 @@ namespace Nop.Plugin.Payments.WeiXin
             packageParameter.Add("spbill_create_ip", _webHelper.GetCurrentIpAddress());
             packageParameter.Add("notify_url", _notifyUrl);
             packageParameter.Add("trade_type", "NATIVE");
-            //packageParameter.Add("device_info", "WEB"); 
-            //packageParameter.Add("fee_type", "CNY"); 
-            //packageParameter.Add("time_start", DateTime.Now.ToString("yyyyMMddHHmmss"));
-            //packageParameter.Add("time_expire", DateTime.Now.AddDays(2).ToString("yyyyMMddHHmmss"));
-            //packageParameter.Add("limit_pay", "no_credit");
-            //packageParameter.Add("openid", "");
 
 
             var sign = CreateMd5Sign("key", _weiXinPaymentSettings.AppSecret, packageParameter, "utf-8");
@@ -197,10 +236,9 @@ namespace Nop.Plugin.Payments.WeiXin
         {
             var customerValues = postProcessPaymentRequest.Order.DeserializeCustomValues();
             var isJsPay = false;
-
-            if (customerValues.ContainsKey("IsJsPay"))
+            if (_httpContext.Session["isJsPay"] != null)
             {
-                isJsPay = customerValues["IsJsPay"].ToString().ToLower() == "true";
+                isJsPay = _httpContext.Session["isJsPay"].ToString().ToLower() == "true";
             }
 
             string openId = null;
@@ -268,50 +306,7 @@ namespace Nop.Plugin.Payments.WeiXin
 
 
 
-        private string ParseXML(Hashtable parameters)
-        {
-            var sb = new StringBuilder();
-            sb.Append("<xml>");
-            var akeys = new ArrayList(parameters.Keys);
-            foreach (string k in akeys)
-            {
-                var v = (string)parameters[k];
-                if (Regex.IsMatch(v, @"^[0-9.]$"))
-                {
-                    sb.Append("<" + k + ">" + v + "</" + k + ">");
-                }
-                else
-                {
-                    sb.Append("<" + k + "><![CDATA[" + v + "]]></" + k + ">");
-                }
-            }
-            sb.Append("</xml>");
 
-            var utf8 = Encoding.UTF8;
-            byte[] utfBytes = utf8.GetBytes(sb.ToString());
-            var result = utf8.GetString(utfBytes, 0, utfBytes.Length);
-
-            return result;
-        }
-
-        private string CreateMd5Sign(string key, string value, Hashtable parameters, string contentEncoding)
-        {
-            var sb = new StringBuilder();
-            var akeys = new ArrayList(parameters.Keys);
-            akeys.Sort();
-            foreach (string k in akeys)
-            {
-                var v = (string)parameters[k];
-                if (null != v && "".CompareTo(v) != 0
-                    && "sign".CompareTo(k) != 0 && "key".CompareTo(k) != 0)
-                {
-                    sb.Append(k + "=" + v + "&");
-                }
-            }
-            sb.Append(key + "=" + value);
-            string sign = GetMD5(sb.ToString(), contentEncoding).ToUpper();
-            return sign;
-        }
 
         /// <summary>
         /// Returns a value indicating whether payment method should be hidden during checkout
@@ -431,7 +426,7 @@ namespace Nop.Plugin.Payments.WeiXin
         {
             actionName = "Configure";
             controllerName = "PaymentWeiXin";
-            routeValues = new RouteValueDictionary() { { "Namespaces", "Nop.Plugin.Payments.WeiXin.Controllers" }, { "area", null } };
+            routeValues = new RouteValueDictionary { { "Namespaces", "Nop.Plugin.Payments.WeiXin.Controllers" }, { "area", null } };
         }
 
         /// <summary>
@@ -444,7 +439,7 @@ namespace Nop.Plugin.Payments.WeiXin
         {
             actionName = "PaymentInfo";
             controllerName = "PaymentWeiXin";
-            routeValues = new RouteValueDictionary() { { "Namespaces", "Nop.Plugin.Payments.WeiXin.Controllers" }, { "area", null } };
+            routeValues = new RouteValueDictionary { { "Namespaces", "Nop.Plugin.Payments.WeiXin.Controllers" }, { "area", null } };
         }
 
         public Type GetControllerType()
@@ -455,7 +450,7 @@ namespace Nop.Plugin.Payments.WeiXin
         public override void Install()
         {
             //settings
-            var settings = new WeiXinPaymentSettings()
+            var settings = new WeiXinPaymentSettings
             {
                 AppId = "",
                 MchId = "",
@@ -579,7 +574,7 @@ namespace Nop.Plugin.Payments.WeiXin
         /// </summary>
         public bool SkipPaymentInfo
         {
-            get { return false; }
+            get { return true; }
         }
 
         #endregion

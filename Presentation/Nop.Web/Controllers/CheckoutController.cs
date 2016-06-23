@@ -1547,7 +1547,8 @@ namespace Nop.Web.Controllers
 
                 int shippingAddressId;
                 int.TryParse(form["shipping_address_id"], out shippingAddressId);
-
+                var isJsPay = form["isJsPay"];
+                _httpContext.Session["isJsPay"] = isJsPay;
                 if (shippingAddressId > 0)
                 {
                     //existing address
