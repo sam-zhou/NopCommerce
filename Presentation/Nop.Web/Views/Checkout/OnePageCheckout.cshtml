@@ -75,7 +75,6 @@
                     </div>
                     <div id="checkout-step-shipping" class="step a-item" style="display: none;">
                         <form action="" id="co-shipping-form">
-                            <input type="hidden" name="isJsPay" id="isJsPay" value="false" />
                             <div id="checkout-shipping-load">
                                 @*shipping address content will be loaded here*@
                             </div>
@@ -85,11 +84,6 @@
                             if ($("#shipping-address-select").length > 0) {
                                 Shipping.newAddress(!$('#shipping-address-select').val());
                             }
-
-                            $(document).on('wxReady', function (e, eventInfo) {
-                                Lynex.log('$("#isJsPay") to ' + eventInfo);
-                                $("#IsJsPay").val(eventInfo);
-                            });
                         </script>
                         <div class="buttons" id="shipping-buttons-container">
                             @if (!Model.DisableBillingAddressCheckoutStep)

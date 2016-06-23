@@ -221,11 +221,13 @@ var Shipping = {
         if (Checkout.loadWaiting != false) return;
 
         Checkout.setLoadWaiting('shipping');
-        
+        var data = $(this.form).serializeArray(); // convert form to array
+        data.push({ name: "isJsPay", value: Lynex.isJsPay });
+
         $.ajax({
             cache: false,
             url: this.saveUrl,
-            data: $(this.form).serialize(),
+            data: $.param(data),
             type: 'post',
             success: this.nextStep,
             complete: this.resetLoadWaiting,

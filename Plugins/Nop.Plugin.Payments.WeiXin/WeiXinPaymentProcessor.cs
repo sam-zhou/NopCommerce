@@ -246,7 +246,7 @@ namespace Nop.Plugin.Payments.WeiXin
             {
                 var weiXinAuthentication =
                     _workContext.CurrentCustomer.ExternalAuthenticationRecords.FirstOrDefault(
-                        q => q.ProviderSystemName == "WeiXin");
+                        q => q.ProviderSystemName == "ExternalAuth.WeiXin");
                 if (weiXinAuthentication != null)
                 {
                     openId = weiXinAuthentication.ExternalIdentifier;

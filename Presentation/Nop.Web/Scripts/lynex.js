@@ -11,13 +11,14 @@
     },
     setJsPay: function () {
         Lynex.isJsPay = true;
+        Lynex.log("setJsPay to " + Lynex.isJsPay);
         $(document).trigger({
             type: "wxReady",
-            message: Lynex.isJsPay,
+            value: Lynex.isJsPay,
             time: new Date()
         });
         $(".wechat-only").show();
-        Lynex.log("setJsPay to " + Lynex.isJsPay);
+        
     }
 };
 
@@ -35,4 +36,9 @@ $(document).ready(function () {
     else {
         Lynex.setJsPay();
     }
+
+
+    $(".header-menu").on("swipeleft",function(){
+        alert("You swiped left!");
+    });
 });
