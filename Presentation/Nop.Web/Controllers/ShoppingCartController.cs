@@ -1811,8 +1811,8 @@ namespace Nop.Web.Controllers
                     true, out discountAmount, out scDiscount);
                 decimal taxRate;
                 decimal finalPriceWithDiscountBase = _taxService.GetProductPrice(product, finalPrice, out taxRate);
-                decimal finalPriceWithDiscount = _currencyService.ConvertFromPrimaryStoreCurrency(finalPriceWithDiscountBase, _workContext.WorkingCurrency);
-                price = _priceFormatter.FormatPrice(finalPriceWithDiscount);
+                //decimal finalPriceWithDiscount = _currencyService.ConvertFromPrimaryStoreCurrency(finalPriceWithDiscountBase, _workContext.WorkingCurrency);
+                price = _priceFormatter.FormatPrice(finalPriceWithDiscountBase);
             }
 
             //stock
