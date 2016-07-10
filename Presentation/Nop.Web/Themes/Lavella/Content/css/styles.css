@@ -352,7 +352,7 @@ label, label + * {
 	overflow: hidden;
 	background: #fff;
 	color: #888;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 }
 .ui-dialog-titlebar {
 	overflow: hidden;
@@ -677,7 +677,7 @@ label, label + * {
 	overflow: hidden;
 }
 .footer-upper .newsletter .title {
-	font: normal 20px/39px 'Open Sans', sans-serif;
+	font: normal 20px/39px open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	color: #666;
 	text-transform: uppercase;
 	border: 1px dotted #D8CFC8;
@@ -690,7 +690,7 @@ label, label + * {
 	font-weight: lighter;
 }
 .footer-upper h2 {
-	font: normal 20px/39px 'Open Sans', sans-serif;
+	font: normal 20px/39px open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	color: #666;
 	text-transform: uppercase;
 	border: 1px dotted #D8CFC8;
@@ -710,7 +710,7 @@ label, label + * {
 }
 .footer-middle h3 {
 	font-size: 20px;
-	font-family: 'Open sans', sans-serif;
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	color: #666;
 	font-weight: normal;
 	background: #d1e7a0;
@@ -825,7 +825,7 @@ label, label + * {
 	background: none repeat scroll 0 0 #A59B92;
 	border: 1px solid #C9C3BE;
 	color: #FFFFFF;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	font-size: 16px;
 	outline: 4px solid #A59B92;
 	padding: 4px 19px;
@@ -1089,7 +1089,7 @@ label, label + * {
 /*in mobile mod this column goes below content*/
 .center-2, .side-2 .listbox {
 	color: #555;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 }
 /*poll in homepage*/
 .todays-poll-box {
@@ -1126,7 +1126,7 @@ label, label + * {
 	border: 1px solid #d6dec2;
 	color: #FFFFFF;
 	display: inline-block;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	font-size: 16px;
 	margin: auto;
 	outline: 4px solid #bac89a;
@@ -1148,7 +1148,7 @@ label, label + * {
 	background: #A59B92;
 	border: 1px solid #C9C3BE;
 	color: #FFFFFF;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	font-size: 16px;
 	margin-bottom: 10px;
 	outline: 4px solid #A59B92;
@@ -1182,7 +1182,7 @@ label, label + * {
 .breadcrumb li {
 	display: inline-block;
 	color: #baaea3;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	font-size: 14px;
 	padding: 0 0 5px 0;
 }
@@ -1230,7 +1230,7 @@ label, label + * {
 	display: inline-block;
 	margin: 5px;
 	color: #888;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 }
 .product-selectors > div > * {
 	display: inline-block;
@@ -1488,23 +1488,23 @@ label, label + * {
 	font-size: 0;
 }
 .item-box input[type="button"],  .block .view-all a {
-	border: 1px solid #c9c3be;
-	padding: 4px 19px;
-	color: #fff;
-	background: #a59b92;
-	font-size: 16px;
-	font-weight: bold;
-	text-transform: uppercase;
-	text-shadow: 0 1px 1px #847c75;
-	font-family: 'open sans';
-	outline: 4px solid #a59b92;
-	transition: 0.3s ease 0s;
-	-webkit-transition: 0.3s ease 0s;
-	-ms-transition: 0.3s ease 0s;
-	min-width: 140px;
-	max-width: 90%;
-	overflow: hidden;
-	white-space: nowrap;
+	    border: 1px solid #bcdc8d;
+    padding: 4px 19px;
+    color: #fff;
+    background: #9aba6b;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-shadow: 0 1px 1px #847c75;
+    font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
+    outline: 4px solid #9aba6b;
+    transition: 0.3s ease 0s;
+    -webkit-transition: 0.3s ease 0s;
+    -ms-transition: 0.3s ease 0s;
+    min-width: 140px;
+    max-width: 90%;
+    overflow: hidden;
+    white-space: nowrap;
 }
 .block .view-all a {
 	font-weight: normal;
@@ -1584,7 +1584,7 @@ label, label + * {
 .sub-category-grid .title,  .home-page-category-grid .title {
 	font-size: 20px;
 	color: #888;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	font-weight: lighter;
 	text-transform: uppercase;
 	margin: 0;
@@ -1651,7 +1651,7 @@ label, label + * {
 	cursor: pointer;
 	color: #888;
 	font-size: 18px;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 }
 
 .pager li.previous-page *,  .pager li.next-page *,  .pager li.first-page *,  .pager li.last-page * {
@@ -1678,7 +1678,7 @@ label, label + * {
 	background: none repeat scroll 0 0 #A59B92;
 	border: 1px solid #C9C3BE;
 	color: #FFFFFF;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	font-size: 16px;
 	outline: 4px solid #A59B92;
 	padding: 4px 19px;
@@ -1843,7 +1843,7 @@ label, label + * {
 }
 .discontinued-product h4 {
     padding: 15px 10px;
-    font-family: 'Open Sans';
+    font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
     font-weight: normal;
     color: #c00;
     font-size: 15px; 
@@ -1861,7 +1861,7 @@ label, label + * {
 }
 .product-details-page .overview .tax-shipping-info {
 	color: #555;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 }
 .product-details-page .overview .tax-shipping-info a:hover {
 	color: #9ca34e;
@@ -1875,7 +1875,7 @@ label, label + * {
 .overview .short-description {
 	font-size: 18px;
 	color: #888;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 }
 .overview .buttons,  .back-in-stock-subscription,  .download-sample {
 	margin: 15px 0;
@@ -1912,7 +1912,7 @@ label, label + * {
 .overview .buttons > div input {
 	font-size: 12px;
 	color: #888;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	border: none;
 	margin-left: 25px;
 	background: transparent;
@@ -1921,7 +1921,7 @@ label, label + * {
 .back-in-stock-subscription input {
 	font-size: 12px;
 	color: #888;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	margin-left: 25px;
 	border: none;
 	background: transparent;
@@ -1991,7 +1991,7 @@ label, label + * {
 .manufacturer-grid .item-box .title a,
 .vendor-grid .item-box .title a {
 	color: #888;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	font-size: 18px;
 }
 .manufacturer-grid .item-box:hover .picture img,
@@ -2002,7 +2002,7 @@ label, label + * {
 .product-no-reviews,  .product-reviews-overview {
 	margin: 0 0 20px; /*not present in variant-overview*/
 	color: #888;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	font-size: 13px;
 }
 .product-reviews-overview {
@@ -2060,14 +2060,14 @@ label, label + * {
 	font-size: 16px;
 	color: #888;
 	text-decoration: line-through;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 }
 .overview .old-product-price > *,  .variant-overview .old-product-price > * {
 }
 .overview .product-price,  .variant-overview .product-price {
 	font-size: 24px;
 	color: #9ca34e;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 }
 .customer-entered-price {
 	margin: 0 0 20px;
@@ -2136,7 +2136,7 @@ label, label + * {
 	border: 1px solid #C9C3BE;
 	color: #FFFFFF;
 	display: block;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	font-size: 16px;
 	margin: 4px auto 0;
 	outline: 4px solid #A59B92;
@@ -2239,7 +2239,7 @@ label, label + * {
 }
 .product-collateral .title strong {
 	font-weight: normal;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	color: #666;
 }
 .tier-prices {
@@ -2331,7 +2331,7 @@ label, label + * {
 }
 .variant-overview {
 	width: 100%;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	color: #888;
 }
 .variant-overview .animated {
@@ -2361,7 +2361,7 @@ label, label + * {
 	margin: 0 auto;
 	font-size: 12px;
 	color: #888;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	border: none;
 }
 .variant-overview .input-wrapper {
@@ -2380,7 +2380,7 @@ label, label + * {
 .product-name h1 {
 	font-size: 20px;
 	color: #666;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	font-weight: lighter;
 	padding: 10px 20px;
 	margin: 0 0 20px 0;
@@ -2435,7 +2435,7 @@ label, label + * {
 	margin: 0 0 20px;
 }
 .product-tags-box > * {
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	color: #888;
 }
 .product-tags-list {
@@ -2673,7 +2673,7 @@ label, label + * {
 	background: #A59B92;
 	border: 1px solid #C9C3BE;
 	color: #FFFFFF;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	font-size: 16px;
 	outline: 4px solid #A59B92;
 	padding: 4px 19px;
@@ -2729,7 +2729,7 @@ label, label + * {
 .compare-products-page .page-body {
 	color: #888;
 	font-size: 14px;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 }
 .compare-products-page img {
 	max-width: 100%;
@@ -2754,7 +2754,7 @@ label, label + * {
 .compare-products-page .button-2.remove-button {
 	background: none;
 	border: none;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	font-size: 14px;
 	color: #888;
 	transition: all 0.5s ease;
@@ -2775,14 +2775,14 @@ label, label + * {
 }
 .wishlist-page .share-info {
 	color: #888;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 }
 .wishlist-page .wishlist-content .common-buttons input {
 	background: #A59B92;
 	border: 1px solid #C9C3BE;
 	color: #FFFFFF;
 	display: inline-block;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	font-size: 16px;
 	outline: 4px solid #A59B92;
 	padding: 0px 10px;
@@ -2922,7 +2922,7 @@ label, label + * {
 	border: 1px solid #C9C3BE;
 	color: #FFFFFF;
 	display: block;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	font-size: 16px;
 	margin: 0 auto 15px;
 	outline: 4px solid #A59B92;
@@ -3009,7 +3009,7 @@ label, label + * {
 	margin: 0 0 20px;
 	color: #9ca34e;
 	font-size: 16px;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 }
 .login-page .customer-blocks {
 	margin: 0 0 30px;
@@ -3031,7 +3031,7 @@ label, label + * {
 	background: none repeat scroll 0 0 #A59B92;
 	border: 1px solid #C9C3BE;
 	color: #FFFFFF;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	font-size: 16px;
 	outline: 4px solid #A59B92;
 	padding: 4px 19px;
@@ -3054,7 +3054,7 @@ label, label + * {
 	background: none repeat scroll 0 0 #A59B92;
 	border: 1px solid #C9C3BE;
 	color: #FFFFFF;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	font-size: 16px;
 	outline: 4px solid #A59B92;
 	padding: 4px 19px;
@@ -3105,7 +3105,7 @@ label, label + * {
 	background: none repeat scroll 0 0 #A59B92;
 	border: 1px solid #C9C3BE;
 	color: #FFFFFF;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	font-size: 16px;
 	outline: 4px solid #A59B92;
 	padding: 4px 19px;
@@ -3169,7 +3169,7 @@ label, label + * {
 .registration-page .fieldset .title {
 	color: #888888;
 	font-size: 16px;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	text-transform: uppercase;
 	font-weight: lighter;
 	background: #eeece7;
@@ -3184,7 +3184,7 @@ label, label + * {
 .login-page .register-block .title,  .login-page .returning-wrapper .title {
 	color: #888888;
 	font-size: 16px;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	text-transform: uppercase;
 	font-weight: lighter;
 	background: #eeece7;
@@ -3201,7 +3201,7 @@ label, label + * {
 	border: 1px solid #C9C3BE;
 	color: #FFFFFF;
 	display: block;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	font-size: 16px;
 	margin: auto;
 	outline: 4px solid #A59B92;
@@ -3220,7 +3220,7 @@ label, label + * {
 	background: #A59B92;
 	border: 1px solid #C9C3BE;
 	color: #FFFFFF;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	font-size: 16px;
 	margin: auto;
 	outline: 4px solid #A59B92;
@@ -3237,14 +3237,14 @@ label, label + * {
 }
 .address-list-page,  .order-list-page,  .return-request-page,  .order-details-page,  .downloadable-products-page,  .back-in-stock-subscription-list-page,  .sitemap-page {
 	color: #888;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 }
 .address-list-page .address-item .buttons input,  .address-edit-page .buttons input,  .order-list-page .order-item .buttons input,  .return-request-page .buttons input,  .order-details-page .page-title a,  .order-details-page .actions input,  .change-password-page .buttons input,  .email-a-friend-page .buttons input,  .order-details-area .repost .re-order-button, .apply-vendor-page .button-1 {
 	background: #A59B92;
 	border: 1px solid #C9C3BE;
 	color: #FFFFFF;
 	display: inline-block;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	font-size: 16px;
 	margin: 0 5px 12px;
 	outline: 4px solid #A59B92;
@@ -3272,14 +3272,14 @@ label, label + * {
 }
 .returning-wrapper {
 	color: #888;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 }
 .account-page.avatar-page .buttons input {
 	background: #A59B92;
 	border: 1px solid #C9C3BE;
 	color: #FFFFFF;
 	display: inline-block;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	font-size: 16px;
 	margin: 4px;
 	outline: 4px solid #A59B92;
@@ -3395,7 +3395,7 @@ label, label + * {
 .order-progress li a {
 	cursor: pointer;
 	color: #888;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 }
 .order-progress li.inactive-step {
 	opacity: .5;
@@ -3403,11 +3403,11 @@ label, label + * {
 .order-progress li.inactive-step a {
 	cursor: default;
 	color: #888;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 }
 .checkout-page .button-1 {
-	background: none repeat scroll 0 0 #a59b92;
-	border: 1px solid #c9c3be;
+	background: none repeat scroll 0 0 #9aba6b;
+	border: 1px solid #bcdc8d;
 	color: #ffffff;
 	font-family: "open sans";
 	font-size: 16px;
@@ -3416,7 +3416,7 @@ label, label + * {
 	margin-bottom: 10px;
 	max-width: 90%;
 	min-width: 140px;
-	outline: 4px solid #a59b92;
+	outline: 4px solid #9aba6b;
 	overflow: hidden;
 	padding: 4px 19px;
 	text-shadow: 0 1px 1px #847c75;
@@ -3466,14 +3466,14 @@ label, label + * {
 	font-size: 0;
 }
 .shopping-cart-page .common-buttons input,  .shipping-options .button-2.estimate-shipping-button {
-	background: #A59B92;
-	border: 1px solid #C9C3BE;
+	background: #9aba6b;
+	border: 1px solid #bcdc8d;
 	color: #FFFFFF;
 	display: block;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	font-size: 16px;
 	margin: 0 auto 15px;
-	outline: 4px solid #A59B92;
+	outline: 4px solid #9aba6b;
 	padding: 4px 19px;
 	text-shadow: 0 1px 1px #847C75;
 	text-transform: uppercase;
@@ -3503,7 +3503,7 @@ label, label + * {
 }
 .cart-footer {
 	color: #888;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	margin-bottom: 20px;
 }
 .cart-footer:after {
@@ -3568,14 +3568,14 @@ label, label + * {
 	font-size: 18px;
 }
 .checkout-buttons button {
-	background: #A59B92;
-	border: 1px solid #C9C3BE;
+	background: #9aba6b;
+	border: 1px solid #bcdc8d;
 	color: #FFFFFF;
 	display: inline-block;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	font-size: 16px;
 	margin: 0 auto 15px;
-	outline: 4px solid #A59B92;
+	outline: 4px solid #9aba6b;
 	padding: 4px 19px;
 	text-shadow: 0 1px 1px #847C75;
 	transition: all 0.3s ease;
@@ -3623,13 +3623,13 @@ label, label + * {
 	float: left;
 	width: 35%;
 	height: 28px; /*safari padding fix*/
-	background: #A59B92;
-	border: 1px solid #C9C3BE;
+	background: #9aba6b;
+	border: 1px solid #bcdc8d;
 	color: #FFFFFF;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	font-size: 14px;
 	margin-top: 3px;
-	outline: 3px solid #A59B92;
+	outline: 3px solid #9aba6b;
 	padding: 0;
 	text-shadow: 0 1px 1px #847C75;
 	transition: all 0.3s ease;
@@ -3658,7 +3658,7 @@ label, label + * {
 }
 .page-body.checkout-data,  .shopping-cart-page .order-summary-content {
 	color: #888;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	font-size: 13px;
 	margin-bottom: 20px;
 }
@@ -3676,14 +3676,14 @@ label, label + * {
 	margin: 0 0 20px 0;
 }
 .address-grid .select-button input,  .enter-address .buttons input,  .shipping-method .buttons input,  .payment-method .buttons input,  .payment-info .buttons input,  .confirm-order .buttons input,  .order-completed .buttons input {
-	background: #A59B92;
-	border: 1px solid #C9C3BE;
+	background: #9aba6b;
+	border: 1px solid #bcdc8d;
 	color: #FFFFFF;
 	display: block;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	font-size: 16px;
 	margin: auto;
-	outline: 4px solid #A59B92;
+	outline: 4px solid #9aba6b;
 	padding: 4px 19px;
 	text-shadow: 0 1px 1px #847C75;
 	text-transform: uppercase;
@@ -3880,7 +3880,7 @@ label, label + * {
 }
 .shipment-details-page {
 	color: #888;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 }
 .shipment-overview .shipping-details li,  .shipment-overview .shipping-address li {
 	text-align: center;
@@ -3989,7 +3989,7 @@ label, label + * {
 	line-height: 30px;
 	padding-left: 15px;
 	color: #666;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	font-weight: lighter;
 	font-size: 14px;
 }
@@ -4095,14 +4095,14 @@ label, label + * {
 	width: 100%;
 }
 .new-comment .button-1 {
-	background: #A59B92;
-	border: 1px solid #C9C3BE;
+	background: #9aba6b;
+	border: 1px solid #bcdc8d;
 	color: #FFFFFF;
 	display: block;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	font-size: 16px;
 	margin: auto;
-	outline: 4px solid #A59B92;
+	outline: 4px solid #9aba6b;
 	padding: 4px 19px;
 	text-shadow: 0 1px 1px #847C75;
 	text-transform: uppercase;
@@ -4237,14 +4237,14 @@ label, label + * {
 	opacity: 1;
 }
 .blogpost-page .new-comment .buttons input {
-	background: #A59B92;
-	border: 1px solid #C9C3BE;
+	background: #9aba6b;
+	border: 1px solid #bcdc8d;
 	color: #FFFFFF;
 	display: block;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	font-size: 16px;
 	margin: auto;
-	outline: 4px solid #A59B92;
+	outline: 4px solid #9aba6b;
 	padding: 4px 19px;
 	text-shadow: 0 1px 1px #847C75;
 	text-transform: uppercase;
@@ -4270,14 +4270,14 @@ label, label + * {
 }
 /*SEARCH PAGE*/
 .search-page .search-input .buttons input {
-	background: #A59B92;
-	border: 1px solid #C9C3BE;
+	background: #9aba6b;
+	border: 1px solid #bcdc8d;
 	color: #FFFFFF;
 	display: block;
-	font-family: 'open sans';
+	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
 	font-size: 16px;
 	margin: auto;
-	outline: 4px solid #A59B92;
+	outline: 4px solid #9aba6b;
 	padding: 4px 19px;
 	text-shadow: 0 1px 1px #847C75;
 	text-transform: uppercase;

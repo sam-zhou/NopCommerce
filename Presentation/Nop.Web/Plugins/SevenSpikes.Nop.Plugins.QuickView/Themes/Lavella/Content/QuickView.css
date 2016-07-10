@@ -67,12 +67,12 @@
 }
 
 .quick-view-button a{
-    background:#c3b9b1;
-    border: 1px solid #dbd5d0;
+    background:#9aba6b;
+    border: 1px solid #bcdc8d;
     color: #FFFFFF;
-    font-family: 'open sans';
+    font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
     font-size: 16px;
-    outline: 4px solid #c3b9b1;
+    outline: 4px solid #9aba6b;
     padding: 4px 10px;
     text-shadow: 0 1px 1px #847C75;
     text-transform: uppercase;

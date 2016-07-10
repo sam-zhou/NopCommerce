@@ -52,8 +52,6 @@
         margin:20px auto 0;
         width: 1000px;
     }
-
-    .master-home-page .home-page .topic-block,
     .master-home-page .home-page .home-page-category-grid,
     .master-home-page .home-page .home-page-product-grid,
     .master-home-page .home-page .bestsellers,
@@ -62,6 +60,11 @@
     .master-home-page .home-page .categories-carousel,
     .master-home-page .home-page .manufacturers-carousel{
         width: 1000px;
+        margin: 0 auto 20px;
+    }
+
+    .master-home-page .home-page .topic-block {
+        width: 100%;
         margin: 0 auto 20px;
     }
 
@@ -1182,6 +1185,17 @@
     .header-menu .service-menu {
         display: none;
     }
+
+    .homepage-sub-banner .homepage-sub-banner-right {
+        width: 50%;
+        float: left;
+        padding-left: 2px;
+    }
     
+    .homepage-sub-banner .homepage-sub-banner-left {
+        padding-right: 2px;
+        width: 50%;
+        float: left;
+    }
 } 
 
