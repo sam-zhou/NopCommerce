@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
@@ -16,6 +17,7 @@ using Nop.Services.Configuration;
 using Nop.Services.Localization;
 using Nop.Services.Payments;
 using Nop.Web.Framework;
+using static System.String;
 
 namespace Nop.Plugin.Payments.AliPay
 {
@@ -52,13 +54,13 @@ namespace Nop.Plugin.Payments.AliPay
         /// <summary>
         /// Gets MD5 hash
         /// </summary>
-        /// <param name="Input">Input</param>
-        /// <param name="Input_charset">Input charset</param>
+        /// <param name="input">Input</param>
+        /// <param name="inputCharset">Input charset</param>
         /// <returns>Result</returns>
-        public string GetMD5(string Input, string Input_charset)
+        public string GetMd5(string input, string inputCharset)
         {
             MD5 md5 = new MD5CryptoServiceProvider();
-            byte[] t = md5.ComputeHash(Encoding.GetEncoding(Input_charset).GetBytes(Input));
+            byte[] t = md5.ComputeHash(Encoding.GetEncoding(inputCharset).GetBytes(input));
             StringBuilder sb = new StringBuilder(32);
             for (int i = 0; i < t.Length; i++)
             {
@@ -85,7 +87,7 @@ namespace Nop.Plugin.Payments.AliPay
 
                 for (j = Input.Length - 2; j >= i; j--)
                 {
-                    if (System.String.CompareOrdinal(Input[j + 1], Input[j]) < 0)
+                    if (CompareOrdinal(Input[j + 1], Input[j]) < 0)
                     {
                         temp = Input[j + 1];
                         Input[j + 1] = Input[j];
@@ -106,32 +108,31 @@ namespace Nop.Plugin.Payments.AliPay
         /// <summary>
         /// Create URL
         /// </summary>
-        /// <param name="Para">Para</param>
-        /// <param name="InputCharset">Input charset</param>
-        /// <param name="Key">Key</param>
+        /// <param name="para">Para</param>
+        /// <param name="inputCharset">Input charset</param>
+        /// <param name="key">Key</param>
         /// <returns>Result</returns>
-        public string CreatUrl(string[] Para, string InputCharset, string Key)
+        public string GetSign(string[] para, string inputCharset, string key)
         {
             int i;
-            string[] Sortedstr = BubbleSort(Para);
             StringBuilder prestr = new StringBuilder();
 
-            for (i = 0; i < Sortedstr.Length; i++)
+            for (i = 0; i < para.Length; i++)
             {
-                if (i == Sortedstr.Length - 1)
+                if (i == para.Length - 1)
                 {
-                    prestr.Append(Sortedstr[i]);
+                    prestr.Append(para[i]);
 
                 }
                 else
                 {
-                    prestr.Append(Sortedstr[i] + "&");
+                    prestr.Append(para[i] + "&");
                 }
 
             }
 
-            prestr.Append(Key);
-            string sign = GetMD5(prestr.ToString(), InputCharset);
+            prestr.Append(key);
+            string sign = GetMd5(prestr.ToString(), inputCharset);
             return sign;
         }
 
@@ -143,7 +144,7 @@ namespace Nop.Plugin.Payments.AliPay
         /// <returns>Result</returns>
         public string Get_Http(string StrUrl, int Timeout)
         {
-            string strResult = string.Empty;
+            string strResult = Empty;
             try
             {
                 HttpWebRequest myReq = (HttpWebRequest)HttpWebRequest.Create(StrUrl);
@@ -187,62 +188,66 @@ namespace Nop.Plugin.Payments.AliPay
         /// <param name="postProcessPaymentRequest">Payment info required for an order processing</param>
         public void PostProcessPayment(PostProcessPaymentRequest postProcessPaymentRequest)
         {
-            //string gateway = "https://www.alipay.com/cooperate/gateway.do?";
-            string service = "create_direct_pay_by_user";
+            var service = "create_forex_trade";
+            var partner = _aliPayPaymentSettings.Partner;
+            var notifyUrl = _webHelper.GetStoreLocation(false) + "Plugins/PaymentAliPay/Notify";
+            var returnUrl = _webHelper.GetStoreLocation(false) + "Plugins/PaymentAliPay/Return";
+            
 
-            string seller_email = _aliPayPaymentSettings.SellerEmail;
-            string sign_type = "MD5";
-            string key = _aliPayPaymentSettings.Key;
-            string partner = _aliPayPaymentSettings.Partner;
-            string input_charset = "utf-8";
+            var subject = _storeContext.CurrentStore.Name;
+            var inputCharset = "UTF-8";
+            var body = "来自于" + _storeContext.CurrentStore.Name + "的订单";
+            var outTradeNo = postProcessPaymentRequest.Order.Id.ToString();
+            var rmbFee = postProcessPaymentRequest.Order.OrderTotal.ToString("0.00", CultureInfo.InvariantCulture);
 
-            string show_url = "http://www.alipay.com/";
+            //string sellerEmail = _aliPayPaymentSettings.SellerEmail;
+            
+            var key = _aliPayPaymentSettings.Key;
+            
 
-            string out_trade_no = postProcessPaymentRequest.Order.Id.ToString();
-            string subject = _storeContext.CurrentStore.Name;
-            string body = "Order from " + _storeContext.CurrentStore.Name;
-            string total_fee = postProcessPaymentRequest.Order.OrderTotal.ToString("0.00", CultureInfo.InvariantCulture);
-
-            string notify_url = _webHelper.GetStoreLocation(false) + "Plugins/PaymentAliPay/Notify";
-            string return_url = _webHelper.GetStoreLocation(false) + "Plugins/PaymentAliPay/Return";
-            string[] para ={
+            string[] param ={
                                "service="+service,
                                "partner=" + partner,
-                               "seller_email=" + seller_email,
-                               "out_trade_no=" + out_trade_no,
+                               "notify_url=" + notifyUrl,
+                               "return_url=" + returnUrl,
                                "subject=" + subject,
+                               "_input_charset=" + inputCharset,
                                "body=" + body,
-                               "total_fee=" + total_fee,
-                               "show_url=" + show_url,
-                               "payment_type=1",
-                               "notify_url=" + notify_url,
-                               "return_url=" + return_url,
-                               "_input_charset=" + input_charset
+                               "out_trade_no=" + outTradeNo,
+                               "rmb_fee=" + rmbFee,
+                               "currency=AUD"
                            };
 
-            string aliay_url = CreatUrl(
-                para,
-                input_charset,
-                key
-                );
-            var post = new RemotePost();
-            post.FormName = "alipaysubmit";
-            post.Url = "https://www.alipay.com/cooperate/gateway.do?_input_charset=utf-8";
-            post.Method = "POST";
+            var sortedParam = BubbleSort(param);
+            var sign = GetSign(sortedParam, inputCharset, key);
+            var signType = "MD5";
 
-            post.Add("service", service);
-            post.Add("partner", partner);
-            post.Add("seller_email", seller_email);
-            post.Add("out_trade_no", out_trade_no);
-            post.Add("subject", subject);
-            post.Add("body", body);
-            post.Add("total_fee", total_fee);
-            post.Add("show_url", show_url);
-            post.Add("return_url", return_url);
-            post.Add("notify_url", notify_url);
-            post.Add("payment_type", "1");
-            post.Add("sign", aliay_url);
-            post.Add("sign_type", sign_type);
+            var finalParamList = sortedParam.ToList();
+            finalParamList.Add("sign="+sign);
+            finalParamList.Add("sign_type=" + signType);
+
+
+            var post = new RemotePost {FormName = "alipaysubmit"};
+            var url = @"https://mapi.alipay.com/gateway.do";
+            var count = 0;
+            foreach (var paramItem in finalParamList)
+            {
+                if (count > 0)
+                {
+                    url += "&";
+                }
+                else
+                {
+                    url += "?";
+                }
+
+                url += paramItem;
+                count ++;
+            }
+
+            post.Url = url;
+            
+
 
             post.Post();
         }

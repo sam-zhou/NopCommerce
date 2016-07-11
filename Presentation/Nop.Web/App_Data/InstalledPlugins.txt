@@ -42,3 +42,4 @@ ExternalAuth.Google
 ExternalAuth.QQ
 Payments.WeiXin
 Nop.Plugin.Misc.WaterMark
+Payments.AliPay

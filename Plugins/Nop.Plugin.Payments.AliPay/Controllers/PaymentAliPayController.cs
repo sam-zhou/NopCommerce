@@ -140,7 +140,7 @@ namespace Nop.Plugin.Payments.AliPay.Controllers
 
             prestr.Append(key);
 
-            string mysign = processor.GetMD5(prestr.ToString(), _input_charset);
+            string mysign = processor.GetMd5(prestr.ToString(), _input_charset);
 
             string sign = Request.Form["sign"];
 
