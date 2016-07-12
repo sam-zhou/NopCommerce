@@ -64,7 +64,7 @@
 }
 .block .listbox li a{
     color:#555;
-    font-family:'open sans';
+    font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
     padding-left:20px;
     line-height:30px;
     -moz-transition:all 0.3s ease 0s;

@@ -2993,6 +2993,17 @@ label, label + * {
 	margin: 0 0 20px;
 	text-align: center;
 }
+
+.accept-privacy-policy span.read {
+    cursor: pointer;
+    margin-right: 15px;    
+}
+
+.accept-privacy-policy span.read:hover {
+    -ms-opacity: 0.7;
+    opacity: 0.7;
+}
+
 .accept-privacy-policy > * {
 	display: inline-block;
 	line-height: 32px;

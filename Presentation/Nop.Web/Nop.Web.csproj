@@ -3105,6 +3105,7 @@
     <Content Include="Themes\Lavella\Views\Customer\Info.cshtml" />
     <Content Include="Themes\Lavella\Views\ShoppingCart\_CheckoutAttributes.cshtml" />
     <Content Include="Themes\Lavella\Views\Checkout\Completed.cshtml" />
+    <Content Include="Themes\Lavella\Views\Customer\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Images\Thumbs\" />
