@@ -1,0 +1,61 @@
+﻿@model Nop.Plugin.Payments.AliPay.Models.AlipayPaymentModel
+@using Nop.Core.Infrastructure
+@using Nop.Web.Framework;
+@using Nop.Web.Framework.UI
+
+@{
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+
+
+    var pageHeadBuilder = EngineContext.Current.Resolve<IPageHeadBuilder>();
+    pageHeadBuilder.AddTitleParts(T("PageTitle.Checkout").Text);
+    Html.AddScriptParts("~/Plugins/Payments.Alipay/Content/js/ap.js");
+    Html.AddCssFileParts("~/Plugins/Payments.Alipay/Content/css/paymentalipay.css");
+}
+
+
+
+
+<div class="page checkout-page order-completed-page">
+    <div class="page-title">
+        <h1>@T("Plugins.Payments.Alipay.YouAreUsingAlipay")</h1>
+    </div>
+    <div id="content" style="position: absolute; left: 0; right: 0; bottom: 0; top: 0;">
+        <iframe src="@Html.Raw(Model.Url)" width="100%" height="100%"></iframe>
+    </div>
+    @*<div class="wechatpay-head">
+        <div class="l-col-6">
+            <div class="wechatpay-orderid">订单编号: @Model.OrderId</div>
+            <div class="wechatpay-orderid">订单类型: 网上支付</div>
+        </div>
+        <div class="l-col-6">
+            <div class="wechatpay-ordertotal-container">
+                应付金额: <span class="wechatpay-ordertotal">@Model.Total</span>
+            </div>
+        </div>
+    </div>
+    <div class="page-body checkout-data">
+        <div class="wepay-logo"></div>
+        <div class="section order-completed">
+            <div class="title">
+                <strong>@T("Plugins.Payments.AliPay.RedirectionTip")</strong>
+            </div>
+            <div class="details">
+                <div class="order-number">
+                    <strong></strong>
+                </div>
+                
+            </div>
+
+        </div>
+    </div>*@
+</div>
+<script type="text/javascript">
+    var redirectToPay = function () {
+        _AP.pay("@Html.Raw(Model.Url)");
+    }
+
+    $(document).ready(function() {
+        setTimeout(redirectToPay, 3000);
+    });
+</script>
