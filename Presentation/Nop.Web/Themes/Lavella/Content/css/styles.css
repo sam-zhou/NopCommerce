@@ -4554,10 +4554,6 @@ pre {
         min-height: 380px;
 }
 
-.qr-container, .qrcode {
-    display: none !important;
-}
-
 .custom-value.qrcode {
     display: block !important;
 }

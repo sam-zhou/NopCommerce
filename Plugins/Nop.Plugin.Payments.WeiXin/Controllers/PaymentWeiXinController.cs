@@ -253,7 +253,7 @@ namespace Nop.Plugin.Payments.WeiXin.Controllers
         [HttpPost]
         public ActionResult JsApiPayment(FormCollection form)
         {
-            var model = new WeiXinPaymentModel(Path.Combine(_webHelper.GetStoreHost(_webHelper.IsCurrentConnectionSecured()), "Plugins/PaymentWeiXin/QueryOrder"));
+            var model = new JsPayViewModel();
             var error = new WeiXinPaymentErrorModel();
             var processor = _paymentService.LoadPaymentMethodBySystemName("Payments.WeiXin") as WeiXinPaymentProcessor;
             if (processor == null ||
@@ -265,42 +265,32 @@ namespace Nop.Plugin.Payments.WeiXin.Controllers
             {
                 try
                 {
-                    string totalFee = form["total"];
-                    string order = form["orderid"];
-                    string prepayId = form["prepay_id"];
+                    var appId = form["appId"];
+                    var timeStamp = form["timeStamp"];
+                    var nonceStr = form["nonceStr"];
+                    var package = form["package"];
+                    var signType = form["signType"];
+                    var paySign = form["paySign"];
+                    var orderId = form["orderid"];
+                    var total = form["total"];
 
-                    if (string.IsNullOrWhiteSpace(prepayId) || string.IsNullOrWhiteSpace(totalFee) || string.IsNullOrWhiteSpace(prepayId))
+                    if (string.IsNullOrWhiteSpace(appId) || string.IsNullOrWhiteSpace(timeStamp) ||
+                        string.IsNullOrWhiteSpace(nonceStr) || string.IsNullOrWhiteSpace(package) ||
+                        string.IsNullOrWhiteSpace(signType) || string.IsNullOrWhiteSpace(paySign) ||
+                        string.IsNullOrWhiteSpace(orderId) || string.IsNullOrWhiteSpace(total))
                     {
                         error.Message = "页面传参出错,请返回重试";
                     }
                     else
                     {
-                        int orderId;
-
-                        if (int.TryParse(order, out orderId))
-                        {
-                            //JSAPI支付预处理
-                            try
-                            {
-                                var notifyUrl = Path.Combine(_webHelper.GetStoreHost(_webHelper.IsCurrentConnectionSecured()),
-                                        "Plugins/PaymentWeiXin/Notify");
-
-                                var jsApiPay = new JsApiPay(_weiXinPaymentSettings, notifyUrl);
-                                jsApiPay.TotalFee = (decimal.Parse(totalFee) * 100).ToString(CultureInfo.InvariantCulture);
-
-                                var unifiedOrderResult = jsApiPay.GetUnifiedOrderResult(orderId, _webHelper.GetCurrentIpAddress(), notifyUrl);
-                                model.JsApiParam = jsApiPay.GetJsApiParameters();//获取H5调起JS API参数                    
-                                model.OrderId = unifiedOrderResult.ToPrintStr();
-                            }
-                            catch (Exception ex)
-                            {
-                                error.Message = "下单失败，请返回重试";
-                            }
-                        }
-                        else
-                        {
-                            error.Message = "订单号错误";
-                        }
+                        model.AppId = appId;
+                        model.TimeStamp = timeStamp;
+                        model.NonceStr = nonceStr;
+                        model.Package = package;
+                        model.SignType = signType;
+                        model.PaySign = paySign;
+                        model.OrderId = orderId;
+                        model.Total = total;
 
                     }
                 }
@@ -314,7 +304,7 @@ namespace Nop.Plugin.Payments.WeiXin.Controllers
             {
                 return View("~/Plugins/Payments.WeiXin/Views/PaymentWeiXin/Error.cshtml", error);
             }
-            return View("~/Plugins/Payments.WeiXin/Views/PaymentWeiXin/ProcessPayment.cshtml", model);
+            return View("~/Plugins/Payments.WeiXin/Views/PaymentWeiXin/JsApiPayment.cshtml", model);
         }
 
         [ValidateInput(false)]

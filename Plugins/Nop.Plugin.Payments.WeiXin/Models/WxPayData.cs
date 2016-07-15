@@ -21,6 +21,11 @@ namespace Nop.Plugin.Payments.WeiXin.Models
         //采用排序的Dictionary的好处是方便对数据包进行签名，不用再签名之前再做一次排序
         private readonly SortedDictionary<string, object> _mValues = new SortedDictionary<string, object>();
 
+        public SortedDictionary<string, object> Values
+        {
+            get { return _mValues; }
+        }
+
         /**
         * 设置某个字段的值
         * @param key 字段名

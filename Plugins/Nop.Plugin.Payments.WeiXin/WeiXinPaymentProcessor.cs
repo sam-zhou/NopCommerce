@@ -290,12 +290,37 @@ namespace Nop.Plugin.Payments.WeiXin
                 jsApiPay.TotalFee = total;
 
                 var unifiedOrderResult = jsApiPay.GetUnifiedOrderResult(postProcessPaymentRequest.Order.Id, _webHelper.GetCurrentIpAddress(), _notifyUrl);
-                post.Add("prepay_id", unifiedOrderResult.GetValue("prepay_id").ToString());
-                post.Url = Path.Combine(_webHelper.GetStoreHost(_webHelper.IsCurrentConnectionSecured()), "Plugins/PaymentWeiXin/JsApiPayment");
+
+                var data = new WxPayData();
+
+                long unixTimestamp = DateTime.Now.Ticks - new DateTime(1970, 1, 1).Ticks;
+                unixTimestamp /= TimeSpan.TicksPerSecond;
+                var timestamp = unixTimestamp.ToString();
+                var nonceStr = Guid.NewGuid().ToString("N");
+                
+
+
+                data.SetValue("appId", _weiXinPaymentSettings.AppId);
+                data.SetValue("timeStamp", timestamp);
+                data.SetValue("nonceStr", nonceStr);
+                data.SetValue("package", "prepay_id=" + unifiedOrderResult.GetValue("prepay_id"));
+                data.SetValue("signType", "MD5");
+                var sign = data.MakeSign(_weiXinPaymentSettings.AppSecret);
+
+
+                post.Add("appId", _weiXinPaymentSettings.AppId);
+                post.Add("timeStamp", timestamp);
+                post.Add("nonceStr", nonceStr);
+                post.Add("package", "prepay_id=" + unifiedOrderResult.GetValue("prepay_id"));
+                post.Add("signType", "MD5");
+                post.Add("paySign", sign);
+
+                post.Url = Path.Combine(_webHelper.GetStoreHost(_webHelper.IsCurrentConnectionSecured()), "Plugins/PaymentWeiXin/JsApiPayment/");
                 post.Post();
             }
             else
             {
+                
                 var result = Unifiedorder(productId, body, detail, orderId, total);
                 post.Url = Path.Combine(_webHelper.GetStoreHost(_webHelper.IsCurrentConnectionSecured()), "Plugins/PaymentWeiXin/ProcessPayment");
                 post.Add("result", HttpUtility.HtmlEncode(result));

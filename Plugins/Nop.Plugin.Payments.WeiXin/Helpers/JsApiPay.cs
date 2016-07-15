@@ -137,8 +137,8 @@ namespace Nop.Plugin.Payments.WeiXin.Helpers
             data.SetValue("attach", "test");
             data.SetValue("out_trade_no", orderId);
             data.SetValue("total_fee", TotalFee);
-            data.SetValue("time_start", DateTime.Now.ToString("yyyyMMddHHmmss"));
-            data.SetValue("time_expire", DateTime.Now.AddHours(2).ToString("yyyyMMddHHmmss"));
+            data.SetValue("time_start", DateTime.Now.AddHours(8).ToString("yyyyMMddHHmmss"));
+            data.SetValue("time_expire", DateTime.Now.AddHours(10).ToString("yyyyMMddHHmmss"));
             data.SetValue("goods_tag", "test");
             data.SetValue("trade_type", "JSAPI");
             data.SetValue("openid", Openid);

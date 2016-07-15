@@ -95,6 +95,7 @@
     </Content>
     <Compile Include="Helpers\HttpUtil.cs" />
     <Compile Include="Helpers\JsApiPay.cs" />
+    <Compile Include="Models\JsPayViewModel.cs" />
     <Compile Include="Models\WeiXinPaymentErrorModel.cs" />
     <Compile Include="Models\WeiXinPaymentModel.cs" />
     <Compile Include="Models\WxPayData.cs" />

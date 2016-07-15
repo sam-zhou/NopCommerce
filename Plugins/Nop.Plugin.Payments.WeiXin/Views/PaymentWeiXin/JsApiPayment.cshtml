@@ -6,7 +6,7 @@
     pageHeadBuilder.AddTitleParts(T("PageTitle.Checkout").Text);
     Html.AddCssFileParts("~/Plugins/Payments.WeiXin/Content/css/paymentweixin.css");
 }
-@model Nop.Plugin.Payments.WeiXin.Models.WeiXinPaymentModel
+@model Nop.Plugin.Payments.WeiXin.Models.JsPayViewModel
 @using Nop.Core.Infrastructure
 @using Nop.Web.Framework;
 @using Nop.Web.Framework.UI
@@ -26,29 +26,38 @@
             <div class="wechatpay-ordertotal-container">
                 应付金额: <span class="wechatpay-ordertotal">@Model.Total</span>
             </div>
-            </div>
-    </div>
-    <div class="page-body checkout-data">
-        <div class="wepay-logo"></div>
-        <div class="section order-completed">
-            <div class="title">
-                <strong>@T("Plugins.Payments.WeiXin.QrcodeOnlyValidTwoHours")</strong>
-            </div>
-            <div class="details">
-                <div class="order-number">
-                    <strong></strong>
-                </div>
-                <div class="details-link">
-                    @if (!string.IsNullOrWhiteSpace(Model.QRCode))
-                    {
-                        <div class="custom-value qrcode">
-                            <img src="@Model.QRCode"/>
-                            <div class="qrcode-hint">@T("Plugins.Payments.WeiXin.PleaseUseWechatScan")<br/>@T("Plugins.Payments.WeiXin.ScanQrcodeToPay")</div>
-                        </div>
-                    }
-                </div>
-            </div>
-            
         </div>
     </div>
+
 </div>
+
+<script type="text/javascript">
+    function onBridgeReady(){
+        WeixinJSBridge.invoke(
+            'getBrandWCPayRequest', {
+                "appId": "@Html.Raw(Model.AppId)",     //公众号名称，由商户传入     
+                "timeStamp": "@Html.Raw(Model.TimeStamp)",         //时间戳，自1970年以来的秒数     
+                "nonceStr": "@Html.Raw(Model.NonceStr)", //随机串     
+                "package": "@Html.Raw(Model.Package)",     
+                "signType": "@Html.Raw(Model.SignType)",         //微信签名方式：     
+                "paySign": "@Html.Raw(Model.PaySign)" //微信签名 
+            },
+            function(res){     
+                if (res.err_msg === "get_brand_wcpay_request：ok") {
+                    location.href = "/";
+                }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。 
+            }
+        ); 
+    }
+    if (typeof WeixinJSBridge == "undefined"){
+        if( document.addEventListener ){
+            document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+        }else if (document.attachEvent){
+            document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
+            document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+        }
+    }else{
+        onBridgeReady();
+    }
+
+</script>
