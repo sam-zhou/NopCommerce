@@ -79,6 +79,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\PaymentAliPayController.cs" />
+    <Compile Include="Models\AlipayPaymentErrorModel.cs" />
+    <Compile Include="Models\AlipayPaymentModel.cs" />
     <Compile Include="Models\ConfigurationModel.cs" />
     <Compile Include="Models\PaymentInfoModel.cs" />
     <Compile Include="AliPayPaymentProcessor.cs" />
@@ -104,6 +106,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\css\paymentalipay.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\img\logo-alipay.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\js\ap.js" />
     <Content Include="Views\PaymentAliPay\Configure.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -116,6 +124,8 @@
     <Content Include="web.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Views\PaymentAliPay\Error.cshtml" />
+    <None Include="Views\PaymentAliPay\ProcessPayment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Description.txt">
