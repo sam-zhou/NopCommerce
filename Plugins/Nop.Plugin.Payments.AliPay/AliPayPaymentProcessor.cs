@@ -508,7 +508,7 @@ namespace Nop.Plugin.Payments.AliPay
         /// </summary>
         public bool SkipPaymentInfo
         {
-            get { return false; }
+            get { return true; }
         }
 
         #endregion
