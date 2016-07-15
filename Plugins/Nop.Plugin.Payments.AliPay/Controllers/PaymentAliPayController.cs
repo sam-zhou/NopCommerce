@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Globalization;
 using System.Text;
 using System.Web.Mvc;
 using Nop.Core;
+using Nop.Core.Domain.Orders;
 using Nop.Core.Domain.Payments;
 using Nop.Plugin.Payments.AliPay.Models;
 using Nop.Services.Configuration;
@@ -11,6 +13,9 @@ using Nop.Services.Logging;
 using Nop.Services.Orders;
 using Nop.Services.Payments;
 using Nop.Web.Framework.Controllers;
+using System.IO;
+using System.Web;
+using Nop.Core.Domain.Logging;
 
 namespace Nop.Plugin.Payments.AliPay.Controllers
 {
@@ -93,6 +98,67 @@ namespace Nop.Plugin.Payments.AliPay.Controllers
             var paymentInfo = new ProcessPaymentRequest();
             return paymentInfo;
         }
+
+        [HttpPost]
+        public ActionResult ProcessPayment(FormCollection form)
+        {
+            var error = new AlipayPaymentErrorModel();
+            var model = new AlipayPaymentModel();
+            var processor = _paymentService.LoadPaymentMethodBySystemName("Payments.AliPay") as AliPayPaymentProcessor;
+            if (processor == null ||
+                !processor.IsPaymentMethodActive(_paymentSettings) || !processor.PluginDescriptor.Installed)
+            {
+                error.Message = "支付宝服务终止";
+            }
+            else
+            {
+                if (form.HasKeys())
+                {
+                    if (!string.IsNullOrWhiteSpace(form["url"]))
+                    {
+                        model.Url = form["url"];
+
+                        if (!string.IsNullOrWhiteSpace(form["orderid"]))
+                        {
+                            model.OrderId = form["orderid"];
+
+
+                            if (!string.IsNullOrWhiteSpace(form["total"]))
+                            {
+                                model.Total = form["total"];
+                            }
+                            else
+                            {
+                                error.Message = "参数错误Total";
+                            }
+
+                        }
+                        else
+                        {
+                            error.Message = "参数错误OrderId";
+                        }
+
+                    }
+                    else
+                    {
+                        error.Message = "参数错误";
+                    }
+                }
+                else
+                {
+                    error.Message = "没有参数";
+                }
+            }
+
+
+
+            if (error.HasError)
+            {
+                return View("~/Plugins/Payments.Alipay/Views/PaymentAlipay/Error.cshtml", error);
+            }
+            return View("~/Plugins/Payments.Alipay/Views/PaymentAlipay/ProcessPayment.cshtml", model);
+        }
+
 
         [ValidateInput(false)]
         public ActionResult Notify(FormCollection form)

@@ -15,6 +15,13 @@ namespace Nop.Plugin.Payments.AliPay
                  new[] { "Nop.Plugin.Payments.AliPay.Controllers" }
             );
 
+            //Payment
+            routes.MapRoute("Plugin.Payments.AliPay.ProcessPayment",
+                 "Plugins/PaymentAliPay/ProcessPayment",
+                 new { controller = "PaymentAliPay", action = "ProcessPayment" },
+                 new[] { "Nop.Plugin.Payments.AliPay.Controllers" }
+            );
+
             //Notify
             routes.MapRoute("Plugin.Payments.AliPay.Return",
                  "Plugins/PaymentAliPay/Return",

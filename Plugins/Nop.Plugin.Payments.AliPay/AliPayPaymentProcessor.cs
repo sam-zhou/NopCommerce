@@ -1,4 +1,4 @@
-using System;
+锘縰sing System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -195,8 +195,8 @@ namespace Nop.Plugin.Payments.AliPay
             
 
             var subject = _storeContext.CurrentStore.Name;
-            var inputCharset = "UTF-8";
-            var body = "来自于" + _storeContext.CurrentStore.Name + "的订单";
+            var inputCharset = @"UTF-8";
+            var body = _storeContext.CurrentStore.Name;
             var outTradeNo = postProcessPaymentRequest.Order.Id.ToString();
             var rmbFee = postProcessPaymentRequest.Order.OrderTotal.ToString("0.00", CultureInfo.InvariantCulture);
 
@@ -234,11 +234,11 @@ namespace Nop.Plugin.Payments.AliPay
             {
                 if (count > 0)
                 {
-                    url += "&";
+                    url += @"&";
                 }
                 else
                 {
-                    url += "?";
+                    url += @"?";
                 }
 
                 url += paramItem;
@@ -246,9 +246,10 @@ namespace Nop.Plugin.Payments.AliPay
             }
 
             post.Url = url;
-            
-
-
+            //post.Url = Path.Combine(_webHelper.GetStoreHost(_webHelper.IsCurrentConnectionSecured()), "Plugins/PaymentAlipay/ProcessPayment");
+            //post.Add("url", url);
+            //post.Add("orderid", postProcessPaymentRequest.Order.Id.ToString(CultureInfo.InvariantCulture));
+            //post.Add("total", postProcessPaymentRequest.Order.OrderTotal.ToString("0.00"));
             post.Post();
         }
 
@@ -412,7 +413,7 @@ namespace Nop.Plugin.Payments.AliPay
             this.AddOrUpdatePluginLocaleResource("Plugins.Payments.AliPay.Partner.Hint", "Enter partner.");
             this.AddOrUpdatePluginLocaleResource("Plugins.Payments.AliPay.AdditionalFee", "Additional fee");
             this.AddOrUpdatePluginLocaleResource("Plugins.Payments.AliPay.AdditionalFee.Hint", "Enter additional fee to charge your customers.");
-            
+            this.AddOrUpdatePluginLocaleResource("Plugins.Payments.Alipay.YouAreUsingAlipay", "You are using Alipay");
             base.Install();
         }
 
@@ -429,7 +430,7 @@ namespace Nop.Plugin.Payments.AliPay
             this.DeletePluginLocaleResource("Plugins.Payments.AliPay.Partner.Hint");
             this.DeletePluginLocaleResource("Plugins.Payments.AliPay.AdditionalFee");
             this.DeletePluginLocaleResource("Plugins.Payments.AliPay.AdditionalFee.Hint");
-            
+            this.DeletePluginLocaleResource("Plugins.Payments.Alipay.YouAreUsingAlipay");
             base.Uninstall();
         }
         #endregion
