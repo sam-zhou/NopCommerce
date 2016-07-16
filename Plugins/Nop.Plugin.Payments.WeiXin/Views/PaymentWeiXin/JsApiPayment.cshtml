@@ -35,29 +35,60 @@
     function onBridgeReady(){
         WeixinJSBridge.invoke(
             'getBrandWCPayRequest', {
-                "appId": "@Html.Raw(Model.AppId)",     //公众号名称，由商户传入     
-                "timeStamp": "@Html.Raw(Model.TimeStamp)",         //时间戳，自1970年以来的秒数     
-                "nonceStr": "@Html.Raw(Model.NonceStr)", //随机串     
-                "package": "@Html.Raw(Model.Package)",     
-                "signType": "@Html.Raw(Model.SignType)",         //微信签名方式：     
-                "paySign": "@Html.Raw(Model.PaySign)" //微信签名 
+                "appId": "@Html.Raw(Model.AppId)",     //公众号名称，由商户传入
+                "timeStamp": "@Html.Raw(Model.TimeStamp)",         //时间戳，自1970年以来的秒数
+                "nonceStr": "@Html.Raw(Model.NonceStr)", //随机串
+                "package": "@Html.Raw(Model.Package)",
+                "signType": "@Html.Raw(Model.SignType)",         //微信签名方式：
+                "paySign": "@Html.Raw(Model.PaySign)" //微信签名
             },
-            function(res){     
+            function(res){
                 if (res.err_msg === "get_brand_wcpay_request：ok") {
                     location.href = "/";
-                }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。 
+                }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
             }
-        ); 
+        );
     }
+
+
     if (typeof WeixinJSBridge == "undefined"){
         if( document.addEventListener ){
             document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
         }else if (document.attachEvent){
-            document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
+            document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
             document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
         }
     }else{
         onBridgeReady();
+    }
+
+
+    $(document).ready(function() {
+        setInterval("checkPaymentStatus()", 10000);
+    });
+
+    function checkPaymentStatus() {
+        console.log("sending");
+        var orderId = @Model.OrderId;
+        if (orderId !== 0) {
+            $.ajax({
+                url: "/Plugins/PaymentWeiXin/QueryOrder",//调用ashx获得订单状态
+                type: "POST",
+                data: {
+                    orderId: orderId
+                },
+                success: function (data) {
+                    console.dir(data);
+                    if (data === 'True') { //订单状态为1表示支付成功
+                        window.location.href = "/Checkout/Completed"; //页面跳转
+                    }
+                },
+                error: function () {
+
+                }
+            });
+        }
+
     }
 
 </script>

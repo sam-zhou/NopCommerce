@@ -127,7 +127,7 @@ namespace Nop.Plugin.Payments.WeiXin.Models
             try
             {
                 //2015-06-29 错误是没有签名
-                if ((string) _mValues["return_code"] != "SUCCESS")
+                if(IsSet("return_code") && (string) GetValue("return_code") != "SUCCESS")
                 {
                     return _mValues;
                 }

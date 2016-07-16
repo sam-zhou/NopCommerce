@@ -107,6 +107,130 @@ namespace Nop.Plugin.Payments.WeiXin.Controllers
             return paymentInfo;
         }
 
+        [ValidateInput(false)]
+        public ActionResult Callback(FormCollection form)
+        {      
+            try
+            {
+                var processor = _paymentService.LoadPaymentMethodBySystemName("Payments.WeiXin") as WeiXinPaymentProcessor;
+                if (processor == null ||
+                    !processor.IsPaymentMethodActive(_paymentSettings) || !processor.PluginDescriptor.Installed)
+                {
+                    throw new NopException("Payments.WeiXin Not Found");
+                }
+
+                var s = Request.InputStream;
+                var count = 0;
+                var buffer = new byte[1024];
+                var builder = new StringBuilder();
+                while ((count = s.Read(buffer, 0, 1024)) > 0)
+                {
+                    builder.Append(Encoding.UTF8.GetString(buffer, 0, count));
+                }
+                s.Flush();
+                s.Close();
+                s.Dispose();
+
+                _logger.InsertLog(LogLevel.Information, GetType() + "Receive data from WeChat : " + builder);
+                var data = new WxPayData();
+                data.FromXml(builder.ToString(), _weiXinPaymentSettings.AppSecret);
+
+
+                if (!data.IsSet("product_id"))
+                {
+                    var res = new WxPayData();
+                    res.SetValue("return_code", "FAIL");
+                    res.SetValue("return_msg", "支付结果中微信订单号不存在");
+                    Response.Write(res.ToXml());
+                    Response.End();
+                }
+                else if (!data.IsSet("appid") || !data.IsSet("appid") || !data.IsSet("appid") || !data.IsSet("appid") ||
+                         !data.IsSet("appid") || !data.IsSet("appid"))
+                {
+                    var res = new WxPayData();
+                    res.SetValue("return_code", "FAIL");
+                    res.SetValue("return_msg", "缺少参数");
+                    Response.Write(res.ToXml());
+                    Response.End();
+                }
+                else
+                {
+                    var orderIdStr = data.GetValue("product_id").ToString();
+                    int orderId;
+                    if (!int.TryParse(orderIdStr, out orderId))
+                    {
+                        return Content("error");
+                    }
+
+                    var order = _orderService.GetOrderById(orderId);
+
+                    if (order == null)
+                    {
+                        var res = new WxPayData();
+                        res.SetValue("return_code", "FAIL");
+                        res.SetValue("return_msg", "订单号错误");
+                        Response.Write(res.ToXml());
+                        Response.End();
+                    }
+                    else
+                    {
+                        var result = processor.Unifiedorder(orderIdStr, "宁尼可在线商城订单" + orderId, "宁尼可在线商城订单" + orderId, orderIdStr,
+                            ((int)(order.OrderTotal * 100)).ToString(CultureInfo.InvariantCulture));
+
+                        var wxModel = new WxPayData();
+                        wxModel.FromXml(result, _weiXinPaymentSettings.AppSecret);
+
+                        if (wxModel.IsSet("return_code") && (string) wxModel.GetValue("return_code") != "SUCCESS")
+                        {
+                            Response.Write(wxModel.ToXml());
+                            Response.End();
+                        }
+                        else if (!wxModel.IsSet("prepay_id"))
+                        {
+                            var res = new WxPayData();
+                            res.SetValue("return_code", "FAIL");
+                            res.SetValue("return_msg", "预支付ID	不存在");
+                            Response.Write(res.ToXml());
+                            Response.End();
+                        }
+                        else
+                        {
+                            var res = new WxPayData();
+                            res.SetValue("return_code", "SUCCESS");
+                            res.SetValue("appid", _weiXinPaymentSettings.AppId);
+                            res.SetValue("mch_id", _weiXinPaymentSettings.MchId);
+                            res.SetValue("nonce_str", Guid.NewGuid().ToString("N"));
+                            res.SetValue("prepay_id", wxModel.GetValue("prepay_id"));
+                            res.SetValue("result_code", "SUCCESS");
+                            var sign = res.MakeSign(_weiXinPaymentSettings.AppSecret);
+                            res.SetValue("sign", sign);
+
+                            Response.Write(res.ToXml());
+                            Response.End();
+                        }
+
+
+                        
+                    }
+                }
+
+                
+
+            }
+            catch (NopException ex)
+            {
+                var res = new WxPayData();
+                res.SetValue("return_code", "FAIL");
+                res.SetValue("return_msg", ex.Message);
+
+                Response.Write(res.ToXml());
+                Response.End();
+            }
+
+
+            return Content("");
+        }
+
         [HttpPost]
         public ActionResult QueryOrder(FormCollection form)
         {
@@ -145,8 +269,6 @@ namespace Nop.Plugin.Payments.WeiXin.Controllers
             {
                 try
                 {
-
-
                     if (form.HasKeys())
                     {
                         if (!string.IsNullOrWhiteSpace(form["result"]))
@@ -221,6 +343,68 @@ namespace Nop.Plugin.Payments.WeiXin.Controllers
                             {
                                 error.Message = "无法读取二维码";
                             }
+                        }
+                        else if (!string.IsNullOrWhiteSpace(form["nativeUrl"]))
+                        {
+                            model.QRCode = processor.GetQrCode(form["nativeUrl"]);
+
+                            if (!string.IsNullOrWhiteSpace(form["orderid"]))
+                            {
+                                int orderId;
+                                if (int.TryParse(form["orderid"], out orderId))
+                                {
+                                    var order = _orderService.GetOrderById(orderId);
+                                    if (order != null)
+                                    {
+                                        if (order.Customer.Id == _workContext.CurrentCustomer.Id)
+                                        {
+                                            if (_orderProcessingService.CanMarkOrderAsPaid(order))
+                                            {
+                                                if (!string.IsNullOrWhiteSpace(form["total"]) &&
+                                                    form["total"] == order.OrderTotal.ToString("0.00"))
+                                                {
+                                                    model.OrderId = order.Id.ToString(CultureInfo.InvariantCulture);
+                                                    model.Total = order.OrderTotal.ToString("￥0.00");
+                                                }
+                                                else
+                                                {
+                                                    error.Message = "价格不匹配";
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (order.PaymentStatus == PaymentStatus.Paid)
+                                                {
+                                                    error.Message = "您已付款，请勿重复提交";
+                                                }
+                                                else
+                                                {
+                                                    error.Message = "订单状态错误";
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            error.Message = "用户不匹配";
+
+                                        }
+                                    }
+                                    else
+                                    {
+                                        error.Message = "订单号不存在";
+                                    }
+                                }
+                                else
+                                {
+                                    error.Message = "无法读取订单号";
+                                }
+                            }
+                            else
+                            {
+                                error.Message = "订单号丢失";
+                            }
+
+
                         }
                         else
                         {

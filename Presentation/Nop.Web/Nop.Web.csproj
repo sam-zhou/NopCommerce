@@ -500,6 +500,11 @@
     <Content Include="Content\Images\default-image.png" />
     <Content Include="Content\Images\logo-108.png" />
     <Content Include="Content\Images\social\qrcode_for_gh_a2e5f1069d1b_430.jpg" />
+    <Content Include="Content\Images\logo-au.png" />
+    <Content Include="Content\Images\logo-cn.png" />
+    <Content Include="Content\Images\logo-tw.png" />
+    <Content Include="Content\Images\uploaded\0000246.png" />
+    <Content Include="Content\Images\uploaded\qrcode.jpg" />
     <Content Include="Content\kendo\2014.1.318\Black\editor.png" />
     <Content Include="Content\kendo\2014.1.318\Black\imagebrowser.png" />
     <Content Include="Content\kendo\2014.1.318\Black\indeterminate.gif" />
@@ -1724,6 +1729,7 @@
     <Content Include="Plugins\SevenSpikes.Nop.Plugins.ProductRibbons\Views\ProductRibbons\ProductRibbonsWidget.cshtml" />
     <Content Include="Plugins\SevenSpikes.Nop.Plugins.ProductRibbons\Views\web.config" />
     <None Include="Properties\PublishProfiles\Aliyun.pubxml" />
+    <None Include="Properties\PublishProfiles\LynexShop.pubxml" />
     <None Include="Properties\PublishProfiles\NopAsia - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\NopAsia - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -2555,6 +2561,7 @@
     <Content Include="Scripts\public.onepagecheckout.js" />
     <Content Include="Scripts\public.common.js" />
     <Content Include="Themes\DefaultClean\Content\css\print.css" />
+    <Content Include="Themes\Lavella\Content\css\400.css" />
     <Content Include="Themes\Lavella\Content\css\480.css" />
     <Content Include="Themes\Lavella\Content\css\480.rtl.css" />
     <Content Include="Themes\Lavella\Content\css\768.css" />

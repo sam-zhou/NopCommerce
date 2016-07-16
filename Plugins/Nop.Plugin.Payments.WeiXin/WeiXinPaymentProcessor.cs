@@ -20,6 +20,7 @@ using System.Xml;
 using Nop.Core;
 using Nop.Core.Domain.Orders;
 using Nop.Core.Domain.Payments;
+using Nop.Core.Extension;
 using Nop.Core.Plugins;
 using Nop.Plugin.Payments.WeiXin.Controllers;
 using Nop.Plugin.Payments.WeiXin.Helpers;
@@ -97,6 +98,27 @@ namespace Nop.Plugin.Payments.WeiXin
             var result = utf8.GetString(utfBytes, 0, utfBytes.Length);
 
             return result;
+        }
+
+        private string CreatUrlParameters(Hashtable parameters)
+        {
+            var output = string.Empty;
+            var akeys = new ArrayList(parameters.Keys);
+            foreach (var k in akeys)
+            {
+                var v = (string)parameters[k];
+                if (output == string.Empty)
+                {
+                    output += "?";
+                }
+                else
+                {
+                    output += "&";
+                }
+
+                output += (k + "=" + v);
+            }
+            return output;
         }
 
         private string CreateMd5Sign(string key, string value, Hashtable parameters, string contentEncoding)
@@ -180,6 +202,22 @@ namespace Nop.Plugin.Payments.WeiXin
                     return String.Format("data:image/png;base64,{0}", Convert.ToBase64String(ms.ToArray()));
                 }
             }
+        }
+
+        public string GetUrlForMethodOne(int orderId)
+        {
+            var url = @"weixin://wxpay/bizpayurl";
+            var packageParameter = new Hashtable();
+            packageParameter.Add("appid", _weiXinPaymentSettings.AppId);
+            packageParameter.Add("mch_id", _weiXinPaymentSettings.MchId);
+            packageParameter.Add("time_stamp", CommonExtension.GetCurrentTimeStamp().ToString());
+            packageParameter.Add("nonce_str", Guid.NewGuid().ToString("N"));
+            packageParameter.Add("product_id", orderId.ToString());
+            var sign = CreateMd5Sign("key", _weiXinPaymentSettings.AppSecret, packageParameter, "utf-8");
+            packageParameter.Add("sign", sign);
+            url += CreatUrlParameters(packageParameter);
+
+            return url;
         }
 
         public string Unifiedorder(string productId, string body, string detail, string orderId, string total)
@@ -293,9 +331,8 @@ namespace Nop.Plugin.Payments.WeiXin
 
                 var data = new WxPayData();
 
-                long unixTimestamp = DateTime.Now.Ticks - new DateTime(1970, 1, 1).Ticks;
-                unixTimestamp /= TimeSpan.TicksPerSecond;
-                var timestamp = unixTimestamp.ToString();
+
+                var timestamp = CommonExtension.GetCurrentTimeStamp().ToString();
                 var nonceStr = Guid.NewGuid().ToString("N");
                 
 
@@ -320,10 +357,10 @@ namespace Nop.Plugin.Payments.WeiXin
             }
             else
             {
-                
-                var result = Unifiedorder(productId, body, detail, orderId, total);
                 post.Url = Path.Combine(_webHelper.GetStoreHost(_webHelper.IsCurrentConnectionSecured()), "Plugins/PaymentWeiXin/ProcessPayment");
-                post.Add("result", HttpUtility.HtmlEncode(result));
+                post.Add("nativeUrl", GetUrlForMethodOne(postProcessPaymentRequest.Order.Id));
+                //var result = Unifiedorder(productId, body, detail, orderId, total);
+                //post.Add("result", HttpUtility.HtmlEncode(result));
                 post.Post();
             }
             

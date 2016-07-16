@@ -1,0 +1,9 @@
+﻿@media all and (max-width: 400px) {
+    .item-box span.price.old-price, .item-box span.price.actual-price {
+        font-size: 14px;
+    }
+
+    .item-box .details {
+        padding: 0;
+    }
+}

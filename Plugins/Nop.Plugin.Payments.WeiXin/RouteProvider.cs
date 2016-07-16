@@ -16,7 +16,7 @@ namespace Nop.Plugin.Payments.WeiXin
                  new[] { "Nop.Plugin.Payments.WeiXin.Controllers" }
             );
 
-            //Payment
+            //JsApiPayment
             routes.MapRoute("Plugin.Payments.WeiXin.JsApiPayment",
                  "Plugins/PaymentWeiXin/JsApiPayment",
                  new { controller = "PaymentWeiXin", action = "JsApiPayment" },
@@ -34,6 +34,13 @@ namespace Nop.Plugin.Payments.WeiXin
             routes.MapRoute("Plugin.Payments.WeiXin.QueryOrder",
                  "Plugins/PaymentWeiXin/QueryOrder",
                  new { controller = "PaymentWeiXin", action = "QueryOrder" },
+                 new[] { "Nop.Plugin.Payments.WeiXin.Controllers" }
+            );
+
+            //Callback
+            routes.MapRoute("Plugin.Payments.WeiXin.Callback",
+                 "Plugins/PaymentWeiXin/Callback",
+                 new { controller = "PaymentWeiXin", action = "Callback" },
                  new[] { "Nop.Plugin.Payments.WeiXin.Controllers" }
             );
 

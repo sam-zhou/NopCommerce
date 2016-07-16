@@ -158,7 +158,7 @@ namespace Nop.Services.Authentication.External
                     
                     if (parameters.ProviderSystemName == "ExternalAuth.WeiXin")
                     {
-                        isApproved = false;
+                        isApproved = true;
                         randomPassword = details.Password;
                         passwordFormat = PasswordFormat.Hashed;
                     }

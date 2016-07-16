@@ -1472,17 +1472,22 @@ label, label + * {
 	overflow: hidden;
     vertical-align: bottom;
 }
-.item-box .old-price {
-	color: #999;
+
+.item-box span.price.old-price {
+    float: left;
+    color: #999;
 	text-decoration: line-through;
 	font-size: 16px;
 	vertical-align: bottom;
 }
-.item-box .actual-price {
-	font-size: 20px;
-	color: #9ca34e;
-	margin: 5px 0;
+
+.item-box span.price.actual-price {
+    float: right;
+    font-weight: 600;
+    font-size: 16px;
+    color: #9aba6b;
 }
+
 .item-box .buttons {
 	margin: 0;
 	font-size: 0;
@@ -4570,3 +4575,4 @@ pre {
 .homepage-sub-banner img {
     width: 100%;
 }
+
