@@ -1,0 +1,112 @@
+﻿@{
+    Layout = "";
+}
+@model ConfigurationModel
+@using Nop.Plugin.Payments.AllPay.Models;
+@using Nop.Web.Framework;
+@Html.Action("StoreScopeConfiguration", "Setting", new { area = "Admin" })
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <table class="adminContent">
+    <tr>
+        <td colspan="2">
+        <b>使用歐付寶插件前請先跟歐付寶申請好HashKey、HashIV和特店代號.</b>
+        <br />
+        <br />
+        目前消費模式限定使用信用卡.
+        <br />
+            <br />
+            <a href="http://www.join2.com.tw" target="_blank">
+                <img src="@Url.Content("~/Plugins/Payments.AllPay/logo.jpg")" alt="" />
+                <br />
+                如有需要更多資訊，可點擊圖片到我們網站觀看與我們聯繫
+            </a>
+            <br />
+        </td>
+
+    </tr>
+    <tr>
+        <td colspan="2">
+            <hr />
+        </td>
+    </tr>
+        <tr>
+            <td class="adminTitle">
+               
+                @Html.NopLabelFor(model => model.IsitTest):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.IsitTest)
+                @Html.ValidationMessageFor(model => model.IsitTest)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.Allpay_mer_id_OverrideForStore, model => model.Allpay_mer_id, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.Allpay_mer_id):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.Allpay_mer_id)
+                @Html.ValidationMessageFor(model => model.Allpay_mer_id)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.Allpay_mer_Desc_OverrideForStore, model => model.Allpay_mer_Desc, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.Allpay_mer_Desc):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.Allpay_mer_Desc)
+                @Html.ValidationMessageFor(model => model.Allpay_mer_Desc)
+            </td>
+         </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.Allpay_mer_HashKey_OverrideForStore, model => model.Allpay_mer_HashKey, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.Allpay_mer_HashKey):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.Allpay_mer_HashKey)
+                @Html.ValidationMessageFor(model => model.Allpay_mer_HashKey)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.Allpay_mer_HashIV_OverrideForStore, model => model.Allpay_mer_HashIV, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.Allpay_mer_HashIV):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.Allpay_mer_HashIV)
+                @Html.ValidationMessageFor(model => model.Allpay_mer_HashIV)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.AdditionalFee_OverrideForStore, model => model.AdditionalFee, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.AdditionalFee):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.AdditionalFee)
+                @Html.ValidationMessageFor(model => model.AdditionalFee)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.AdditionalFeePercentage_OverrideForStore, model => model.AdditionalFeePercentage, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.AdditionalFeePercentage):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.AdditionalFeePercentage)
+                @Html.ValidationMessageFor(model => model.AdditionalFeePercentage)
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="submit" name="save" class="k-button" value="@T("Admin.Common.Save")" />
+            </td>
+        </tr>
+    </table>
+    
+}

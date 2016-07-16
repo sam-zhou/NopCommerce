@@ -1,0 +1,9 @@
+Group: Payment methods
+FriendlyName: AllPay
+SystemName: Payments.AllPay
+Version: 1.00
+SupportedVersions: 3.70
+Author: LeonHeshi-join2
+DisplayOrder: 1
+FileName: Nop.Plugin.Payments.AllPay.dll
+LimitedToStores: 3
