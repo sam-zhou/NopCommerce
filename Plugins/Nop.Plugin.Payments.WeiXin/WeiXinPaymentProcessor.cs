@@ -52,7 +52,7 @@ namespace Nop.Plugin.Payments.WeiXin
         private readonly HttpContextBase _httpContext;
 
         private const string OrderUrl = @"https://api.mch.weixin.qq.com/pay/unifiedorder";
-        private string _notifyUrl;
+        private readonly string _notifyUrl;
         #endregion
 
         #region Ctor
@@ -68,7 +68,7 @@ namespace Nop.Plugin.Payments.WeiXin
             _workContext = workContext;
             _httpContext = httpContext;
 
-            _notifyUrl = Path.Combine(_webHelper.GetStoreHost(true), "Plugins/PaymentWeiXin/Notify");
+            _notifyUrl = Path.Combine(_webHelper.GetStoreLocation(), "Plugins/PaymentWeiXin/Notify");
         }
 
         #endregion

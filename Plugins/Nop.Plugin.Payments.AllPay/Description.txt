@@ -1,0 +1,9 @@
+﻿Group: Payment methods
+FriendlyName: 欧付宝
+SystemName: Payments.AllPay
+Version: 1.03
+SupportedVersions: 3.70
+Author: Sam Zhou
+DisplayOrder: 1
+FileName: Nop.Plugin.Payments.AllPay.dll
+LimitedToStores: 3

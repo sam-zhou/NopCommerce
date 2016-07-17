@@ -1,0 +1,62 @@
+﻿@{
+    Layout = "";
+}
+@model Nop.Plugin.Payments.AllPay.Models.ConfigurationModel
+@using Nop.Web.Framework;
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <table class="adminContent">
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.TestMode):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.TestMode)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.MerchantId):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.MerchantId)
+                @Html.ValidationMessageFor(model => model.MerchantId)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.HashKey):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.HashKey)
+                @Html.ValidationMessageFor(model => model.HashKey)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.HashIv):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.HashIv)
+                @Html.ValidationMessageFor(model => model.HashIv)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.AdditionalFee):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.AdditionalFee)
+                @Html.ValidationMessageFor(model => model.AdditionalFee)
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button type="submit" name="save" value="save" class="k-button">
+                    Save</button>
+            </td>
+        </tr>
+    </table>
+    
+}
