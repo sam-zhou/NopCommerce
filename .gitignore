@@ -249,7 +249,7 @@ paket-files/
 .idea/
 *.sln.iml
 
-*.dll
+
 *.pdb
 .vs/
 Presentation/Nop.Web/Plugins/bin*
@@ -261,9 +261,21 @@ Presentation/Nop.Web/Plugins/P*
 Presentation/Nop.Web/Plugins/T*
 Presentation/Nop.Web/Plugins/W*
 Presentation/Nop.Web/Content/Images/Thumbs/*
-!packages/AioSDK/*
-!packages/AioSDK/AllPay.Payment.Integration.dll
-!packages/AioSDK/AllPay.Payment.Integration.XML
 !Presentation/Nop.Web/Plugins/ExternalAuth.Facebook/Description.txt
 !Presentation/Nop.Web/Plugins/ExternalAuth.Google/Description.txt
 !Presentation/Nop.Web/Plugins/ExternalAuth.WeiXin/Description.txt
+Presentation/Nop.Web/Plugins/Nop.Plugin.Misc.Watermark/Autofac.dll
+Presentation/Nop.Web/Plugins/Shipping.Fedex/Nop.Plugin.Shipping.Fedex.XmlSerializers.dll
+Presentation/Nop.Web/Plugins/Shipping.FixedRateShipping/Nop.Plugin.Shipping.FixedRateShipping.dll
+Presentation/Nop.Web/Plugins/Shipping.CanadaPost/Nop.Plugin.Shipping.CanadaPost.dll
+/Presentation/Nop.Web/Plugins/Nop.Plugin.Misc.Watermark
+/Presentation/Nop.Web/Plugins/Shipping.AustraliaPost
+/Presentation/Nop.Web/Plugins/SMS.Verizon
+/Presentation/Nop.Web/Plugins/Shipping.USPS/Nop.Plugin.Shipping.USPS.dll
+/Presentation/Nop.Web/Plugins/Shipping.USPS
+/Presentation/Nop.Web/Plugins/Shipping.UPS/Nop.Plugin.Shipping.UPS.XmlSerializers.dll
+/Presentation/Nop.Web/Plugins/Shipping.UPS/Nop.Plugin.Shipping.UPS.dll
+/Presentation/Nop.Web/Plugins/Shipping.UPS
+/Presentation/Nop.Web/Plugins/Shipping.Fedex/Nop.Plugin.Shipping.Fedex.dll
+/Presentation/Nop.Web/Plugins/Shipping.Fedex
+/Presentation/Nop.Web/Plugins/Shipping.ByWeight
