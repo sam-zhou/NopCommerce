@@ -414,12 +414,13 @@
     float:right;
 }  
 .product-essential .gallery .picture-thumbs{
-    width:20%;
+    width:100%;
     float:left;
 }
 .product-essential .gallery .picture-thumbs a{
     display:block;
     margin:0px auto 10px;
+    float: left;
 }
 .product-essential .overview{
     float:left;
@@ -855,11 +856,9 @@
 }
 .shopping-cart-page .common-buttons input {
     display: inline-block;
-    margin: 10px 5px 0; 
-}
-.shopping-cart-page .common-buttons input{
     margin:0 10px;
 }
+
 
 /* SEARCH & SITEMAP */
 

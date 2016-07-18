@@ -55,6 +55,7 @@
         position: fixed;
         top: 0;
         z-index: 10000;
+        background: #fff;
     }
         .responsive-nav-wrapper:after {
             content: ".";

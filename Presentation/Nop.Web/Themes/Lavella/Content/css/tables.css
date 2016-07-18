@@ -3,8 +3,8 @@
 .cart, .data-table,
 .compare-products-table,
 .forums-table-section table {
-	margin: 0 0 20px;
-    font-family:'open sans';
+	margin: 0 0 0;
+    font-family: "open sans","Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
     color:#888;
 }
 .cart th, .data-table th,

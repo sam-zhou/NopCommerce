@@ -1548,7 +1548,6 @@
     <Content Include="Plugins\SevenSpikes.Nop.Plugins.QuickView\Themes\Lavella\Content\QuickView.css" />
     <Content Include="Plugins\SevenSpikes.Nop.Plugins.QuickView\Themes\Lavella\Content\QuickView.rtl.css" />
     <Content Include="EmailTemplates\Common.Header.html" />
-    <None Include="Properties\PublishProfiles\1MxdKPqev34Exvu7bKpGyg6kRPNXr3dkGPiZwQvRmvALSNtoMqMEeYfGJHzl" />
     <Content Include="Properties\PublishProfiles\Aliyun.pubxml.user" />
     <Content Include="Properties\PublishProfiles\NopAsia - FTP.pubxml.user" />
     <Content Include="Properties\PublishProfiles\NopAsia - Web Deploy.pubxml.user" />

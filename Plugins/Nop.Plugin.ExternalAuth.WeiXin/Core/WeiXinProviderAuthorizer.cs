@@ -59,16 +59,9 @@ namespace Nop.Plugin.ExternalAuth.WeiXin.Core
 
         private Uri GenerateLocalCallbackUri()
         {
-            var t = _webHelper.GetStoreHost(true);
-            var t2 = _webHelper.GetStoreHost(false);
-            var t3 = _webHelper.GetStoreLocation();
             string url = Path.Combine(_webHelper.GetBaseUrl(),"plugins/externalauthWeiXin/logincallback");
             return new Uri(url);
         }
-
-        
-
-
 
         private static readonly string[] UriRfc3986CharsToEscape = { "!", "*", "'", "(", ")" };
 

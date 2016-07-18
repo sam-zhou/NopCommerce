@@ -17,6 +17,7 @@ using System.Web.Routing;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Xml;
+using LitJson;
 using Nop.Core;
 using Nop.Core.Domain.Orders;
 using Nop.Core.Domain.Payments;
@@ -26,8 +27,10 @@ using Nop.Plugin.Payments.WeiXin.Controllers;
 using Nop.Plugin.Payments.WeiXin.Helpers;
 using Nop.Plugin.Payments.WeiXin.Models;
 using Nop.Services.Configuration;
+using Nop.Services.Events;
 using Nop.Services.Helpers;
 using Nop.Services.Localization;
+using Nop.Services.Logging;
 using Nop.Services.Payments;
 using Nop.Web.Framework;
 using ZXing;
@@ -40,7 +43,7 @@ namespace Nop.Plugin.Payments.WeiXin
     /// <summary>
     /// WeiXin payment processor
     /// </summary>
-    public class WeiXinPaymentProcessor : BasePlugin, IPaymentMethod
+    public class WeiXinPaymentProcessor : BasePlugin, IPaymentMethod, IConsumer<OrderPaidEvent>
     {
         #region Fields
 
@@ -50,6 +53,7 @@ namespace Nop.Plugin.Payments.WeiXin
         private readonly IStoreContext _storeContext;
         private readonly IWorkContext _workContext;
         private readonly HttpContextBase _httpContext;
+        private readonly ILogger _log;
 
         private const string OrderUrl = @"https://api.mch.weixin.qq.com/pay/unifiedorder";
         private readonly string _notifyUrl;
@@ -59,7 +63,7 @@ namespace Nop.Plugin.Payments.WeiXin
 
         public WeiXinPaymentProcessor(WeiXinPaymentSettings weiXinPaymentSettings,
             ISettingService settingService, IWebHelper webHelper,
-            IStoreContext storeContext, IWorkContext workContext, HttpContextBase httpContext)
+            IStoreContext storeContext, IWorkContext workContext, HttpContextBase httpContext, ILogger log)
         {
             this._weiXinPaymentSettings = weiXinPaymentSettings;
             this._settingService = settingService;
@@ -67,6 +71,7 @@ namespace Nop.Plugin.Payments.WeiXin
             this._storeContext = storeContext;
             _workContext = workContext;
             _httpContext = httpContext;
+            _log = log;
 
             _notifyUrl = Path.Combine(_webHelper.GetStoreLocation(), "Plugins/PaymentWeiXin/Notify");
         }
@@ -640,5 +645,83 @@ namespace Nop.Plugin.Payments.WeiXin
         }
 
         #endregion
+
+        public void HandleEvent(OrderPaidEvent eventMessage)
+        {
+            if (eventMessage.Order.PaymentStatus == PaymentStatus.Paid)
+            {
+                _log.Information("Order Paid: " + eventMessage.Order.Id);
+
+                var weixinRecord =
+                    eventMessage.Order.Customer.ExternalAuthenticationRecords.FirstOrDefault(
+                        q => q.ProviderSystemName == "ExternalAuth.WeiXin");
+
+                if (weixinRecord != null)
+                {
+                    var openId = weixinRecord.ExternalIdentifier;
+                    var templateId = "qnKBZRpyvXEBEDEYR8sJAGNW-rfRhMKbHVF1tdRPQdI";
+                    var postUrl = @"https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=" + GetAccessToken();
+
+                    var data = new
+                    {
+                        touser = openId,
+                        template_id = templateId,
+                        url = Path.Combine(_webHelper.GetStoreLocation(), "orderdetails/" + eventMessage.Order.Id),
+                        data = new
+                        {
+                            first = new
+                            {
+                                value = "恭喜您购买成功!",
+                                color = "#173177"
+                            },
+                            keyword1 = new
+                            {
+                                value = eventMessage.Order.Id.ToString(),
+                                color = "#173177"
+                            },
+                            keyword2 = new
+                            {
+                                value = eventMessage.Order.OrderTotal.ToString("0.00"),
+                                color = "#173177"
+                            },
+                            keyword3 = new
+                            {
+                                value = DateTime.UtcNow.AddHours(8).ToString("yyyy年MM月dd日 HH:mm:ss"),
+                                color = "#173177"
+                            },
+                            remark = new
+                            {
+                                value = "购买成功，谢谢您的惠顾，欢迎下次再来光临！!",
+                                color = "#173177"
+                            },
+                        }
+                    };
+                    
+                    var result = HttpUtil.Post(JsonMapper.ToJson(data), postUrl, 100, "application/json");
+                    _log.Information("Weixin template message result: " + result);
+
+                }
+
+                
+            }
+        }
+
+        public string GetAccessToken()
+        {
+            var url =
+                string.Format(
+                    "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={0}&secret={1}",
+                    _weiXinPaymentSettings.AppId, _weiXinPaymentSettings.AppSecret);
+            var result = HttpUtil.Get(url);
+            _log.Information("WeiXin access token result: " + result);
+            var data = JsonMapper.ToObject(result);
+            if (data["access_token"] != null && !string.IsNullOrWhiteSpace(data["access_token"].ToString()))
+            {
+                return data["access_token"].ToString();
+            }
+            
+            throw new NopException("WeiXin access_token failed");
+            
+        }
     }
 }

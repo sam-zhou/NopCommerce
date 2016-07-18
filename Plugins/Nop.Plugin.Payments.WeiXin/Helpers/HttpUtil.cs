@@ -63,8 +63,7 @@ namespace Nop.Plugin.Payments.WeiXin
             //直接确认，否则打不开    
             return true;
         }
-
-        public static string Post(string xml, string url, int timeout)
+        public static string Post(string content, string url, int timeout, string type = "text/xml")
         {
             GC.Collect();//垃圾回收，回收没有正常关闭的http连接
 
@@ -99,17 +98,9 @@ namespace Nop.Plugin.Payments.WeiXin
                 //request.Proxy = proxy;
 
                 //设置POST的数据类型和长度
-                request.ContentType = "text/xml";
-                byte[] data = System.Text.Encoding.UTF8.GetBytes(xml);
+                request.ContentType = type;
+                byte[] data = Encoding.UTF8.GetBytes(content);
                 request.ContentLength = data.Length;
-
-                ////是否使用证书
-                //if (isUseCert)
-                //{
-                //    string path = HttpContext.Current.Request.PhysicalApplicationPath;
-                //    X509Certificate2 cert = new X509Certificate2(path + WxPayConfig.SSLCERT_PATH, WxPayConfig.SSLCERT_PASSWORD);
-                //    request.ClientCertificates.Add(cert);
-                //}
 
                 //往服务器写入数据
                 reqStream = request.GetRequestStream();

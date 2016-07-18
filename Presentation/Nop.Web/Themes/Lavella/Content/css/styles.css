@@ -3480,6 +3480,7 @@ label, label + * {
 }
 .shopping-cart-page .common-buttons {
 	font-size: 0;
+    margin-bottom: 20px;
 }
 .shopping-cart-page .common-buttons input,  .shipping-options .button-2.estimate-shipping-button {
 	background: #9aba6b;
@@ -3520,7 +3521,7 @@ label, label + * {
 .cart-footer {
 	color: #888;
 	font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
-	margin-bottom: 20px;
+	margin-bottom: 10px;
 }
 .cart-footer:after {
 	content: ".";
@@ -4576,3 +4577,22 @@ pre {
     width: 100%;
 }
 
+.video-iframe-container {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;
+}
+
+.video-iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.shopping-cart-page .common-buttons input {
+    display: inline-block;
+    margin: 0 10px;
+}
