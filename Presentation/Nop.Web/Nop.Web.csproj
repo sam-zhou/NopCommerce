@@ -3112,6 +3112,8 @@
     <Content Include="Themes\Lavella\Views\ShoppingCart\_CheckoutAttributes.cshtml" />
     <Content Include="Themes\Lavella\Views\Checkout\Completed.cshtml" />
     <Content Include="Themes\Lavella\Views\Customer\Register.cshtml" />
+    <Content Include="Themes\Lavella\Views\ShoppingCart\_DiscountBox.cshtml" />
+    <Content Include="Themes\Lavella\Views\ShoppingCart\_GiftCardBox.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Images\Thumbs\" />
