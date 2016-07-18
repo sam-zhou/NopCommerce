@@ -1727,6 +1727,9 @@
     <Content Include="Plugins\SevenSpikes.Nop.Plugins.ProductRibbons\Views\ProductRibbons\ProductRibbonsHtml.cshtml" />
     <Content Include="Plugins\SevenSpikes.Nop.Plugins.ProductRibbons\Views\ProductRibbons\ProductRibbonsWidget.cshtml" />
     <Content Include="Plugins\SevenSpikes.Nop.Plugins.ProductRibbons\Views\web.config" />
+    <Content Include="App_Data\Pdf\MSMHei-Bold.ttf" />
+    <Content Include="App_Data\Pdf\MSMHei.ttf" />
+    <Content Include="App_Data\Pdf\simhei.ttf" />
     <None Include="Properties\PublishProfiles\Aliyun.pubxml" />
     <None Include="Properties\PublishProfiles\LynexShop.pubxml" />
     <None Include="Properties\PublishProfiles\NopAsia - FTP.pubxml" />

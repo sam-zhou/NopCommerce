@@ -21,6 +21,7 @@ using LitJson;
 using Nop.Core;
 using Nop.Core.Domain.Orders;
 using Nop.Core.Domain.Payments;
+using Nop.Core.Domain.Shipping;
 using Nop.Core.Extension;
 using Nop.Core.Plugins;
 using Nop.Plugin.Payments.WeiXin.Controllers;
@@ -43,7 +44,7 @@ namespace Nop.Plugin.Payments.WeiXin
     /// <summary>
     /// WeiXin payment processor
     /// </summary>
-    public class WeiXinPaymentProcessor : BasePlugin, IPaymentMethod, IConsumer<OrderPaidEvent>
+    public class WeiXinPaymentProcessor : BasePlugin, IPaymentMethod, IConsumer<OrderPaidEvent>, IConsumer<ShipmentSentEvent>
     {
         #region Fields
 
@@ -54,7 +55,12 @@ namespace Nop.Plugin.Payments.WeiXin
         private readonly IWorkContext _workContext;
         private readonly HttpContextBase _httpContext;
         private readonly ILogger _log;
-
+        private readonly string _paidTemplateId = "qnKBZRpyvXEBEDEYR8sJAGNW-rfRhMKbHVF1tdRPQdI";
+        private readonly string _shippedTemplateId = "JDkdWbv2RfISnw_0jBfXSfR6na_74noXd4bTHKIlhbA";
+        private readonly string _cancelledTemplateId = "3hzGSYrsrFeSDWtWdZmauez6mHjHsA9RvzOjQlDvFew";
+        private readonly string _shippingExceptionTemplateId = "-tVYG3Kt6Bjhu7PxA0SC5lpTWBIWXP6ABV0khnFDpu8";
+        private readonly string _orderReceivedTemplateId = "suwFXWVi9Vk59vOyycLAGmJZaZiwRk53A8pOjl90RZI";
+        private readonly string _customExceptionTemplateId = "RHRHMYsoARcvaPHW6E4bmyjD89QhMUN7pP1CosTeP78";
         private const string OrderUrl = @"https://api.mch.weixin.qq.com/pay/unifiedorder";
         private readonly string _notifyUrl;
         #endregion
@@ -645,13 +651,30 @@ namespace Nop.Plugin.Payments.WeiXin
         }
 
         #endregion
+        public string GetAccessToken()
+        {
+            var url =
+                string.Format(
+                    "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={0}&secret={1}",
+                    _weiXinPaymentSettings.AppId, _weiXinPaymentSettings.AppSecret);
+            var result = HttpUtil.Get(url);
+            _log.Information("WeiXin access token result: " + result);
+            var data = JsonMapper.ToObject(result);
+            if (data["access_token"] != null && !string.IsNullOrWhiteSpace(data["access_token"].ToString()))
+            {
+                return data["access_token"].ToString();
+            }
+
+            throw new NopException("WeiXin access_token failed");
+
+        }
 
         public void HandleEvent(OrderPaidEvent eventMessage)
         {
             if (eventMessage.Order.PaymentStatus == PaymentStatus.Paid)
             {
                 _log.Information("Order Paid: " + eventMessage.Order.Id);
-
+                
                 var weixinRecord =
                     eventMessage.Order.Customer.ExternalAuthenticationRecords.FirstOrDefault(
                         q => q.ProviderSystemName == "ExternalAuth.WeiXin");
@@ -659,13 +682,13 @@ namespace Nop.Plugin.Payments.WeiXin
                 if (weixinRecord != null)
                 {
                     var openId = weixinRecord.ExternalIdentifier;
-                    var templateId = "qnKBZRpyvXEBEDEYR8sJAGNW-rfRhMKbHVF1tdRPQdI";
+
                     var postUrl = @"https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=" + GetAccessToken();
 
                     var data = new
                     {
                         touser = openId,
-                        template_id = templateId,
+                        template_id = _paidTemplateId,
                         url = Path.Combine(_webHelper.GetStoreLocation(), "orderdetails/" + eventMessage.Order.Id),
                         data = new
                         {
@@ -681,7 +704,7 @@ namespace Nop.Plugin.Payments.WeiXin
                             },
                             keyword2 = new
                             {
-                                value = eventMessage.Order.OrderTotal.ToString("0.00"),
+                                value = eventMessage.Order.OrderTotal.ToString(_workContext.WorkingCurrency.CustomFormatting),
                                 color = "#173177"
                             },
                             keyword3 = new
@@ -691,7 +714,7 @@ namespace Nop.Plugin.Payments.WeiXin
                             },
                             remark = new
                             {
-                                value = "购买成功，谢谢您的惠顾，欢迎下次再来光临！!",
+                                value = "购买成功，谢谢您的惠顾，我们将尽快安排发货!",
                                 color = "#173177"
                             },
                         }
@@ -706,22 +729,62 @@ namespace Nop.Plugin.Payments.WeiXin
             }
         }
 
-        public string GetAccessToken()
+        
+
+        public void HandleEvent(ShipmentSentEvent eventMessage)
         {
-            var url =
-                string.Format(
-                    "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={0}&secret={1}",
-                    _weiXinPaymentSettings.AppId, _weiXinPaymentSettings.AppSecret);
-            var result = HttpUtil.Get(url);
-            _log.Information("WeiXin access token result: " + result);
-            var data = JsonMapper.ToObject(result);
-            if (data["access_token"] != null && !string.IsNullOrWhiteSpace(data["access_token"].ToString()))
+            _log.Information("Shipment Sent: " + eventMessage.Shipment.TrackingNumber + " Order Id: " + eventMessage.Shipment.Order.Id);
+
+            var weixinRecord =
+                eventMessage.Shipment.Order.Customer.ExternalAuthenticationRecords.FirstOrDefault(
+                    q => q.ProviderSystemName == "ExternalAuth.WeiXin");
+
+            if (weixinRecord != null)
             {
-                return data["access_token"].ToString();
+                var openId = weixinRecord.ExternalIdentifier;
+
+                var postUrl = @"https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=" + GetAccessToken();
+
+                var data = new
+                {
+                    touser = openId,
+                    template_id = _shippedTemplateId,
+                    url = Path.Combine(_webHelper.GetStoreLocation(), "orderdetails/shipment/" + eventMessage.Shipment.Id),
+                    data = new
+                    {
+                        first = new
+                        {
+                            value = "亲，宝贝已经启程向您飞来，好想快点来到你身边!",
+                            color = "#173177"
+                        },
+                        keyword1 = new
+                        {
+                            value = eventMessage.Shipment.Order.Id.ToString(),
+                            color = "#173177"
+                        },
+                        keyword2 = new
+                        {
+                            value = eventMessage.Shipment.AdminComment,
+                            color = "#173177"
+                        },
+                        keyword3 = new
+                        {
+                            value = eventMessage.Shipment.TrackingNumber,
+                            color = "#173177"
+                        },
+                        remark = new
+                        {
+                            value = "点击查看完整的物流信息 。如有问题请致电 +61 0487 538 888 或直接在微信里留言，我们将在第一时间为您服务!",
+                            color = "#173177"
+                        },
+                    }
+                };
+
+                var result = HttpUtil.Post(JsonMapper.ToJson(data), postUrl, 100, "application/json");
+                _log.Information("Weixin template message result: " + result);
+
             }
-            
-            throw new NopException("WeiXin access_token failed");
-            
         }
+
     }
 }
