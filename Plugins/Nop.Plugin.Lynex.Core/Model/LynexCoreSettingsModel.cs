@@ -51,7 +51,7 @@ namespace Nop.Plugin.Misc.WaterMark.Models
 		public bool ApplyOnProductVariantAttributeValuePictures { get; set; }
 		public bool ApplyOnProductVariantPictures_Override { get; set; }
 
-		public WaterMarkSettingsModel()
+		public LynexCoreSettingsModel()
 			: base()
 		{
 			this.PositionsValues = new List<SelectListItem>();

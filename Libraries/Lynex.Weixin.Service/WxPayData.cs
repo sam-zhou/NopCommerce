@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using LitJson;
 using Nop.Core;
-using Nop.Core.Domain.Logging;
 
-namespace Nop.Plugin.Payments.WeiXin.Models
+namespace Lynex.Weixin.Service
 {
     public class WxPayData
     {

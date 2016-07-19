@@ -18,6 +18,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Xml;
 using LitJson;
+using Lynex.WebClient;
+using Lynex.Weixin.Service;
 using Nop.Core;
 using Nop.Core.Domain.Orders;
 using Nop.Core.Domain.Payments;
@@ -25,7 +27,7 @@ using Nop.Core.Domain.Shipping;
 using Nop.Core.Extension;
 using Nop.Core.Plugins;
 using Nop.Plugin.Payments.WeiXin.Controllers;
-using Nop.Plugin.Payments.WeiXin.Helpers;
+
 using Nop.Plugin.Payments.WeiXin.Models;
 using Nop.Services.Configuration;
 using Nop.Services.Events;

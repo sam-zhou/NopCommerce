@@ -7,7 +7,6 @@ using System.Web.Mvc;
 using Nop.Core;
 using Nop.Core.Domain.Orders;
 using Nop.Core.Domain.Payments;
-using Nop.Plugin.Payments.WeiXin.Helpers;
 using Nop.Plugin.Payments.WeiXin.Models;
 using Nop.Services.Configuration;
 using Nop.Services.Logging;
@@ -16,6 +15,7 @@ using Nop.Services.Payments;
 using Nop.Web.Framework.Controllers;
 using System.IO;
 using System.Web;
+using Lynex.Weixin.Service;
 using Nop.Core.Domain.Logging;
 
 namespace Nop.Plugin.Payments.WeiXin.Controllers

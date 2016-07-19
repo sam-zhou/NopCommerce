@@ -5,7 +5,26 @@
     Html.AddCssFileParts("~/Plugins/ExternalAuth.WeiXin/Content/weixinstyles.css");
 }
 <div class="external-login-block">
-    <a href="@Url.RouteUrl("Plugin.ExternalAuth.WeiXin.Login", new {ReturnUrl = HttpContext.Current.Request.QueryString["ReturnUrl"]})" class="btn btn-block btn-social btn-weixin">
+    <a id="weixin-login-url" href="@Url.RouteUrl("Plugin.ExternalAuth.WeiXin.WebLogin", new {ReturnUrl = HttpContext.Current.Request.QueryString["ReturnUrl"]})" class="btn btn-block btn-social btn-weixin">
         <i class="fa fa-weixin"></i>@T("Plugins.ExternalAuth.WeiXin.Login")
     </a>
 </div>
+
+
+<script type="text/javascript">
+    function onBridgeReady() {
+        document.getElementById("weixin-login-url").setAttribute("href", "@Url.RouteUrl("Plugin.ExternalAuth.WeiXin.Login", new { ReturnUrl = HttpContext.Current.Request.QueryString["ReturnUrl"] })");
+    }
+
+    if (typeof WeixinJSBridge == "undefined") {
+        if (document.addEventListener) {
+            document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+        } else if (document.attachEvent) {
+            document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+            document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+        }
+    } else {
+        onBridgeReady();
+    }
+
+</script>

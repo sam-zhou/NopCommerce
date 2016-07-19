@@ -1,19 +1,15 @@
-﻿using DotNetOpenAuth.AspNet.Clients;
-using Newtonsoft.Json.Linq;
-
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Security;
 using System.Text;
 using System.Web;
 using DotNetOpenAuth.AspNet;
+using Newtonsoft.Json.Linq;
 using Nop.Core;
 
-namespace Nop.Plugin.ExternalAuth.WeiXin.Core
+namespace Lynex.Weixin.Service
 {
     public class WeiXinClient
     {
@@ -24,6 +20,8 @@ namespace Nop.Plugin.ExternalAuth.WeiXin.Core
         /// </summary>
         
         private const string AuthorizationEndpoint = "https://open.weixin.qq.com/connect/oauth2/authorize";
+
+        private const string WebAuthorizationEndpoint = "https://open.weixin.qq.com/connect/qrconnect";
 
         private const string TokenEndpoint = "https://api.weixin.qq.com/sns/oauth2/access_token";
 
@@ -131,6 +129,19 @@ namespace Nop.Plugin.ExternalAuth.WeiXin.Core
             return builder.Uri;
         }
 
+        public static Uri GenerateWebLoginRequestUrl(string appId, string callbackUrl)
+        {
+            var builder = new UriBuilder(WebAuthorizationEndpoint);
+            var args = new Dictionary<string, string>();
+            args.Add("appid", appId);
+            args.Add("redirect_uri", callbackUrl);
+            args.Add("response_type", "code");
+            args.Add("scope", "snsapi_login");
+            args.Add("state", "STATE#wechat_redirect");
+            AppendQueryArgs(builder, args);
+            return builder.Uri;
+        }
+
         internal static void AppendQueryArgs(UriBuilder builder, Dictionary<string, string> args)
         {
             if ((args != null) && (args.Any()))
@@ -165,12 +176,24 @@ namespace Nop.Plugin.ExternalAuth.WeiXin.Core
             return builder.ToString();
         }
 
+        private static readonly string[] UriRfc3986CharsToEscape = { "!", "*", "'", "(", ")" };
+
+        private string EscapeUriDataStringRfc3986(string value)
+        {
+            var builder = new StringBuilder(Uri.EscapeDataString(value));
+            for (int i = 0; i < UriRfc3986CharsToEscape.Length; i++)
+            {
+                builder.Replace(UriRfc3986CharsToEscape[i], Uri.HexEscape(UriRfc3986CharsToEscape[i][0]));
+            }
+            return builder.ToString();
+        }
+
         protected IDictionary<string, string> GetUserData(string accessToken, string openId)
         {
             var userData = new Dictionary<string, string>();
-            using (var client = new WebClient())
+            using (var client = new System.Net.WebClient())
             {
-                using (var stream = client.OpenRead(UserInfoEndpoint + "?access_token=" + WeiXinProviderAuthorizer.EscapeUriDataStringRfc3986(accessToken) + "&openid=" + openId + "&lang=zh_CN"))
+                using (var stream = client.OpenRead(UserInfoEndpoint + "?access_token=" + EscapeUriDataStringRfc3986(accessToken) + "&openid=" + openId + "&lang=zh_CN"))
                 {
                     using (var reader = new StreamReader(stream))
                     {

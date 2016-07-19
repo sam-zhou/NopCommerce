@@ -1,20 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Security;
 using LitJson;
+using Lynex.WebClient;
 using Nop.Core;
-using Nop.Core.Domain.Logging;
-using Nop.Plugin.Payments.WeiXin.Models;
 
-namespace Nop.Plugin.Payments.WeiXin.Helpers
+namespace Lynex.Weixin.Service
 {
     public class JsApiPay
     {
-        private readonly WeiXinPaymentSettings _settings;
+        private readonly IWeiXinSettings _settings;
         private readonly string _redirectUri;
 
         /// <summary>
@@ -37,7 +32,7 @@ namespace Nop.Plugin.Payments.WeiXin.Helpers
         /// </summary>
         public WxPayData UnifiedOrderResult { get; set; }
 
-        public JsApiPay(WeiXinPaymentSettings settings, string redirectUri)
+        public JsApiPay(IWeiXinSettings settings, string redirectUri)
         {
             _settings = settings;
             _redirectUri = redirectUri;

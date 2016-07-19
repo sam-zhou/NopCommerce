@@ -120,7 +120,7 @@ namespace Nop.Plugin.ExternalAuth.WeiXin.Controllers
         }
 
         [NonAction]
-        private ActionResult LoginInternal(string returnUrl, bool verifyResponse)
+        private ActionResult LoginInternal(string returnUrl, bool? verifyResponse)
         {
             var processor = _openAuthenticationService.LoadExternalAuthenticationMethodBySystemName("ExternalAuth.WeiXin");
             if (processor == null ||
@@ -176,6 +176,11 @@ namespace Nop.Plugin.ExternalAuth.WeiXin.Controllers
         public ActionResult Login(string returnUrl)
         {
             return LoginInternal(returnUrl, false);
+        }
+
+        public ActionResult WebLogin(string returnUrl)
+        {
+            return LoginInternal(returnUrl, null);
         }
 
 

@@ -1,18 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Lynex.WebClient;
 using Nop.Core;
-using Nop.Core.Domain.Logging;
-using Nop.Plugin.Payments.WeiXin.Models;
 
-namespace Nop.Plugin.Payments.WeiXin
+namespace Lynex.Weixin.Service
 {
     public static class WeiXinHelper
     {
-        public static WxPayData OrderQuery(WxPayData inputObj, WeiXinPaymentSettings settings, int timeOut = 6)
+        public static WxPayData OrderQuery(WxPayData inputObj, IWeiXinSettings settings, int timeOut = 6)
         {
             string url = "https://api.mch.weixin.qq.com/pay/orderquery";
             //检测必填参数
@@ -58,7 +53,7 @@ namespace Nop.Plugin.Payments.WeiXin
 * @throws NopException
 * @return 成功时返回，其他抛异常
 */
-        public static WxPayData UnifiedOrder(WxPayData inputObj, string clientIp, string notifyUrl, WeiXinPaymentSettings settings, int timeOut = 6)
+        public static WxPayData UnifiedOrder(WxPayData inputObj, string clientIp, string notifyUrl, IWeiXinSettings settings, int timeOut = 6)
         {
             string url = "https://api.mch.weixin.qq.com/pay/unifiedorder";
             //检测必填参数
@@ -126,7 +121,7 @@ namespace Nop.Plugin.Payments.WeiXin
             return Convert.ToInt64(ts.TotalSeconds).ToString(CultureInfo.InvariantCulture);
         }
 
-        private static void ReportCostTime(string interfaceUrl, int timeCost, WxPayData inputObj, WeiXinPaymentSettings settings)
+        private static void ReportCostTime(string interfaceUrl, int timeCost, WxPayData inputObj, IWeiXinSettings settings)
         {
             //如果不需要进行上报
             if (ReportLevenl == 0)
@@ -191,7 +186,7 @@ namespace Nop.Plugin.Payments.WeiXin
             }
         }
 
-        public static WxPayData Report(WxPayData inputObj, WeiXinPaymentSettings settings, int timeOut = 1)
+        public static WxPayData Report(WxPayData inputObj, IWeiXinSettings settings, int timeOut = 1)
         {
             string url = "https://api.mch.weixin.qq.com/payitil/report";
             //检测必填参数

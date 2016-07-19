@@ -4,10 +4,9 @@ using System.Net;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
-using System.Web;
 using Nop.Core;
 
-namespace Nop.Plugin.Payments.WeiXin
+namespace Lynex.WebClient
 {
     public class HttpUtil
     {

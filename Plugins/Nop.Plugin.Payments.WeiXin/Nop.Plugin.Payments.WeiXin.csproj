@@ -93,13 +93,9 @@
     <Content Include="Content\css\paymentweixin.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Compile Include="Helpers\HttpUtil.cs" />
-    <Compile Include="Helpers\JsApiPay.cs" />
     <Compile Include="Models\JsPayViewModel.cs" />
     <Compile Include="Models\WeiXinPaymentErrorModel.cs" />
     <Compile Include="Models\WeiXinPaymentModel.cs" />
-    <Compile Include="Models\WxPayData.cs" />
-    <Compile Include="Helpers\WeiXinHelper.cs" />
     <Compile Include="WeiXinPaymentProcessor.cs" />
     <Compile Include="WeiXinPaymentSettings.cs" />
     <Compile Include="Controllers\PaymentWeiXinController.cs" />
@@ -109,6 +105,14 @@
     <Compile Include="RouteProvider.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Lynex.WebClient\Lynex.WebClient.csproj">
+      <Project>{22ecdf30-5496-4992-bb06-d7710f890a37}</Project>
+      <Name>Lynex.WebClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Lynex.Weixin.Service\Lynex.Weixin.Service.csproj">
+      <Project>{76536aa3-8165-4c99-a5ba-4f40f54ddd19}</Project>
+      <Name>Lynex.Weixin.Service</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Nop.Core\Nop.Core.csproj">
       <Project>{6BDA8332-939F-45B7-A25E-7A797260AE59}</Project>
       <Name>Nop.Core</Name>

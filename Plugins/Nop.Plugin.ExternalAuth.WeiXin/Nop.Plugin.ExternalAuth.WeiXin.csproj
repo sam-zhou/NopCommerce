@@ -125,7 +125,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\ExternalAuthWeiXinController.cs" />
-    <Compile Include="Core\WeiXinClient.cs" />
     <Compile Include="Core\IWeiXinExternalProviderAuthorizer.cs" />
     <Compile Include="Core\Provider.cs" />
     <Compile Include="Core\OAuthAuthenticationParameters.cs" />
@@ -160,6 +159,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Lynex.Weixin.Service\Lynex.Weixin.Service.csproj">
+      <Project>{76536aa3-8165-4c99-a5ba-4f40f54ddd19}</Project>
+      <Name>Lynex.Weixin.Service</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Nop.Core\Nop.Core.csproj">
       <Project>{6bda8332-939f-45b7-a25e-7a797260ae59}</Project>
       <Name>Nop.Core</Name>
@@ -180,10 +183,10 @@
     <None Include="app.config" />
     <None Include="packages.config" />
     <Content Include="Views\ExternalAuthWeiXin\Configure.cshtml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Views\ExternalAuthWeiXin\PublicInfo.cshtml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Views\ExternalAuthWeiXin\Register.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

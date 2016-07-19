@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using DotNetOpenAuth.AspNet;
+using Lynex.Weixin.Service;
 using Nop.Core;
 using Nop.Core.Domain.Customers;
 using Nop.Core.Infrastructure;
@@ -63,18 +64,6 @@ namespace Nop.Plugin.ExternalAuth.WeiXin.Core
             return new Uri(url);
         }
 
-        private static readonly string[] UriRfc3986CharsToEscape = { "!", "*", "'", "(", ")" };
-
-        internal static string EscapeUriDataStringRfc3986(string value)
-        {
-            var builder = new StringBuilder(Uri.EscapeDataString(value));
-            for (int i = 0; i < UriRfc3986CharsToEscape.Length; i++)
-            {
-                builder.Replace(UriRfc3986CharsToEscape[i], Uri.HexEscape(UriRfc3986CharsToEscape[i][0]));
-            }
-            return builder.ToString();
-        }
-
         internal static string NormalizeHexEncoding(string url)
         {
             var chars = url.ToCharArray();
@@ -95,6 +84,12 @@ namespace Nop.Plugin.ExternalAuth.WeiXin.Core
         private AuthorizeState RequestAuthentication()
         {
             var authUrl = WeiXinClient.GenerateCodeRequestUrl(_weiXinExternalAuthSettings.AppId, GenerateLocalCallbackUri().AbsoluteUri).AbsoluteUri;
+            return new AuthorizeState("", OpenAuthenticationStatus.RequiresRedirect) { Result = new RedirectResult(authUrl) };
+        }
+
+        private AuthorizeState WebAppRequestAuthentication()
+        {
+            var authUrl = WeiXinClient.GenerateWebLoginRequestUrl(_weiXinExternalAuthSettings.AppId, GenerateLocalCallbackUri().AbsoluteUri).AbsoluteUri;
             return new AuthorizeState("", OpenAuthenticationStatus.RequiresRedirect) { Result = new RedirectResult(authUrl) };
         }
 
@@ -273,7 +268,7 @@ namespace Nop.Plugin.ExternalAuth.WeiXin.Core
         public AuthorizeState Authorize(string returnUrl, bool? verifyResponse = null)
         {
             if (!verifyResponse.HasValue)
-                throw new ArgumentException("Weixin plugin cannot automatically determine verifyResponse property");
+                return WebAppRequestAuthentication();
 
             if (verifyResponse.Value)
                 return VerifyCode(returnUrl);

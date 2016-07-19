@@ -15,6 +15,12 @@ namespace Nop.Plugin.ExternalAuth.WeiXin
                 new { controller = "ExternalAuthWeiXin", action = "Login" },
                 new[] { "Nop.Plugin.ExternalAuth.WeiXin.Controllers" });
 
+            // Login
+            routes.MapRoute("Plugin.ExternalAuth.WeiXin.WebLogin",
+                "Plugins/ExternalAuthWeiXin/WebLogin",
+                new { controller = "ExternalAuthWeiXin", action = "WebLogin" },
+                new[] { "Nop.Plugin.ExternalAuth.WeiXin.Controllers" });
+
             // LoginCallback
             routes.MapRoute("Plugin.ExternalAuth.WeiXin.LoginCallback",
                 "Plugins/ExternalAuthWeiXin/LoginCallback",
