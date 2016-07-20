@@ -766,7 +766,7 @@ namespace Nop.Plugin.Payments.WeiXin
                         },
                         keyword2 = new
                         {
-                            value = eventMessage.Shipment.AdminComment,
+                            value = eventMessage.Shipment.CourierName,
                             color = "#173177"
                         },
                         keyword3 = new

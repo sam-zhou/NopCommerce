@@ -24,6 +24,10 @@ namespace Nop.Admin.Models.Orders
         [UIHint("DateNullable")]
         public DateTime? EndDate { get; set; }
 
+        [NopResourceDisplayName("Admin.Orders.Shipments.List.CourierName")]
+        [AllowHtml]
+        public string CourierName { get; set; }
+
         [NopResourceDisplayName("Admin.Orders.Shipments.List.TrackingNumber")]
         [AllowHtml]
         public string TrackingNumber { get; set; }

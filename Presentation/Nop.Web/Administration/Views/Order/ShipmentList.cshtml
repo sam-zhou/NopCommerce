@@ -43,6 +43,14 @@
         </tr>
         <tr>
             <td class="adminTitle">
+                @Html.NopLabelFor(model => model.CourierName):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.CourierName)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
                 @Html.NopLabelFor(model => model.TrackingNumber):
             </td>
             <td class="adminData">
@@ -152,6 +160,11 @@
                                 title: "@T("Admin.Orders.Shipments.OrderID")",
                                 width: 100
                             }, {
+                                field: "CourierName",
+                                title: "@T("Admin.Orders.Shipments.CourierName")",
+                                width: 100
+                            }
+                            , {
                                 field: "TrackingNumber",
                                 title: "@T("Admin.Orders.Shipments.TrackingNumber")",
                                 width: 100
@@ -284,7 +297,7 @@
                     return false;
                 }
             });
-            
+
             //search button
             $('#search-shipments').click(function () {
                 //search
@@ -352,25 +365,25 @@
                 return false;
             });
 
-            
+
             $('#mastercheckbox').click(function () {
                 $('.checkboxGroups').attr('checked', $(this).is(':checked')).change();
             });
 
-            //wire up checkboxes. 
+            //wire up checkboxes.
             $('#shipments-grid').on('change', 'input[type=checkbox][id!=mastercheckbox]', function (e) {
                 var $check = $(this);
                 if ($check.is(":checked") == true) {
                     var checked = jQuery.inArray($check.val(), selectedIds);
                     if (checked == -1) {
-                        //add id to selectedIds.  
+                        //add id to selectedIds.
                         selectedIds.push($check.val());
                     }
                 }
                 else {
                     var checked = jQuery.inArray($check.val(), selectedIds);
                     if (checked > -1) {
-                        //remove id from selectedIds.  
+                        //remove id from selectedIds.
                         selectedIds = $.grep(selectedIds, function (item, index) {
                             return item != $check.val();
                         });
@@ -384,6 +397,7 @@
             var data = {
                 StartDate: $('#@Html.FieldIdFor(model => model.StartDate)').val(),
                 EndDate: $('#@Html.FieldIdFor(model => model.EndDate)').val(),
+                CourierName:  $('#@Html.FieldIdFor(model => model.CourierName)').val(),
                 TrackingNumber: $('#@Html.FieldIdFor(model => model.TrackingNumber)').val(),
                 CountryId: $('#@Html.FieldIdFor(model => model.CountryId)').val(),
                 StateProvinceId: $('#@Html.FieldIdFor(model => model.StateProvinceId)').val(),
@@ -394,12 +408,12 @@
             addAntiForgeryToken(data);
             return data;
         }
-    
+
         function onDataBound(e) {
             $('#shipments-grid input[type=checkbox][id!=mastercheckbox]').each(function () {
                 var currentId = $(this).val();
                 var checked = jQuery.inArray(currentId, selectedIds);
-                //set checked based on if current checkbox's value is in selectedIds.  
+                //set checked based on if current checkbox's value is in selectedIds.
                 $(this).attr('checked', checked > -1);
             });
 

@@ -114,6 +114,7 @@ namespace Nop.Web.Models.Order
 
         public partial class ShipmentBriefModel : BaseNopEntityModel
         {
+            public string CourierName { get; set; }
             public string TrackingNumber { get; set; }
             public DateTime? ShippedDate { get; set; }
             public DateTime? DeliveryDate { get; set; }

@@ -18,6 +18,8 @@ namespace Nop.Admin.Models.Orders
         public int OrderId { get; set; }
         [NopResourceDisplayName("Admin.Orders.Shipments.TotalWeight")]
         public string TotalWeight { get; set; }
+        [NopResourceDisplayName("Admin.Orders.Shipments.CourierName")]
+        public string CourierName { get; set; }
         [NopResourceDisplayName("Admin.Orders.Shipments.TrackingNumber")]
         public string TrackingNumber { get; set; }
         public string TrackingNumberUrl { get; set; }

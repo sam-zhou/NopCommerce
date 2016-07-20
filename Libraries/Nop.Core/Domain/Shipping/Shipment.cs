@@ -15,6 +15,8 @@ namespace Nop.Core.Domain.Shipping
         /// Gets or sets the order identifier
         /// </summary>
         public int OrderId { get; set; }
+
+        public string CourierName { get; set; }
         
         /// <summary>
         /// Gets or sets the tracking number of this shipment

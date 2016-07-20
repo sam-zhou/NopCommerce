@@ -206,6 +206,7 @@ namespace Nop.Web.Controllers
                 {
                     var shipmentModel = new OrderDetailsModel.ShipmentBriefModel
                     {
+                        CourierName = shipment.CourierName,
                         Id = shipment.Id,
                         TrackingNumber = shipment.TrackingNumber,
                     };
@@ -449,6 +450,7 @@ namespace Nop.Web.Controllers
             //tracking number and shipment information
             if (!String.IsNullOrEmpty(shipment.TrackingNumber))
             {
+                model.CourierName = shipment.CourierName;
                 model.TrackingNumber = shipment.TrackingNumber;
                 var srcm = _shippingService.LoadShippingRateComputationMethodBySystemName(order.ShippingRateComputationMethodSystemName);
                 if (srcm != null &&

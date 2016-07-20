@@ -12,6 +12,7 @@ namespace Nop.Web.Models.Order
             Items = new List<ShipmentItemModel>();
         }
 
+        public string CourierName { get; set; }
         public string TrackingNumber { get; set; }
         public string TrackingNumberUrl { get; set; }
         public DateTime? ShippedDate { get; set; }

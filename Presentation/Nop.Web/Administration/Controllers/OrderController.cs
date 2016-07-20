@@ -707,6 +707,7 @@ namespace Nop.Admin.Controllers
             var model = new ShipmentModel
             {
                 Id = shipment.Id,
+                CourierName = shipment.CourierName,
                 OrderId = shipment.OrderId,
                 TrackingNumber = shipment.TrackingNumber,
                 TotalWeight = shipment.TotalWeight.HasValue ? string.Format("{0:F2} [{1}]", shipment.TotalWeight, baseWeightIn) : "",
@@ -3080,9 +3081,11 @@ namespace Nop.Admin.Controllers
                 {
                     var trackingNumber = form["TrackingNumber"];
                     var adminComment = form["AdminComment"];
+                    var courierName = form["CourierName"];
                     shipment = new Shipment
                     {
                         OrderId = order.Id,
+                        CourierName = courierName,
                         TrackingNumber = trackingNumber,
                         TotalWeight = null,
                         ShippedDateUtc = null,
@@ -3202,6 +3205,28 @@ namespace Nop.Admin.Controllers
                 return RedirectToAction("List");
 
             shipment.TrackingNumber = model.TrackingNumber;
+            _shipmentService.UpdateShipment(shipment);
+
+            return RedirectToAction("ShipmentDetails", new { id = shipment.Id });
+        }
+
+        [HttpPost, ActionName("ShipmentDetails")]
+        [FormValueRequired("setcouriername")]
+        public ActionResult SetShipmentCourierName(ShipmentModel model)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageOrders))
+                return AccessDeniedView();
+
+            var shipment = _shipmentService.GetShipmentById(model.Id);
+            if (shipment == null)
+                //No shipment found with the specified id
+                return RedirectToAction("List");
+
+            //a vendor should have access only to his products
+            if (_workContext.CurrentVendor != null && !HasAccessToShipment(shipment))
+                return RedirectToAction("List");
+
+            shipment.CourierName = model.CourierName;
             _shipmentService.UpdateShipment(shipment);
 
             return RedirectToAction("ShipmentDetails", new { id = shipment.Id });
