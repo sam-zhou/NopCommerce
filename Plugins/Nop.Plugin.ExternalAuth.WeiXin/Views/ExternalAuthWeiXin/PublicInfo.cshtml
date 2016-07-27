@@ -1,15 +1,28 @@
 ﻿@using Nop.Web.Framework.UI
+
 @{
     Layout = "";
 
     Html.AddCssFileParts("~/Plugins/ExternalAuth.WeiXin/Content/weixinstyles.css");
 }
+<script src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
 <div class="external-login-block">
     <a id="weixin-login-url" href="@Url.RouteUrl("Plugin.ExternalAuth.WeiXin.WebLogin", new {ReturnUrl = HttpContext.Current.Request.QueryString["ReturnUrl"]})" class="btn btn-block btn-social btn-weixin">
         <i class="fa fa-weixin"></i>@T("Plugins.ExternalAuth.WeiXin.Login")
     </a>
 </div>
-
+@*<div id="login_container">
+    <script type="text/javascript">
+        var obj = new WxLogin({
+            id: "login_container",
+            appid: "wx67f946649f30b025",
+            scope: "snsapi_login",
+            redirect_uri: "http%3A%2F%2Fnzgoodscom%2Fplugins%2FexternalauthWeiXin%2Flogincallback",
+            state: "afdwqaefqwf",
+            style: "white"
+        });
+    </script>
+</div>*@
 
 <script type="text/javascript">
     function onBridgeReady() {

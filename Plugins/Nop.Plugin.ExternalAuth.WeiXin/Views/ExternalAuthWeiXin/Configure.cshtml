@@ -10,7 +10,7 @@
     <table class="adminContent">
         <tr>
             <td class="adminTitle">
-                @Html.OverrideStoreCheckboxFor(model => model.AppIdOverrideForStore, model => model.AppId, Model.ActiveStoreScopeConfiguration)
+                @Html.OverrideStoreCheckboxFor(model => model.AppId_OverrideForStore, model => model.AppId, Model.ActiveStoreScopeConfiguration)
                 @Html.NopLabelFor(model => model.AppId):
             </td>
             <td class="adminData">
@@ -20,7 +20,7 @@
         </tr>
         <tr>
             <td class="adminTitle">
-                @Html.OverrideStoreCheckboxFor(model => model.AppSecretOverrideForStore, model => model.AppSecret, Model.ActiveStoreScopeConfiguration)
+                @Html.OverrideStoreCheckboxFor(model => model.AppSecret_OverrideForStore, model => model.AppSecret, Model.ActiveStoreScopeConfiguration)
                 @Html.NopLabelFor(model => model.AppSecret):
             </td>
             <td class="adminData">
@@ -28,6 +28,28 @@
                 @Html.ValidationMessageFor(model => model.AppSecret)
             </td>
         </tr>
+
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.WebAppId_OverrideForStore, model => model.AppId, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.WebAppId):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.WebAppId)
+                @Html.ValidationMessageFor(model => model.WebAppId)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.WebAppSecret_OverrideForStore, model => model.AppSecret, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.WebAppSecret):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.WebAppSecret)
+                @Html.ValidationMessageFor(model => model.WebAppSecret)
+            </td>
+        </tr>
+
         <tr>
             <td colspan="2">
                 <input type="submit" name="save" class="k-button" value="@T("Admin.Common.Save")" />

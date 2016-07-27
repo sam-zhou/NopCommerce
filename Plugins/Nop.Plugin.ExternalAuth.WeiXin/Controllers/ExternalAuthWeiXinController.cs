@@ -62,12 +62,16 @@ namespace Nop.Plugin.ExternalAuth.WeiXin.Controllers
             var model = new ConfigurationModel();
             model.AppId = weiXinExternalAuthSettings.AppId;
             model.AppSecret = weiXinExternalAuthSettings.AppSecret;
+            model.WebAppId = weiXinExternalAuthSettings.WebAppId;
+            model.WebAppSecret = weiXinExternalAuthSettings.WebAppSecret;
 
             model.ActiveStoreScopeConfiguration = storeScope;
             if (storeScope > 0)
             {
-                model.AppIdOverrideForStore = _settingService.SettingExists(weiXinExternalAuthSettings, x => x.AppId, storeScope);
-                model.AppSecretOverrideForStore = _settingService.SettingExists(weiXinExternalAuthSettings, x => x.AppSecret, storeScope);
+                model.AppId_OverrideForStore = _settingService.SettingExists(weiXinExternalAuthSettings, x => x.AppId, storeScope);
+                model.AppSecret_OverrideForStore = _settingService.SettingExists(weiXinExternalAuthSettings, x => x.AppSecret, storeScope);
+                model.WebAppId_OverrideForStore = _settingService.SettingExists(weiXinExternalAuthSettings, x => x.WebAppId, storeScope);
+                model.WebAppSecret_OverrideForStore = _settingService.SettingExists(weiXinExternalAuthSettings, x => x.WebAppSecret, storeScope);
             }
 
             return View("~/Plugins/ExternalAuth.WeiXin/Views/ExternalAuthWeiXin/Configure.cshtml", model);
@@ -91,19 +95,31 @@ namespace Nop.Plugin.ExternalAuth.WeiXin.Controllers
             //save settings
             weiXinExternalAuthSettings.AppId = model.AppId;
             weiXinExternalAuthSettings.AppSecret = model.AppSecret;
+            weiXinExternalAuthSettings.WebAppId = model.WebAppId;
+            weiXinExternalAuthSettings.WebAppSecret = model.WebAppSecret;
 
             /* We do not clear cache after each setting update.
              * This behavior can increase performance because cached settings will not be cleared 
              * and loaded from database after each update */
-            if (model.AppIdOverrideForStore || storeScope == 0)
+            if (model.AppId_OverrideForStore || storeScope == 0)
                 _settingService.SaveSetting(weiXinExternalAuthSettings, x => x.AppId, storeScope, false);
             else if (storeScope > 0)
                 _settingService.DeleteSetting(weiXinExternalAuthSettings, x => x.AppId, storeScope);
 
-            if (model.AppSecretOverrideForStore || storeScope == 0)
+            if (model.AppSecret_OverrideForStore || storeScope == 0)
                 _settingService.SaveSetting(weiXinExternalAuthSettings, x => x.AppSecret, storeScope, false);
             else if (storeScope > 0)
                 _settingService.DeleteSetting(weiXinExternalAuthSettings, x => x.AppSecret, storeScope);
+
+            if (model.WebAppId_OverrideForStore || storeScope == 0)
+                _settingService.SaveSetting(weiXinExternalAuthSettings, x => x.WebAppId, storeScope, false);
+            else if (storeScope > 0)
+                _settingService.DeleteSetting(weiXinExternalAuthSettings, x => x.WebAppId, storeScope);
+
+            if (model.WebAppSecret_OverrideForStore || storeScope == 0)
+                _settingService.SaveSetting(weiXinExternalAuthSettings, x => x.WebAppSecret, storeScope, false);
+            else if (storeScope > 0)
+                _settingService.DeleteSetting(weiXinExternalAuthSettings, x => x.WebAppSecret, storeScope);
 
             //now clear settings cache
             _settingService.ClearCache();

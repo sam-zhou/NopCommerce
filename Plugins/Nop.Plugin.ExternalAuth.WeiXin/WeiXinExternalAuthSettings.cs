@@ -13,5 +13,11 @@ namespace Nop.Plugin.ExternalAuth.WeiXin
         /// 唯一凭证密钥
         /// </summary>
         public string AppSecret { get; set; }
+
+
+        public string WebAppId { get; set; }
+
+
+        public string WebAppSecret { get; set; }
     }
 }

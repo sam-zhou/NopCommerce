@@ -123,7 +123,7 @@ label, label + * {
 	text-align: center;
 }
 .page-title {
-	margin: 0 0 38px;
+	margin: 0 0 10px;
 }
 .page-title h1 {
 	color: #666666;
@@ -4404,7 +4404,7 @@ pre {
 .external-login-block {
     width: 100%;
     float: left;
-    height: 80px;
+    height: 40px;
     padding-left: 30px;
     padding-right: 30px;
 }

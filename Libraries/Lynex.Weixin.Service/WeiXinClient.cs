@@ -129,12 +129,12 @@ namespace Lynex.Weixin.Service
             return builder.Uri;
         }
 
-        public static Uri GenerateWebLoginRequestUrl(string appId, string callbackUrl)
+        public static Uri GenerateWebLoginRequestUrl(string webAppId, string callbackUrl)
         {
             var builder = new UriBuilder(WebAuthorizationEndpoint);
             var args = new Dictionary<string, string>();
-            args.Add("appid", appId);
-            args.Add("redirect_uri", callbackUrl);
+            args.Add("appid", webAppId);
+            args.Add("redirect_uri", HttpUtility.UrlEncode(callbackUrl));
             args.Add("response_type", "code");
             args.Add("scope", "snsapi_login");
             args.Add("state", "STATE#wechat_redirect");

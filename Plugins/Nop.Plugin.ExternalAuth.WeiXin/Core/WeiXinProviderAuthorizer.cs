@@ -89,7 +89,7 @@ namespace Nop.Plugin.ExternalAuth.WeiXin.Core
 
         private AuthorizeState WebAppRequestAuthentication()
         {
-            var authUrl = WeiXinClient.GenerateWebLoginRequestUrl(_weiXinExternalAuthSettings.AppId, GenerateLocalCallbackUri().AbsoluteUri).AbsoluteUri;
+            var authUrl = WeiXinClient.GenerateWebLoginRequestUrl(_weiXinExternalAuthSettings.WebAppId, GenerateLocalCallbackUri().AbsoluteUri).AbsoluteUri;
             return new AuthorizeState("", OpenAuthenticationStatus.RequiresRedirect) { Result = new RedirectResult(authUrl) };
         }
 

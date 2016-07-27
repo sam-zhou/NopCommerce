@@ -44,9 +44,10 @@ namespace Nop.Plugin.ExternalAuth.WeiXin
 
             // locales
             this.AddOrUpdatePluginLocaleResource("Plugins.ExternalAuth.WeiXin.Login", "微信登录");
-            this.AddOrUpdatePluginLocaleResource("Plugins.ExternalAuth.WeiXin.AppId", "唯一凭证");
-            this.AddOrUpdatePluginLocaleResource("Plugins.ExternalAuth.WeiXin.AppSecret", "唯一凭证密钥");
-
+            this.AddOrUpdatePluginLocaleResource("Plugins.ExternalAuth.WeiXin.AppId", "微信接口唯一凭证");
+            this.AddOrUpdatePluginLocaleResource("Plugins.ExternalAuth.WeiXin.AppSecret", "微信接口唯一凭证密钥");
+            this.AddOrUpdatePluginLocaleResource("Plugins.ExternalAuth.WeiXin.WebAppId", "网站接口唯一凭证");
+            this.AddOrUpdatePluginLocaleResource("Plugins.ExternalAuth.WeiXin.WebAppSecret", "网站接口唯一凭证密钥");
             base.Install();
         }
 
@@ -61,7 +62,8 @@ namespace Nop.Plugin.ExternalAuth.WeiXin
             this.DeletePluginLocaleResource("Plugins.ExternalAuth.WeiXin.Login");
             this.DeletePluginLocaleResource("Plugins.ExternalAuth.WeiXin.AppId");
             this.DeletePluginLocaleResource("Plugins.ExternalAuth.WeiXin.AppSecret");
-
+            this.DeletePluginLocaleResource("Plugins.ExternalAuth.WeiXin.WebAppId");
+            this.DeletePluginLocaleResource("Plugins.ExternalAuth.WeiXin.WebAppSecret");
             base.Uninstall();
         }
     }
