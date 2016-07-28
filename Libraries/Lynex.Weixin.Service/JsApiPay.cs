@@ -2,7 +2,6 @@
 using System.Web;
 using System.Web.Security;
 using LitJson;
-using Lynex.WebClient;
 using Nop.Core;
 
 namespace Lynex.Weixin.Service

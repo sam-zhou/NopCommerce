@@ -18,7 +18,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Xml;
 using LitJson;
-using Lynex.WebClient;
 using Lynex.Weixin.Service;
 using Nop.Core;
 using Nop.Core.Domain.Orders;

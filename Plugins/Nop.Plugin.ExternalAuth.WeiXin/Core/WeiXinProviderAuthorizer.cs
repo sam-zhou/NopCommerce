@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.SessionState;
 using DotNetOpenAuth.AspNet;
 using Lynex.Weixin.Service;
 using Nop.Core;
@@ -83,23 +84,52 @@ namespace Nop.Plugin.ExternalAuth.WeiXin.Core
 
         private AuthorizeState RequestAuthentication()
         {
-            var authUrl = WeiXinClient.GenerateCodeRequestUrl(_weiXinExternalAuthSettings.AppId, GenerateLocalCallbackUri().AbsoluteUri).AbsoluteUri;
+            var state = Guid.NewGuid().ToString("N");
+            Session["nop.externalauth.weixin.authentication.native"] = state;
+            var authUrl = WeiXinClient.GenerateCodeRequestUrl(_weiXinExternalAuthSettings.AppId, state, GenerateLocalCallbackUri().AbsoluteUri).AbsoluteUri;
             return new AuthorizeState("", OpenAuthenticationStatus.RequiresRedirect) { Result = new RedirectResult(authUrl) };
         }
 
         private AuthorizeState WebAppRequestAuthentication()
         {
-            var authUrl = WeiXinClient.GenerateWebLoginRequestUrl(_weiXinExternalAuthSettings.WebAppId, GenerateLocalCallbackUri().AbsoluteUri).AbsoluteUri;
+            var state = Guid.NewGuid().ToString("N");
+            Session["nop.externalauth.weixin.authentication.web"] = state;
+            var authUrl = WeiXinClient.GenerateWebLoginRequestUrl(_weiXinExternalAuthSettings.WebAppId, state, GenerateLocalCallbackUri().AbsoluteUri).AbsoluteUri;
             return new AuthorizeState("", OpenAuthenticationStatus.RequiresRedirect) { Result = new RedirectResult(authUrl) };
         }
 
         private WeiXinClient WeiXinApplication
         {
-            get { return _weiXinApplication ?? (_weiXinApplication = new WeiXinClient(_weiXinExternalAuthSettings.AppId, _weiXinExternalAuthSettings.AppSecret)); }
+            get { return _weiXinApplication ?? (_weiXinApplication = new WeiXinClient()); }
         }
 
         private AuthorizeState VerifyCode(string returnUrl)
         {
+            var state = _httpContext.Request.QueryString["state"];
+
+            var errorState = new AuthorizeState(returnUrl, OpenAuthenticationStatus.Error);
+
+            string appId, appSecret;
+
+            if (state == (string) Session["nop.externalauth.weixin.authentication.native"])
+            {
+                Session.Remove(("nop.externalauth.weixin.authentication.native"));
+                appId = _weiXinExternalAuthSettings.AppId;
+                appSecret = _weiXinExternalAuthSettings.AppSecret;
+
+            }
+            else if (state == (string) Session["nop.externalauth.weixin.authentication.web"])
+            {
+                Session.Remove(("nop.externalauth.weixin.authentication.web"));
+                appId = _weiXinExternalAuthSettings.WebAppId;
+                appSecret = _weiXinExternalAuthSettings.WebAppSecret;
+            }
+            else
+            {
+                
+                errorState.AddError("State not matching");
+                return errorState;
+            }
             var authResult = WeiXinApplication.VerifyCode(_httpContext, GenerateLocalCallbackUri());
 
             if (authResult.IsSuccessful)
@@ -110,7 +140,7 @@ namespace Nop.Plugin.ExternalAuth.WeiXin.Core
                 }
                 var code = authResult.ExtraData["code"];
 
-                authResult = WeiXinApplication.VerifyAuthentication(GenerateLocalCallbackUri(), code);
+                authResult = WeiXinApplication.VerifyAuthentication(GenerateLocalCallbackUri(), code, appId, appSecret);
 
                 if (authResult.IsSuccessful)
                 {
@@ -138,21 +168,21 @@ namespace Nop.Plugin.ExternalAuth.WeiXin.Core
                     {
                         var result = _authorizer.Authorize(parameters);
                         return new AuthorizeState(returnUrl, result);
-                    }// Register User
+                    } // Register User
                     else
                     {
                         SaveOAuthParametersToSession(parameters);
-                        return new AuthorizeState("/Plugins/ExternalAuthWeiXin/Register", OpenAuthenticationStatus.AutoRegisteredEmailEnter);
+                        return new AuthorizeState("/Plugins/ExternalAuthWeiXin/Register",
+                            OpenAuthenticationStatus.AutoRegisteredEmailEnter);
                     }
                 }
 
-                
+
             }
 
-            var state = new AuthorizeState(returnUrl, OpenAuthenticationStatus.Error);
             var error = authResult.Error != null ? authResult.Error.Message : "Unknown error";
-            state.AddError(error);
-            return state;
+            errorState.AddError(error);
+            return errorState;
         }
 
         public AuthorizeState RegisterEmail(string returnUrl, RegisterModel model)

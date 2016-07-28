@@ -77,6 +77,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HttpUtil.cs" />
     <Compile Include="IWeiXinSettings.cs" />
     <Compile Include="JsApiPay.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -88,10 +89,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Lynex.WebClient\Lynex.WebClient.csproj">
-      <Project>{22ecdf30-5496-4992-bb06-d7710f890a37}</Project>
-      <Name>Lynex.WebClient</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Nop.Core\Nop.Core.csproj">
       <Project>{6bda8332-939f-45b7-a25e-7a797260ae59}</Project>
       <Name>Nop.Core</Name>

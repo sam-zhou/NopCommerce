@@ -31,7 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release For Lynexshop.com|AnyCPU'">
-    <OutputPath>bin\Release For Lynexshop.com\</OutputPath>
+    <OutputPath>..\..\Presentation\Nop.Web\Plugins\ExternalAuth.QQ\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>

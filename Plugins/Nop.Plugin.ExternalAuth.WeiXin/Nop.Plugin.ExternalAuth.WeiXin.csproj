@@ -32,7 +32,7 @@
     <WarningLevel>2</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release For Lynexshop.com|AnyCPU'">
-    <OutputPath>bin\Release For Lynexshop.com\</OutputPath>
+    <OutputPath>..\..\Presentation\Nop.Web\Plugins\ExternalAuth.WeiXin\</OutputPath>
     <DefineConstants>TRACE;Debug</DefineConstants>
     <Optimize>true</Optimize>
     <WarningLevel>2</WarningLevel>

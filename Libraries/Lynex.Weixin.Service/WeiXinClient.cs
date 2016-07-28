@@ -29,21 +29,16 @@ namespace Lynex.Weixin.Service
 
         private const string Scope = "snsapi_userinfo";// "snsapi_base" : "snsapi_userinfo"
 
-        private readonly string _appId;
-
-        private readonly string _appSecret;
-
         private readonly string _providerName;
 
         #endregion
 
         #region Constructors and Destructors
 
-        public WeiXinClient(string appId, string appSecret)
+        public WeiXinClient()
         {
             _providerName = "weixin";
-            _appId = appId;
-            _appSecret = appSecret;
+
         }
 
         #endregion
@@ -80,9 +75,9 @@ namespace Lynex.Weixin.Service
             return result;
         }
 
-        public AuthenticationResult VerifyAuthentication(Uri returnUrl, string code)
+        public AuthenticationResult VerifyAuthentication(Uri returnUrl, string code, string appId, string appSecret)
         {
-            var tokenObject = QueryAccessToken(returnUrl, code);
+            var tokenObject = QueryAccessToken(returnUrl, code, appId, appSecret);
             if (tokenObject["access_token"] == null || tokenObject["openid"] == null || tokenObject["refresh_token"] == null)
             {
                 return AuthenticationResult.Failed;
@@ -116,7 +111,7 @@ namespace Lynex.Weixin.Service
 
         #endregion
 
-        public static Uri GenerateCodeRequestUrl(string appId, string callbackUrl)
+        public static Uri GenerateCodeRequestUrl(string appId, string state, string callbackUrl)
         {
             var builder = new UriBuilder(AuthorizationEndpoint);
             var args = new Dictionary<string, string>();
@@ -124,12 +119,12 @@ namespace Lynex.Weixin.Service
             args.Add("redirect_uri", callbackUrl);
             args.Add("response_type", "code");
             args.Add("scope", Scope);
-            args.Add("state", "STATE#wechat_redirect");
+            args.Add("state", state + "#wechat_redirect");
             AppendQueryArgs(builder, args);
             return builder.Uri;
         }
 
-        public static Uri GenerateWebLoginRequestUrl(string webAppId, string callbackUrl)
+        public static Uri GenerateWebLoginRequestUrl(string webAppId, string state, string callbackUrl)
         {
             var builder = new UriBuilder(WebAuthorizationEndpoint);
             var args = new Dictionary<string, string>();
@@ -137,7 +132,7 @@ namespace Lynex.Weixin.Service
             args.Add("redirect_uri", HttpUtility.UrlEncode(callbackUrl));
             args.Add("response_type", "code");
             args.Add("scope", "snsapi_login");
-            args.Add("state", "STATE#wechat_redirect");
+            args.Add("state", state + "#wechat_redirect");
             AppendQueryArgs(builder, args);
             return builder.Uri;
         }
@@ -215,11 +210,11 @@ namespace Lynex.Weixin.Service
             context.Response.Redirect(returnUrl.AbsoluteUri, endResponse: true);
         }
 
-        protected JObject QueryAccessToken(Uri returnUrl, string authorizationCode)
+        protected JObject QueryAccessToken(Uri returnUrl, string authorizationCode, string appId, string appSecret)
         {
             var args = new Dictionary<string, string>();
-            args.Add("appid", _appId);
-            args.Add("secret", _appSecret);
+            args.Add("appid", appId);
+            args.Add("secret", appSecret);
             args.Add("code", authorizationCode);
             args.Add("grant_type", "authorization_code");
             string query = "?" + CreateQueryString(args);

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Globalization;
-using Lynex.WebClient;
 using Nop.Core;
 
 namespace Lynex.Weixin.Service
