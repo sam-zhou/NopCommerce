@@ -1,0 +1,147 @@
+﻿/*=====================================================
+    
+    TABLETS PORTRAIT & SMARTPHONES LANDSCAPE
+
+=====================================================*/
+
+@media all and (min-width: 481px) {
+
+
+    /* HEADER */
+
+    .search-box input.search-box-text {
+        width: 300px !important;
+        font: italic 14px tahoma,arial,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53",open sans;
+        color: #bbb;
+    }
+
+    .ui-autocomplete.ui-menu.ui-widget.ui-widget-content {
+        width: 300px !important; 
+    }
+
+    .eu-cookie-bar-notification {
+        width: 450px;
+        max-width: 95%;
+        margin-left: -225px;
+    }
+
+    /* FOOTER */
+
+    .newsletter-email input[type="text"] {
+        width: 300px;
+        font-family: open sans,"Hiragino Sans GB","Microsoft Yahei","\5b8b\4f53";
+        color:#888;
+        font-style:italic;
+    }
+
+    .footer-middle h3 {
+        width: 768px;
+    }
+
+    /* LEFT/RIGHT COLUMN */
+    .poll {
+        padding: 15px 7px 5px;
+        width: 50%;
+    }
+
+    /* CATEGORY PAGE & GRIDS */
+
+    
+
+    .product-grid.home-page-category-grid .item-box:nth-child(2n){
+        margin-left:1%;
+    }
+    .category-page .item-box .description{
+        max-height:58px;
+    }
+
+/* VARIANT GRID */
+    .product-variant-list.grid,
+    .product-variant-list.list {
+        overflow: hidden;
+    }
+    .product-variant-list.grid .product-variant-line,
+    .product-variant-list.list .product-variant-line{
+        float:left;
+        width:48%;
+        margin:1%
+    }
+    .product-variant-list.grid .variant-overview .add-to-wishlist-button,
+    .product-variant-list.list .variant-overview .add-to-wishlist-button{
+        display:block;
+        margin-left:0;
+    }
+    .product-variant-list.grid .add-to-cart-button,
+    .product-variant-list.list .add-to-cart-button{
+        margin-bottom:20px;
+    }
+
+    /* PRODUCT PAGE */
+    .gallery .picture-wrapper {
+        width: 100%;
+    }
+
+
+/* PASSWORD PROTECTION */
+.enter-password-form input[type="password"] {
+	width: 300px !important;
+}
+
+/* REGISTRATION, LOGIN, MY ACCOUNT */
+
+.registration-page .fieldset:nth-child(2) select,
+.account-page .fieldset:nth-child(3) select {
+	width: 110px;
+}
+
+/* SHOPPING CART & CHECKOUT */
+
+.order-review-data {
+	display: block;
+	width: 100%;
+	margin: 0 0 30px;
+}
+.order-review-data ul {
+	display: table-cell;
+}
+.order-details-area td {
+	float: none;
+	width: auto;
+}
+
+.shipment-details-page .shipment-overview > ul {
+    float: left;
+    width: 48%;
+    margin: 0 1% !important;
+}
+.order-progress li{
+    margin:0 50px 40px 0;
+}
+.checkout-page .address-item {
+    float:left;
+    width:47%;
+    margin:1.5%;
+}
+.checkout-page .address-item:nth-child(2n+1){
+    clear:both;
+}
+.checkout-page .order-review-data>ul{
+    display:inline-block;
+    width:46%;
+    margin:1.5%;
+}
+
+.external-login-block {
+    width: 100%;
+}
+
+.homepage-sub-banner {
+    margin-top: -35px;
+}
+
+.homepage-sub-banner .homepage-sub-banner-right {
+    margin-top: 0;
+}
+
+
+}

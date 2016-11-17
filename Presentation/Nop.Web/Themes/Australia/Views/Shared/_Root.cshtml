@@ -1,0 +1,173 @@
+﻿@using Nop.Core
+@using Nop.Core.Domain.Customers
+@using Nop.Core.Infrastructure
+@using Nop.Services.Common
+@using Nop.Services.Customers
+@using Nop.Services.Localization
+@using Nop.Services.Media
+@using Nop.Web.Framework.Themes
+@using Nop.Web.Models.Catalog;
+@{
+    Layout = "~/Views/Shared/_Root.Head.cshtml";
+
+    var additionalClass = String.Empty;
+
+    var controllerName = System.Web.HttpContext.Current.Request.RequestContext.RouteData.GetRequiredString("controller");
+    var isHomePage = controllerName.Equals("home", StringComparison.InvariantCultureIgnoreCase);
+    if (isHomePage)
+    {
+        additionalClass = "master-home-page";
+    }
+
+    var currentThemeName = EngineContext.Current.Resolve<IThemeContext>().WorkingThemeName;
+    var logoPath = "~/Themes/" + currentThemeName + "/Content/img/logo.png";
+
+    var lavellaLogo = @Html.Widget("lavella_theme_logo");
+}
+@Html.Widget("body_start_html_tag_after")
+@Html.Partial("_Notifications")
+@Html.Action("JavaScriptDisabledWarning", "Common")
+@Html.Partial("OldInternetExplorerWarning")
+<div class="master-wrapper-page @additionalClass">
+    @Html.Action("AdminHeaderLinks", "Common")
+    <div class="h-wrapper">
+        <div class="header">
+            @Html.Widget("header")
+            <div class="header-links-wrapper">
+                <div class="header-content-wrapper">
+                    <div class="desktop-header-right">
+                        <div class="search-box store-search-box">
+                            @Html.Action("SearchBox", "Catalog")
+                        </div>
+                        <div class="header-selectors-wrapper">
+                            @Html.Action("TaxTypeSelector", "Common")
+                            @Html.Action("CurrencySelector", "Common")
+                            @*@Html.Action("StoreSelector", "Common")*@
+                            @Html.Action("LanguageSelector", "Common")
+
+                            @Html.Widget("header_selectors")
+                        </div>
+                    </div>
+                    @Html.Action("HeaderLinks", "Common")
+                </div>
+            </div>
+        </div>
+        <div class="header-logo">
+            <a href="@Url.RouteUrl("homepage")" class="logo">
+            @if (!MvcHtmlString.IsNullOrEmpty(lavellaLogo))
+            {
+                    @lavellaLogo
+                }
+                else
+                {
+                    string storeName = EngineContext.Current.Resolve<IStoreContext>().CurrentStore.GetLocalized(x => x.Name);
+                    <img title="" alt="@storeName" src="@Url.Content(logoPath)">
+                }
+            </a>
+        </div>
+    </div>
+    <div class="overlayOffCanvas"></div>
+    <div class="responsive-nav-wrapper-parent">
+        <div class="responsive-nav-wrapper">
+            <div class="menu-title responsive-nav-btn">
+                <span>@T("SevenSpikes.Themes.Common.MenuTitle")</span>
+            </div>
+            <div class="responsive-header-logo">
+                <a href="@Url.RouteUrl("homepage")" class="logo">
+                    @if (!MvcHtmlString.IsNullOrEmpty(lavellaLogo))
+                    {
+                        @lavellaLogo
+                    }
+                    else
+                    {
+                        string storeName = EngineContext.Current.Resolve<IStoreContext>().CurrentStore.GetLocalized(x => x.Name);
+                        <img title="" alt="@storeName" src="@Url.Content(logoPath)">
+                    }
+                        
+                </a>
+            </div>
+            <div class="search-wrap responsive-nav-btn">
+                <span>@T("Search")</span>
+            </div>
+            <div class="shopping-cart-link responsive-nav-btn">
+                <a href="@Url.RouteUrl("ShoppingCart")">@T("ShoppingCart")<span id="l-cart-qty">0</span></a>
+                
+                    <script>
+                        $(document).ready(function () {
+                            if (shoppingCartItems !== undefined && shoppingCartItems > 0) {
+                                $("#l-cart-qty").text(shoppingCartItems);
+                            }
+                        });
+                    </script>
+</div>
+            <div class="filters-button responsive-nav-btn">
+                <span>@T("SevenSpikes.Themes.Common.Filters")</span>
+            </div>
+            @*<div class="personal-button responsive-nav-btn" id="header-links-opener">
+                <span>@T("SevenSpikes.Themes.Common.Personal")</span>
+            </div>*@
+        </div>
+    </div>
+    <div class="justAFixingDivBefore"></div>
+    <div class="header-menu">
+        <div class="close-menu">
+            <div class="close-menu-logo">
+                <a href="@Url.RouteUrl("CustomerInfo")">
+                    @{
+                        var customer = EngineContext.Current.Resolve<IWorkContext>().CurrentCustomer;
+                        if (customer != null)
+                        {
+                            var avatarId = customer.GetAttribute<int>(SystemCustomerAttributeNames.AvatarPictureId);
+                            if (avatarId != 0)
+                            {
+                                var avatarUrl = EngineContext.Current.Resolve<IPictureService>().GetPictureUrl(avatarId, 50, false);
+                                <img title="" src="@Url.Content(avatarUrl)">
+                            }
+                            else
+                            {
+                                <img title="" src="/Themes/Lavella/Content/img/default_avatar.png">
+                            }
+
+                        }
+                    }
+                </a>
+
+            </div>
+            <div class="close-menu-title"><a href="@Url.RouteUrl("CustomerInfo")">@customer.GetFullName()</a></div>
+            <div class="close-btn"></div>
+        </div>
+        @{
+            var menuHtml = Html.Widget("theme_header_menu");
+        }
+        @if (!MvcHtmlString.IsNullOrEmpty(menuHtml))
+        {
+            @menuHtml
+        }
+        else
+        {
+            @Html.Action("TopMenu", "Catalog")
+        }
+    </div>
+    <div class="master-wrapper-content">
+        <script type="text/javascript">
+            AjaxCart.init(false, '.header-links .cart-qty', '.header-links .wishlist-qty', '#flyout-cart');
+        </script>
+        @Html.Widget("content_before")
+        @*ajax loading window*@
+        <div class="ajax-loading-block-window" style="display: none">
+            <div class="loading-image">
+            </div>
+        </div>
+        @if (IsSectionDefined("Breadcrumb"))
+        {
+            @RenderSection("Breadcrumb")
+        }
+        <div class="master-column-wrapper">
+            @RenderBody()
+        </div>
+        @Html.Widget("content_after")
+    </div>
+</div>
+@Html.Action("Footer", "Common")
+@Html.Action("EuCookieLaw", "Common")
+@Html.Widget("body_end_html_tag_before")
